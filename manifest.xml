@@ -636,7 +636,10 @@
 		
 		<script uuid="1a4e40a9-cf14-4703-b206-9f2fbeb56c7f" category="component-centric-validation" sqlFile="component-centric-snapshot-referencedComponentID-of-refset-member-must-be-valid.sql" text="All active Refset records are valid." />
 		
-		<script uuid="6bed3e87-6d20-4b05-81ce-43d359a6f684" category="component-centric-validation,INT,US" sqlFile="component-centric-snapshot-referencedComponentID-of-extended-map-refset-member-must-be-valid.sql" text="All active records in extended map refset are valid." severity="WARNING"/>
+		<script uuid="6bed3e87-6d20-4b05-81ce-43d359a6f684" category="component-centric-validation,INT,US" sqlFile="component-centric-snapshot-referencedComponentID-in-extended-map-refset-member-without-exceptions-must-be-valid.sql" text="All active records in extended map refset are valid." severity="WARNING"/>
+
+		<script uuid="2e2542f9-64a4-43d0-bf4e-9029af8b7cf0" category="component-centric-validation,INT,US" sqlFile="component-centric-snapshot-referencedComponentID-in-extended-map-refset-member-with-exceptions-must-be-valid.sql" text="All active records in extended map refset are valid." severity="WARNING"/>
+		
 		<!-- component-centric-validation-mrcm -->
 		<script uuid="5d0fdbf5-fef6-44b2-aa42-ebb302132178" category="component-centric-validation,INT" sqlFile="component-centric-snapshot-mrcm-domain-refset-validate-concept-ids.sql" text="Check that the expression constraints, refinements and expression templates in multiple columns in MRCM Domain Refset include only valid SNOMED CT concept identifiers" />
 		
