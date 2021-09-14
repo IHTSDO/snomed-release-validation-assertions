@@ -190,7 +190,8 @@
 		<script uuid="9190473a-29f7-40fc-b879-9ae0d038b681" category="release-type-validation" sqlFile="release-type-snapshot-simple-refset-successive-states.sql" text="New inactive states for existing components must have active states in the previous SIMPLE REFSET snapshot."/>
 		<script uuid="eff30fb0-7856-11e1-b0c4-0800200c9a66" category="release-type-validation" sqlFile="release-type-snapshot-language-successive-states.sql" text="All language refset members inactivated in current snapshot must have been active in the previous release."/>
 		<script uuid="89ceaf00-79b9-11e1-b0c4-0800200c9a66" category="release-type-validation" sqlFile="release-type-snapshot-stated-relationship-successive-states.sql" text="All stated relationships inactivated in current release must have been active in the previous release."/>
-		<script uuid="5c6b6bc0-79b9-11e1-b0c4-0800200c9a66" category="release-type-validation" sqlFile="release-type-snapshot-inferred-relationship-successive-states.sql" text="All relationships inactivated in current release must have been active in the previous release."/>
+		<script uuid="5c6b6bc0-79b9-11e1-b0c4-0800200c9a66" category="release-type-validation,INT" sqlFile="release-type-snapshot-inferred-relationship-successive-states_INT.sql" text="All relationships inactivated in current release must have been active in the previous release."/>
+		<script uuid="a98e02f7-e810-449b-89ff-0a9037cea32d" category="release-type-validation,EXTENSION" sqlFile="release-type-snapshot-inferred-relationship-successive-states_EXTENSION.sql" text="All relationships inactivated in current release must have been active in the previous release."/>
 		<script uuid="4deb9274-d923-4f84-b0dc-c4dab0c2fc4c" category="release-type-validation" sqlFile="release-type-snapshot-relationship-concrete-values-successive-states.sql" text="All relationship concrete values inactivated in current release must have been active in the previous release."/>
 
 		<!-- across multiple files in Current snapshot-->
@@ -227,9 +228,9 @@
 
 
 		<!-- file-centric-snapshot-concept -->
-		<script uuid="0145fbad-f067-41ff-b700-cf54fc639e21" category="file-centric-validation,ES,DK,SE,US,BE,NO,CH,IE,EE,NZ,LOINC,GPFP-ICPC2,GMDN,DERIVATIVE" sqlFile="file-centric-snapshot-correct-module-id.sql" text="The module id of components should be in module dependency list" />
+		<script uuid="0145fbad-f067-41ff-b700-cf54fc639e21" category="file-centric-validation,EXTENSION" sqlFile="file-centric-snapshot-correct-module-id.sql" text="The module id of components should be in module dependency list" />
 
-		<script uuid="0e898ae0-15cb-45f9-b032-041193aa79e8" category="file-centric-validation,ES,DK,SE,US,BE,NO,CH,IE,EE,NZ,LOINC,GPFP-ICPC2,GMDN,DERIVATIVE" sqlFile="file-centric-snapshot-correct-refset-id.sql" text="The refset id of components should be in refset dependency list" />
+		<script uuid="0e898ae0-15cb-45f9-b032-041193aa79e8" category="file-centric-validation,EXTENSION" sqlFile="file-centric-snapshot-correct-refset-id.sql" text="The refset id of components should be in refset dependency list" />
 
 		<script uuid="2edc1f50-fcc7-4b55-acad-56672fefacdf" category="file-centric-validation,mdrs" sqlFile="file-centric-snapshot-root-concept-has-non-isa-relationships.sql" text="Root concept has non-isa relationships." severity="WARNING" />
 		
