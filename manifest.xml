@@ -161,6 +161,7 @@
 		
 		<script uuid="0988de1d-29dd-4668-bcbf-032d38692492" category="release-type-validation" sqlFile="release-type-snapshot-validation-simple-refset.sql" text="The current simple refset snapshot file is an accurate derivative of the current full file" />
 		
+		<script uuid="202ef495-5f18-4e3e-8129-63759f2bbbd6" category="release-type-validation,INT" sqlFile="release-type-snapshot-invalid-content-of-SEP.sql" text="All SEP reference set records must be valid." />
 		<!--  release type for current delta comparing with previous snapshot -->
 
 		<script uuid="35680574-3ac6-4b68-9efe-de88b677eb35" category="release-type-validation" sqlFile="release-type-delta-previous-snapshot-validation-association-refset.sql" text="There must be actual changes made to previously published association refset components in order for them to appear in the current delta." />
@@ -475,7 +476,7 @@
 		<!--script uuid="7dd01495-2099-4e7b-9d02-39899bf774f3" category="component-centric-validation" sqlFile="component-centric-snapshot-definition-term-used-in-description-warning.sql" text="A description normally has less than 35 words." / -->
 		<script uuid="f55ed5ec-fc57-429c-8190-bbd5cbb8343a" category="component-centric-validation,INT" sqlFile="component-centric-snapshot-core-module-concepts-have-core-module-parents.sql" text="Core module concepts have core module parents." />
 		<script uuid="22405025-d572-4bbb-b0fd-b066ac49b983" category="component-centric-validation,INT" sqlFile="component-centric-snapshot-no-duplicate-association-of-SEP.sql" text="Active structure concepts are unique in SEP reference sets." />
-		<script uuid="202ef495-5f18-4e3e-8129-63759f2bbbd6" category="component-centric-validation,INT" sqlFile="component-centric-snapshot-invalid-content-of-SEP.sql" text="All SEP reference set records must be valid." />
+		
 		<!-- Exclude these assertion for the time being
 		<script uuid="0a4bba70-85b7-11e1-b0c4-0800200c9a66" category="component-centric-validation" sqlFile="component-centric-snapshot-historical-association-navigation.sql" text="targetComponentId in association refset file does not refer to navigation concepts." />
 		<script uuid="38b88ff6-7ee3-40a5-b362-98a87e80526e" category="component-centric-validation" sqlFile="component-centric-snapshot-nonhuman-inactive.sql" text="Inactive Non-human refset members refer to inactive components." />
