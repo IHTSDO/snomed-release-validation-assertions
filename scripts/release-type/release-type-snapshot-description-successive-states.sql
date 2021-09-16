@@ -20,7 +20,11 @@
 	and a.active = '0'
 	and b.active = '0'
 	and a.id = b.id
-	and a.moduleid =b.moduleid
+	and a.conceptid = b.conceptid
+	and a.moduleid = b.moduleid
+	and a.term = b.term
+	and a.typeid = b.typeid
+	and a.languagecode = b.languagecode
 	and a.casesignificanceid = b.casesignificanceid;
 	
 	
