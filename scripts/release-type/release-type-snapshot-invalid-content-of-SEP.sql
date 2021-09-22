@@ -95,13 +95,13 @@
 		and b.typeid = '900000000000003001' /* FSN */
 		and (lower(b.term) not like '%structure%' or (b.term like 'Entire%' or  b.term like 'All%' or b.term like 'Part%'));
 
-	/* 5. The FSN for a P concept must start with the word Part (case sensitive match) or end with the word part*/
+	/* 5. The FSN for a P concept must start with the word Part (case sensitive match) or contain the word part*/
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
 	select 
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('A P concept id=', a.targetcomponentid, ' for refset id=', a.id, ' in SEP refset must start with the word Part or end with the word part.'),
+		concat('A P concept id=', a.targetcomponentid, ' for refset id=', a.id, ' in SEP refset must contain the word part.'),
 		a.id,
 		'curr_associationrefset_s'
 	from tmp_sep_refset a
@@ -110,9 +110,11 @@
 		and a.active = '1'
 		and b.active = '1'
 		and b.typeid = '900000000000003001' /* FSN */
-		and (b.term not like 'Part%' and  b.term not like '% part (body structure)');
+		and (b.term not like 'Part%' and  b.term not like '%part%');
 
 	/* 6. The FSN for an E concept must start with the word Entire or the word All (case sensitive match)*/
+	call findDescendants('4421005,122453002,51576004,280115004,91832008,258331007,118956008,278001007,39801007,361083003,21229009,87100004,420864000,698969006,279228004,698968003,244023005,123957003');
+
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
 	select 
 		<RUNID>,
@@ -123,11 +125,13 @@
 		'curr_associationrefset_s'
 	from tmp_sep_refset a
 		left join curr_description_s b on a.targetcomponentid = b.conceptid
+		left join descendants d on a.targetcomponentid = d.sourceid 
 	where a.refsetid = '734138000' /* SE Refset */ 
 		and a.active = '1'
 		and b.active = '1'
 		and b.typeid = '900000000000003001' /* FSN */
-		and (b.term not like 'Entire%' and  b.term not like 'All%');
+		and (b.term not like 'Entire%' and  b.term not like 'All%')
+		and d.sourceid is null;
 
 	/* 7. All body structure concepts that start with the word 'Entire' or 'All' should appear in the SE refset with some exceptions.
 		  If a S concept has both E concept and All concept, the E concept should be included for the SE refset. But All concept would not be required for the SE refset.*/

@@ -13,6 +13,7 @@
 		<script uuid="646390b7-c4aa-4aab-92c0-0031cf2e45ae" category="resource" sqlFile="component-centric-snapshot-mrcm-domain-refset-expression-concept-validation-proc.sql" text="Defines procedure to test the validity of concept ids in the MRCM Attribute Range Refsets." />
 		<script uuid="045b977a-a5cb-49f6-9a80-54ff478062bb" category="resource" sqlFile="file-centric-moduleid-validation-proc.sql" text="Defines procedure to validate module ID in data" />
 		<script uuid="3dc3b12a-642b-406f-a3e7-5ca81a7fc9af" category="resource" sqlFile="file-centric-refsetid-validation-proc.sql" text="Defines procedure to validate refset ID in data" />
+		<script uuid="46bdbc56-d79c-48b0-b0d6-97208c0376aa" category="resource" sqlFile="release-type-snapshot-retrieve-descendants-for-concept-proc.sql" text="Defines procedure to retrive all descendants of a concept" />
 
 		<!-- release-type-full-validation -->
 		<script uuid="84f5edda-1249-4d79-87da-e248e61f06a6" category="release-type-validation" sqlFile="release-type-full-validation-concept.sql" text="The current Concept full file contains all previously published data unchanged."/>
