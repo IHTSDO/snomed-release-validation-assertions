@@ -14,6 +14,7 @@
 		<script uuid="045b977a-a5cb-49f6-9a80-54ff478062bb" category="resource" sqlFile="file-centric-moduleid-validation-proc.sql" text="Defines procedure to validate module ID in data" />
 		<script uuid="3dc3b12a-642b-406f-a3e7-5ca81a7fc9af" category="resource" sqlFile="file-centric-refsetid-validation-proc.sql" text="Defines procedure to validate refset ID in data" />
 		<script uuid="46bdbc56-d79c-48b0-b0d6-97208c0376aa" category="resource" sqlFile="release-type-snapshot-retrieve-descendants-for-concept-proc.sql" text="Defines procedure to retrive all descendants of a concept" />
+		<script uuid="d1847e3e-9434-4b41-bd82-dc8012b59d89" category="resource" sqlFile="file-centric-changes-are-in-exepected-modules-validation-proc.sql" text="Defines procedure to validation all changes in the release are in expected set of modules" />
 
 		<!-- release-type-full-validation -->
 		<script uuid="84f5edda-1249-4d79-87da-e248e61f06a6" category="release-type-validation" sqlFile="release-type-full-validation-concept.sql" text="The current Concept full file contains all previously published data unchanged."/>
@@ -229,6 +230,8 @@
 
 
 		<!-- file-centric-snapshot-concept -->
+		<script uuid="5ca164a8-c451-4204-b1ae-804d0cb890e7" category="file-centric-validation" sqlFile="file-centric-delta-changes-are-not-in-expected-modules.sql" text="All the changes in the release are in the expected set of modules" />
+
 		<script uuid="0145fbad-f067-41ff-b700-cf54fc639e21" category="file-centric-validation,EXTENSION" sqlFile="file-centric-snapshot-correct-module-id.sql" text="The module id of components should be in module dependency list" />
 
 		<script uuid="0e898ae0-15cb-45f9-b032-041193aa79e8" category="file-centric-validation,EXTENSION" sqlFile="file-centric-snapshot-correct-refset-id.sql" text="The refset id of components should be in refset dependency list" />
