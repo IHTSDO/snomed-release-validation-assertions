@@ -14,7 +14,8 @@
 		<script uuid="045b977a-a5cb-49f6-9a80-54ff478062bb" category="resource" sqlFile="file-centric-moduleid-validation-proc.sql" text="Defines procedure to validate module ID in data" />
 		<script uuid="3dc3b12a-642b-406f-a3e7-5ca81a7fc9af" category="resource" sqlFile="file-centric-refsetid-validation-proc.sql" text="Defines procedure to validate refset ID in data" />
 		<script uuid="46bdbc56-d79c-48b0-b0d6-97208c0376aa" category="resource" sqlFile="release-type-snapshot-retrieve-descendants-for-concept-proc.sql" text="Defines procedure to retrive all descendants of a concept" />
-		<script uuid="d1847e3e-9434-4b41-bd82-dc8012b59d89" category="resource" sqlFile="file-centric-changes-are-in-exepected-modules-validation-proc.sql" text="Defines procedure to validation all changes in the release are in expected set of modules" />
+		<script uuid="d1847e3e-9434-4b41-bd82-dc8012b59d89" category="resource" sqlFile="file-centric-changes-are-in-exepected-modules-validation-edition-proc.sql" text="Defines procedure to validation all changes in the release are in expected set of modules" />
+		<script uuid="66aca2ba-1286-48d8-ac81-b8395a7c5f89" category="resource" sqlFile="file-centric-changes-are-in-exepected-modules-validation-extension-proc.sql" text="Defines procedure to validation all changes in the release are in expected set of modules" />
 
 		<!-- release-type-full-validation -->
 		<script uuid="84f5edda-1249-4d79-87da-e248e61f06a6" category="release-type-validation" sqlFile="release-type-full-validation-concept.sql" text="The current Concept full file contains all previously published data unchanged."/>
@@ -193,7 +194,7 @@
 		<script uuid="eff30fb0-7856-11e1-b0c4-0800200c9a66" category="release-type-validation" sqlFile="release-type-snapshot-language-successive-states.sql" text="All language refset members inactivated in current snapshot must have been active in the previous release."/>
 		<script uuid="89ceaf00-79b9-11e1-b0c4-0800200c9a66" category="release-type-validation" sqlFile="release-type-snapshot-stated-relationship-successive-states.sql" text="All stated relationships inactivated in current release must have been active in the previous release."/>
 		<script uuid="5c6b6bc0-79b9-11e1-b0c4-0800200c9a66" category="release-type-validation,INT" sqlFile="release-type-snapshot-inferred-relationship-successive-states_INT.sql" text="All relationships inactivated in current release must have been active in the previous release."/>
-		<script uuid="a98e02f7-e810-449b-89ff-0a9037cea32d" category="release-type-validation,EXTENSION" sqlFile="release-type-snapshot-inferred-relationship-successive-states_EXTENSION.sql" text="All relationships inactivated in current release must have been active in the previous release."/>
+		<script uuid="a98e02f7-e810-449b-89ff-0a9037cea32d" category="release-type-validation,US,EXTENSION" sqlFile="release-type-snapshot-inferred-relationship-successive-states_EXTENSION.sql" text="All relationships inactivated in current release must have been active in the previous release."/>
 		<script uuid="4deb9274-d923-4f84-b0dc-c4dab0c2fc4c" category="release-type-validation" sqlFile="release-type-snapshot-relationship-concrete-values-successive-states.sql" text="All relationship concrete values inactivated in current release must have been active in the previous release."/>
 
 		<!-- across multiple files in Current snapshot-->
@@ -230,11 +231,13 @@
 
 
 		<!-- file-centric-snapshot-concept -->
-		<script uuid="5ca164a8-c451-4204-b1ae-804d0cb890e7" category="file-centric-validation" sqlFile="file-centric-delta-changes-are-not-in-expected-modules.sql" text="All the changes in the release are in the expected set of modules" />
+		<script uuid="81a4f6a9-0f64-4b45-9e9d-310bac0ec4f8" category="file-centric-validation,INT,US" sqlFile="file-centric-delta-changes-are-not-in-expected-modules_EDITION.sql" text="All the changes in the release are in the expected set of modules" />
 
-		<script uuid="0145fbad-f067-41ff-b700-cf54fc639e21" category="file-centric-validation,EXTENSION" sqlFile="file-centric-snapshot-correct-module-id.sql" text="The module id of components should be in module dependency list" />
+		<script uuid="5ca164a8-c451-4204-b1ae-804d0cb890e7" category="file-centric-validation,EXTENSION" sqlFile="file-centric-delta-changes-are-not-in-expected-modules_EXTENSION.sql" text="All the changes in the release are in the expected set of modules" />
 
-		<script uuid="0e898ae0-15cb-45f9-b032-041193aa79e8" category="file-centric-validation,EXTENSION" sqlFile="file-centric-snapshot-correct-refset-id.sql" text="The refset id of components should be in refset dependency list" />
+		<script uuid="0145fbad-f067-41ff-b700-cf54fc639e21" category="file-centric-validation,US,EXTENSION" sqlFile="file-centric-snapshot-correct-module-id.sql" text="The module id of components should be in module dependency list" />
+
+		<script uuid="0e898ae0-15cb-45f9-b032-041193aa79e8" category="file-centric-validation,US,EXTENSION" sqlFile="file-centric-snapshot-correct-refset-id.sql" text="The refset id of components should be in refset dependency list" />
 
 		<script uuid="2edc1f50-fcc7-4b55-acad-56672fefacdf" category="file-centric-validation,mdrs" sqlFile="file-centric-snapshot-root-concept-has-non-isa-relationships.sql" text="Root concept has non-isa relationships." severity="WARNING" />
 		

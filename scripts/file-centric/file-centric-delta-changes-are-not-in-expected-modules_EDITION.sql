@@ -6,4 +6,4 @@
 	The module id of all data must be correct
 
 ********************************************************************************/
-call validate_changes_in_expected_modules('<PROSPECTIVE>',<RUNID>,'<ASSERTIONUUID>');
+call validate_changes_in_expected_modules_edition('<PROSPECTIVE>',<RUNID>,'<ASSERTIONUUID>');

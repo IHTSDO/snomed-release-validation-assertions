@@ -5,8 +5,8 @@
 	All the changes in the release are in the expected set of modules
 
 ********************************************************************************/
-drop procedure if exists validate_changes_in_expected_modules;
-create procedure validate_changes_in_expected_modules(dbname char(255),runid BIGINT, assertionid char(36))
+drop procedure if exists validate_changes_in_expected_modules_extension;
+create procedure validate_changes_in_expected_modules_extension(dbname char(255),runid BIGINT, assertionid char(36))
 begin
 declare no_more_rows integer default 0;
 declare tb_name char(255);
