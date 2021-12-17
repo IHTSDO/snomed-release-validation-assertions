@@ -20,6 +20,19 @@ component-centric-snapshot-referencedComponentID-of-refeset-member-must-be-valid
 	    and (b.active = '0' or b.id is null) ;
 
     insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
+	select
+		<RUNID>,
+		'<ASSERTIONUUID>',
+		a.targetcomponentid,
+		concat('Target component id:',a.targetcomponentid,' for refset id: ', a.refsetid,' in association refset member must be valid.'),
+		a.id,
+        'curr_associationrefset_s'
+	from curr_associationrefset_s a left join curr_concept_s b on a.targetcomponentid = b.id
+	where a.active = '1'
+	    and a.refsetid not in ('900000000000523009','900000000000524003','900000000000525002','900000000000526001','900000000000527005','900000000000528000','900000000000530003','900000000000531004')
+	    and (b.active = '0' or b.id is null) ;
+
+    insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
     select
         <RUNID>,
         '<ASSERTIONUUID>',
