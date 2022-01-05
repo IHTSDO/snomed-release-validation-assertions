@@ -11,7 +11,7 @@ select distinct
 	<RUNID>,
 	'<ASSERTIONUUID>',
 	a.referencedComponentId	,
-	concat('MEMBER: id=',a.id, ' in historical association refset member has a duplicated indicator with MEMBER id= ', b.id),
+	concat('MEMBER: id=',a.id, ' in historical association refset member has a duplicated association with MEMBER id= ', b.id),
 	a.id,
     'curr_associationrefset_s'
 from curr_associationrefset_s a inner join (
@@ -23,4 +23,6 @@ from curr_associationrefset_s a inner join (
 										on a.referencedComponentId = b.referencedComponentId 
 											and a.targetcomponentId = b.targetcomponentId 
 											and a.refsetid = b.refsetid 
-											and a.id != b.id;
+											and a.id != b.id
+											and a.active = '1'
+											and b.active = '1';
