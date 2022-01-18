@@ -237,7 +237,7 @@
 
 		<script uuid="0145fbad-f067-41ff-b700-cf54fc639e21" category="file-centric-validation,US,EXTENSION" sqlFile="file-centric-snapshot-correct-module-id.sql" text="The module id of components should be in module dependency list" />
 
-		<script uuid="0e898ae0-15cb-45f9-b032-041193aa79e8" category="file-centric-validation,US,EXTENSION" sqlFile="file-centric-snapshot-correct-refset-id.sql" text="The refset id of components should be in refset dependency list" />
+		<script uuid="0e898ae0-15cb-45f9-b032-041193aa79e8" category="file-centric-validation,US,EXTENSION" sqlFile="file-centric-snapshot-correct-refset-id.sql" text="The refset id of components should be in refset descriptor list" />
 
 		<script uuid="2edc1f50-fcc7-4b55-acad-56672fefacdf" category="file-centric-validation,mdrs" sqlFile="file-centric-snapshot-root-concept-has-non-isa-relationships.sql" text="Root concept has non-isa relationships." severity="WARNING" />
 		
