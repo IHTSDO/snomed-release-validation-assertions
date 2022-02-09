@@ -93,7 +93,7 @@
 	where a.active = '1'
 		and b.active = '1'
 		and b.typeid = '900000000000003001' /* FSN */
-		and (lower(b.term) not like '%structure%' or (b.term like 'Entire%' or  b.term like 'All%' or b.term like 'Part%'));
+		and (lower(SUBSTRING(b.term, 1, LENGTH(b.term) - 17)) not like '%structure%' or (b.term like 'Entire%' or  b.term like 'All%' or b.term like 'Part%'));
 
 	/* 5. The FSN for a P concept must start with the word Part (case sensitive match) or contain the word part*/
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
