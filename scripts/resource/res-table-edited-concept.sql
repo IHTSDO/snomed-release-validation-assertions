@@ -37,7 +37,7 @@
 	union
         select referencedcomponentid
         from curr_associationrefset_d
-        where refsetid in ('900000000000527005','900000000000523009','900000000000526001','900000000000528000')
+        where refsetid in ('900000000000523009','900000000000526001','900000000000527005','900000000000530003','1186924009','1186921001')
 	union
         select a.conceptid from curr_description_d a 
         join curr_associationrefset_d b on a.id = b.referencedcomponentid 

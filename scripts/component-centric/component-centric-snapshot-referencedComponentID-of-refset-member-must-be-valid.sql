@@ -16,7 +16,7 @@ component-centric-snapshot-referencedComponentID-of-refeset-member-must-be-valid
         'curr_associationrefset_s'
 	from curr_associationrefset_s a left join curr_concept_s b on a.referencedcomponentid = b.id
 	where a.active = '1'
-	    and a.refsetid not in ('900000000000523009','900000000000524003','900000000000525002','900000000000526001','900000000000527005','900000000000528000','900000000000530003','900000000000531004')
+	    and a.refsetid not in ('900000000000523009','900000000000524003','900000000000525002','900000000000526001','900000000000527005','900000000000528000','900000000000530003','900000000000531004','1186924009','1186921001')
 	    and (b.active = '0' or b.id is null) ;
 
     insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
@@ -29,7 +29,7 @@ component-centric-snapshot-referencedComponentID-of-refeset-member-must-be-valid
         'curr_associationrefset_s'
 	from curr_associationrefset_s a left join curr_concept_s b on a.targetcomponentid = b.id
 	where a.active = '1'
-	    and a.refsetid not in ('900000000000523009','900000000000524003','900000000000525002','900000000000526001','900000000000527005','900000000000528000','900000000000530003','900000000000531004')
+	    and a.refsetid not in ('900000000000523009','900000000000524003','900000000000525002','900000000000526001','900000000000527005','900000000000528000','900000000000530003','900000000000531004','1186924009','1186921001')
 	    and (b.active = '0' or b.id is null) ;
 
     insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
