@@ -78,6 +78,9 @@
 	where a.active = '1'
     group by a.targetcomponentid , a.refsetid
     having count(a.targetcomponentid) > 1;
+    
+	/* Populate our exclusion list where the usual SEP naming convention does not apply.  This creates the descendants table */
+	call findDescendants('4421005,122453002,51576004,280115004,91832008,258331007,118956008,278001007,39801007,361083003,21229009,87100004,420864000,698969006,279228004,698968003,244023005,123957003');
 
 	/* 4. The FSN for an S concept must contain the word Structure (case insensitive match) and must not start with the word Entire, All or Part */
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
@@ -90,8 +93,10 @@
 		'curr_associationrefset_s'
 	from tmp_sep_refset a
 		left join curr_description_s b on a.referencedcomponentid = b.conceptid
+		left join descendants d on a.referencedcomponentid = d.sourceid 
 	where a.active = '1'
 		and b.active = '1'
+		and d.sourceId is null
 		and b.typeid = '900000000000003001' /* FSN */
 		and (lower(SUBSTRING(b.term, 1, LENGTH(b.term) - 17)) not like '%structure%' or (b.term like 'Entire%' or  b.term like 'All%' or b.term like 'Part%'));
 
@@ -113,8 +118,6 @@
 		and (b.term not like 'Part%' and  b.term not like '%part%');
 
 	/* 6. The FSN for an E concept must start with the word Entire or the word All (case sensitive match)*/
-	call findDescendants('4421005,122453002,51576004,280115004,91832008,258331007,118956008,278001007,39801007,361083003,21229009,87100004,420864000,698969006,279228004,698968003,244023005,123957003');
-
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
 	select 
 		<RUNID>,
