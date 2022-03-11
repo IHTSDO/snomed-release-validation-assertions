@@ -18,7 +18,7 @@ LEFT JOIN curr_attributevaluerefset_s i
 	ON i.referencedcomponentid = c.id 
 	AND i.active = 1 
 	AND i.refsetid='900000000000489007' 
-	AND NOT i.valueid = '723277005' -- Nonconformance to editorial policy component (foundation metadata concept) 
+	AND i.valueid NOT IN ('723277005','900000000000487009','1186919006','900000000000483008')
 WHERE c.active = 0 and i.id is not null
 AND NOT EXISTS (
   SELECT 1 FROM curr_associationrefset_s a, curr_concept_s c2
