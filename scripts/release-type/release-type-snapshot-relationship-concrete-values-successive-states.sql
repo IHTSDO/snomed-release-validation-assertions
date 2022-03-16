@@ -44,4 +44,9 @@ insert into qa_result (runid, assertionuuid, concept_id, details, component_id, 
 	and a.value=b.value
 	and a.typeid=b.typeid
 	where a.active=0 
-	and b.id is null;
+	and b.id is null
+	AND NOT EXISTS (
+        SELECT 1 FROM curr_relationship_concrete_values_f c
+        WHERE a.id = c.id
+		AND a.moduleid = c.moduleid
+        AND c.active = 1);

@@ -20,5 +20,11 @@
 		and a.typeid = b.typeid
 		and a.characteristictypeid = b.characteristictypeid
 		and a.modifierid = b.modifierid	
-	where b.id is not null;
+	where b.id is not null
+	    AND NOT EXISTS (
+        SELECT 1 FROM curr_relationship_f c
+        WHERE a.id = c.id
+		AND a.moduleid = c.moduleid
+        AND c.active != a.active AND cast(a.effectivetime as datetime) > cast(c.effectivetime as datetime) 
+        AND cast(c.effectivetime as datetime) > cast(b.effectivetime as datetime));
 

@@ -39,7 +39,12 @@
 		'curr_description_s'
 	from curr_description_s a left join prev_description_s b
 	on a.id=b.id
-	where a.active=0 and b.id is null;
+	where a.active=0 and b.id is null
+	AND NOT EXISTS (
+		SELECT 1 FROM curr_description_f c
+		WHERE a.id = c.id
+		AND a.moduleid = c.moduleid
+		AND c.active = 1);
 	
 	
 	

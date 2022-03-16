@@ -27,7 +27,13 @@
 	and a.destinationid = b.destinationid
 	and a.typeid = b.typeid
 	and a.characteristictypeid = b.characteristictypeid
-	and a.modifierid = b.modifierid;
+	and a.modifierid = b.modifierid
+	AND NOT EXISTS (
+        SELECT 1 FROM curr_relationship_f c
+        WHERE a.id = c.id
+		AND a.moduleid = c.moduleid
+        AND c.active = 1 AND cast(a.effectivetime as datetime) > cast(c.effectivetime as datetime) 
+		AND cast(c.effectivetime as datetime) > cast(b.effectivetime as datetime));
 
 	
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)

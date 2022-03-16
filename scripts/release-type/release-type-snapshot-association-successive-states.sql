@@ -31,5 +31,10 @@
 		'curr_associationrefset_s'
 	from curr_associationrefset_s a left join prev_associationrefset_s b
 	on a.id = b.id
-	where a.active=0 and b.id is null;
+	where a.active=0 and b.id is null
+	AND NOT EXISTS (
+	SELECT 1 FROM curr_associationrefset_f c
+	WHERE a.id = c.id
+	AND a.moduleid = c.moduleid
+	AND c.active = 1);
 	commit;

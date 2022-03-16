@@ -31,4 +31,9 @@
 	from curr_attributevaluerefset_s a left join prev_attributevaluerefset_s b
 	on a.id = b.id
 	where a.active = 0
-	and b.id is null;
+	and b.id is null
+	AND NOT EXISTS (
+		SELECT 1 FROM curr_attributevaluerefset_f c
+		WHERE a.id = c.id
+		AND a.moduleid = c.moduleid
+		AND c.active = 1);
