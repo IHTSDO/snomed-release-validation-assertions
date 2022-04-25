@@ -13,7 +13,8 @@
 		<script uuid="646390b7-c4aa-4aab-92c0-0031cf2e45ae" category="resource" sqlFile="component-centric-snapshot-mrcm-domain-refset-expression-concept-validation-proc.sql" text="Defines procedure to test the validity of concept ids in the MRCM Attribute Range Refsets." />
 		<script uuid="045b977a-a5cb-49f6-9a80-54ff478062bb" category="resource" sqlFile="file-centric-moduleid-validation-proc.sql" text="Defines procedure to validate module ID in data" />
 		<script uuid="3dc3b12a-642b-406f-a3e7-5ca81a7fc9af" category="resource" sqlFile="file-centric-refsetid-validation-proc.sql" text="Defines procedure to validate refset ID in data" />
-		<script uuid="46bdbc56-d79c-48b0-b0d6-97208c0376aa" category="resource" sqlFile="release-type-snapshot-retrieve-descendants-for-concept-proc.sql" text="Defines procedure to retrive all descendants of a concept" />
+		<script uuid="46bdbc56-d79c-48b0-b0d6-97208c0376aa" category="resource" sqlFile="release-type-snapshot-retrieve-descendants-for-concept-proc.sql" text="Defines procedure to retrieve all descendants of a concept" />
+		<script uuid="0d4e6ad9-62c9-4cd3-8037-1006c5531e7f" category="resource" sqlFile="component-centric-retrieve-ancestors-for-concept-proc.sql" text="Defines procedure to retrieve all ancestors of a concept" />
 		<script uuid="d1847e3e-9434-4b41-bd82-dc8012b59d89" category="resource" sqlFile="file-centric-changes-are-in-exepected-modules-validation-edition-proc.sql" text="Defines procedure to validation all changes in the release are in expected set of modules" />
 		<script uuid="66aca2ba-1286-48d8-ac81-b8395a7c5f89" category="resource" sqlFile="file-centric-changes-are-in-exepected-modules-validation-extension-proc.sql" text="Defines procedure to validation all changes in the release are in expected set of modules" />
 
@@ -493,6 +494,8 @@
 		<script uuid="8090d441-7aeb-4a48-bdc3-2545916aa26d" category="component-centric-validation" sqlFile="component-centric-snapshot-active-concept-must-have-correct-definition-status-according-to-defined-axioms.sql" text="Active concepts must have correct definition status according to defined axioms." />
 		<script uuid="628a8d16-d8ba-405e-b321-1f5f7dd70d91" category="component-centric-validation" sqlFile="component-centric-snapshot-referenced-concepts-in-mrcm-active.sql" text="All referenced concepts in MRCM refsets must be active." />
 		<script uuid="e82a8211-fac1-4998-b3cb-3db99ee4565c" category="component-centric-validation" sqlFile="component-centric-snapshot-role-group-are-in-double-figures.sql" text="Role Group numbers are in double figures." />
+
+		<script uuid="fc0f240c-4a07-4995-acf6-52a7f41f2ce6" category="component-centric-validation" sqlFile="component-centric-snapshot-refsets-descriptor-validation.sql" text="Any refset with a refsetDescriptor record, that is a subset of another refset with a refsetDescriptor record, must have a refsetDescriptor that is either the same, or a specialisation of the parent's refset." />
 
 		<script uuid="041dcf55-4c9c-4dd4-baa7-584eb0e53d5a" category="component-centric-validation" sqlFile="component-centric-snapshot-historical-association-unique-indicator.sql" text="Concept should not have any duplicated historical association indicators." />
 		<script uuid="b72bc5f4-7afb-4a2e-ac3a-e0f4373b03e6" category="component-centric-validation" sqlFile="component-centric-snapshot-active-concept-with-inactivation-reason.sql" text="Active concepts do not have active inactivation indicators" />
