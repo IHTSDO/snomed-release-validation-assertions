@@ -32,19 +32,3 @@
 													((cast(a.effectivetime as datetime) <  (select max(cast(effectivetime as datetime)) from curr_description_s ) and cast(b.effectivetime as datetime) <  (select max(cast(effectivetime as datetime)) from curr_description_s) ) /* Detect all old records in the past which are acitve */
 													or (a.effectivetime <> b.effectivetime and (cast(a.effectivetime as datetime) =  (select max(cast(effectivetime as datetime)) from curr_description_s) or cast(b.effectivetime as datetime) <  (select max(cast(effectivetime as datetime)) from curr_description_s) ))))) /* Detect old and new records which are acitve */;
 	commit;
-	
-	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
-	select 
-		<RUNID>,
-		'<ASSERTIONUUID>',
-		a.conceptid,
-		concat('Description:', a.id , ' has changes in the immutable fields either type id, language code or concept id since previous release.'),
-		a.id,
-		'curr_description_s'
-	from curr_description_s a
-	join prev_description_s b
- 	on a.id=b.id
-	where
-	a.typeid != b.typeid
-	or a.languagecode != b.languagecode
-	or a.conceptid != b.conceptid;
