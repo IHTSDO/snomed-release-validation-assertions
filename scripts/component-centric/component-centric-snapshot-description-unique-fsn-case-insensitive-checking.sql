@@ -14,10 +14,18 @@ insert into qa_result (runid, assertionuuid, concept_id, details, component_id, 
 	<RUNID>,
 	'<ASSERTIONUUID>',
 	a.conceptid,
-	concat('FSN=',a.term, ' concept=',a.conceptid, ': FSN term is not unique in description snapshot when case is ignored'),
+	concat('FSN=',a.term, ' concept=',a.conceptid, ': FSN term is not unique in description snapshot when case is ignored. This term already exists against active concept ', result.conceptid, ' |', result.term,'| in ', result.moduleid,' |', d.term, '|'),
 	a.id,
     'curr_description_d'
-	from curr_description_d a,
-	(select b.term, count(b.id) as total from curr_description_s b join curr_concept_s c on b.conceptid=c.id
-	where b.active=1 and c.active=1 and b.typeid ='900000000000003001' group by term COLLATE utf8_general_ci having total > 1) result
-	where a.term COLLATE utf8_general_ci = result.term;
+	from curr_description_d a, (select b.id, b.moduleid, b.term, b.conceptid, count(b.id) as total 
+						from curr_description_s b join curr_concept_s c on b.conceptid=c.id 
+						where b.active=1 
+						and c.active=1 
+						and b.typeid ='900000000000003001' 
+						group by term COLLATE utf8_general_ci having total > 1) result, curr_description_s d 
+	where a.term COLLATE utf8_general_ci = result.term 
+	and a.id <> result.id 
+	and result.moduleid = d.conceptid 
+	and d.active = 1 
+	and d.typeid = '900000000000003001' 
+	and d.languagecode = 'en';
