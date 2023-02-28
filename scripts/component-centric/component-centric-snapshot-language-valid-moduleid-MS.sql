@@ -1,6 +1,6 @@
 
 /********************************************************************************
-	component-centric-snapshot-language-unique-textdefinition
+	component-centric-snapshot-language-valid-moduleid-MS
 
 	Assertion:
 	Language refset members have the wrong module id in	the snapshot file.
@@ -22,6 +22,7 @@
 	where a.active = '1'
 		and b.active = '1'
 		and c.id is null
+		and a.moduleid <> '900000000000207008' 
 		and a.moduleid not in (<MODULEIDS>);
 
     commit;
