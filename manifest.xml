@@ -556,6 +556,7 @@
 		<script uuid="21acfba1-d637-4913-a54d-987f4ac336d1" category="release-type-validation" sqlFile="release-type-delta-validation-owl-expression.sql" text="The current OWL Expression delta file is an accurate derivative of the current full file"  />
 
 		<script uuid="9fc3995b-f84d-46e1-b7cb-88f0fe8564e2" category="file-centric-validation" sqlFile="file-centric-snapshot-owl-expression-unique-id.sql" text="The current OWL Expression snapshot file does not contain duplicate Ids." />
+		<script uuid="6a5cf755-e2bb-4615-8f84-733b9546a3cf" category="file-centric-validation" sqlFile="file-centric-snapshot-owl-expression-unique-active-axiom-for-same-concept.sql" text="The current OWL Expression snapshot file does not contain any duplicate active OWL axioms for the same concept." />
 		
 		<!-- <script uuid="d55eee56-c5f2-44da-971b-86f39378fe38" category="file-centric-validation" sqlFile="file-centric-snapshot-relationship-must-not-be-both-stated-inferred.sql" text="Relationships should not exist in Stated Relationship and Relationship files at the same time" /> -->
 		
