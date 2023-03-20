@@ -185,6 +185,7 @@
 		<script uuid="cab60a2f-4239-4933-91d6-dc910a8ac08b" category="release-type-validation" sqlFile="release-type-delta-previous-snapshot-validation-stated-relationship.sql" text="There must be actual changes made to previously published stated relatioships in order for them to appear in the current delta." />
 
 		<!--  Successive stated checking current snapshot against previous snapshot -->
+		<script uuid="32b07ff2-9a9a-497f-ae26-92b68ebed20e" category="release-type-validation" sqlFile="release-type-snapshot-owl-expression-refset-successive-states.sql" text="New inactive states follow active states in the Owl Expression snapshot." />
 		<script uuid="5f1a51a3-6200-4463-8799-d75998165278" category="release-type-validation" sqlFile="release-type-snapshot-concept-successive-states.sql" text="New inactive states follow active states in the CONCEPT snapshot." />
 		<script uuid="2b193a88-8dab-4d19-b995-b556ed59398d" category="release-type-validation" sqlFile="release-type-snapshot-description-successive-states.sql" text="New inactive states follow active states in the DESCRIPTION snapshot."/>
 		<script uuid="e6082dc4-c6f4-48c6-afa3-233182336a5c" category="release-type-validation" sqlFile="release-type-snapshot-definition-successive-states.sql" text="New inactive states follow active states in the DEFINITION snapshot file." />
