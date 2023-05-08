@@ -12,7 +12,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('Attribute Value Refset id=',a.id, ' is a inactive ', if( a.refsetid = '900000000000490003', 'Description', 'Concept'),' inactivation indicator refset member but there is an illegal change for inactivation indicator reason'),
+		concat('Attribute Value Refset id=',a.id, ' is an inactive ', if( a.refsetid = '900000000000490003', 'Description', 'Concept'),' inactivation indicator refset member, but there is an illegal modification of its inactivation indicator reason.'),
 		a.id,
         'curr_attributevaluerefset_s'
 	from curr_attributevaluerefset_s a
