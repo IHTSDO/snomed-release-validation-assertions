@@ -12,7 +12,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('Simple RefSet:',a.referencedcomponentid, ':Invalid Referencedcomponentid in Simple Refset snapshot.'),
+		concat('Member id=', a.id, ', Refset id=', a.refsetid, ', Referenced Component id=', a.referencedcomponentid, ' is invalid in SIMPLE refset snapshot.'),
 		a.id,
 		'curr_simplerefset_s'
 	from curr_simplerefset_s a

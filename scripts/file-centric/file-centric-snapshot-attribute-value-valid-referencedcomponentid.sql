@@ -11,7 +11,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('ATT RS: id=',a.referencedcomponentid, ':Invalid Referencedcomponentid in ATTRIBUTEVALUE REFSET snapshot.'),
+		concat('Member id=', a.id, ', Refset id=', a.refsetid, ', Referenced Component id=', a.referencedcomponentid, ' is invalid in ATTRIBUTEVALUE refset snapshot.'),
 		a.id,
 		'curr_attributevaluerefset_s'
 	from curr_attributevaluerefset_s a
