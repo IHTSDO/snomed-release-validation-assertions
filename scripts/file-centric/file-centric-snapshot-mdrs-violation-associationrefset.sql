@@ -31,10 +31,9 @@ select
   <RUNID>,
   '<ASSERTIONUUID>',
   a.moduleid,
-  concat('associationrefset: Component moduleId: ', a.moduleid, ' is not a dependency of the Edition <MODULEID> as per MDRS'),
+  concat('associationrefset: Component moduleId: ', a.moduleid, ' is not a valid module defined as per MDRS'),
   a.id,
   'curr_associationrefset_s'
 from curr_associationrefset_s a
-where a.moduleid != '<MODULEID>' and a.moduleid not in (
-  select m.referencedcomponentid from curr_moduledependencyrefset_s m
-  where m.moduleid = '<MODULEID>' and m.effectivetime = '<VERSION>' and m.active = 1);
+where a.moduleid not in (
+  select m.moduleid from curr_moduledependencyrefset_s m where m.active = 1 union select n.referencedcomponentid from curr_moduledependencyrefset_s n where n.active = 1);
