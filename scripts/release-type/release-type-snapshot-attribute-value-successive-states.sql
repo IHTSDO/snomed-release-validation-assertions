@@ -35,5 +35,4 @@
 	AND NOT EXISTS (
 		SELECT 1 FROM curr_attributevaluerefset_f c
 		WHERE a.id = c.id
-		AND a.moduleid = c.moduleid
 		AND c.active = 1);
