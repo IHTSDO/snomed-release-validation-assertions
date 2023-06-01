@@ -35,6 +35,5 @@
 	AND NOT EXISTS (
 	SELECT 1 FROM curr_associationrefset_f c
 	WHERE a.id = c.id
-	AND a.moduleid = c.moduleid
 	AND c.active = 1);
 	commit;
