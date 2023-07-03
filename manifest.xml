@@ -556,6 +556,7 @@
 
 		<script uuid="9fc3995b-f84d-46e1-b7cb-88f0fe8564e2" category="file-centric-validation" sqlFile="file-centric-snapshot-owl-expression-unique-id.sql" text="The current OWL Expression snapshot file does not contain duplicate Ids." />
 		<script uuid="6a5cf755-e2bb-4615-8f84-733b9546a3cf" category="file-centric-validation" sqlFile="file-centric-snapshot-owl-expression-unique-active-axiom-for-same-concept.sql" text="The current OWL Expression snapshot file does not contain any duplicate active OWL axioms for the same concept." />
+		<script uuid="70befe18-cb16-4b86-bd49-e624ce5f6ae7" category="component-centric-validation" sqlFile="component-centric-snapshot-active-owl-axiom-referencing-inactive-concept.sql" text="Active OWL axiom refset members must not be referencing inactive concepts." />
 		
 		<!-- <script uuid="d55eee56-c5f2-44da-971b-86f39378fe38" category="file-centric-validation" sqlFile="file-centric-snapshot-relationship-must-not-be-both-stated-inferred.sql" text="Relationships should not exist in Stated Relationship and Relationship files at the same time" /> -->
 		
