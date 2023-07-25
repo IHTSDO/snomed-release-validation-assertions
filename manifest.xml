@@ -299,7 +299,12 @@
 		<script uuid="5a83783e-3366-48bd-a50d-8f3a53812174" category="file-centric-validation" sqlFile="file-centric-snapshot-definition-valid conceptid.sql" text="ConceptId value refers to valid concept identifier in the DEFINITION snapshot." />
 		
 		<script uuid="de0c4d6c-6297-41be-9979-fb1c93717baa" category="file-centric-validation" sqlFile="file-centric-snapshot-definition-cardinality.sql" text="There is at most one active definition per concept per dialect." />
-		
+
+		<script uuid="58c76663-c6e8-4fc7-87e9-e93adfa1ddf9" category="file-centric-validation" sqlFile="file-centric-snapshot-simple-map-refset-valid-referencedcomponentid.sql" text="Referencedcomponentid refers to valid concepts in the SIMPLE MAP REFSET snapshot file." />
+
+		<script uuid="e9a00a9e-0353-45e9-8256-fdcf1f7e2bf7" category="file-centric-validation" sqlFile="file-centric-snapshot-complex-map-refset-valid-referencedcomponentid.sql" text="Referencedcomponentid refers to valid concepts in the COMPLEX MAP REFSET snapshot file." />
+
+		<script uuid="df941341-25ff-48cd-8b80-9eab2fb705d4" category="file-centric-validation" sqlFile="file-centric-snapshot-extended-map-refset-valid-referencedcomponentid.sql" text="Referencedcomponentid refers to valid concepts in the EXTENDED MAP REFSET snapshot file." />
 
 		<script uuid="18a9f6b4-b66f-4af3-8c67-2a07b4655d27" category="file-centric-validation" sqlFile="file-centric-snapshot-association-unique-id.sql" text="ID is unique in the ASSOCIATION REFSET snapshot." />
 		
@@ -308,7 +313,6 @@
 		<script uuid="bec23e05-e977-4190-aa6a-137e5742f513" category="file-centric-validation" sqlFile="file-centric-snapshot-association-valid-referencedcomponentid.sql" text="Referencedcomponentid refers to valid concepts in the ASSOCIATION REFSET snapshot file." />
 		
 		<script uuid="35ec824d-b53d-4567-833e-8ce79774acae" category="file-centric-validation" sqlFile="file-centric-snapshot-association-valid-targetcomponentid.sql" text="TargetComponentId refers to valid concepts in the ASSOCIATION REFSET snapshot file." />
-		
 
 		<script uuid="e202807d-915d-4c8a-8f02-c6e4e6f969fc" category="file-centric-validation" sqlFile="file-centric-snapshot-attribute-value-unique-id.sql" text="ID is unique in the ATTRIBUTE VALUE snapshot." />
 		
