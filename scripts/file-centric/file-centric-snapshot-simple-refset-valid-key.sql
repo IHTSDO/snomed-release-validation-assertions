@@ -15,5 +15,6 @@
 		a.id,
 		'curr_simplerefset_s'
 	from curr_simplerefset_s a 
+	where active = 1
 	group by a.refsetid , a.referencedcomponentid
 	having count(a.id) > 1;
