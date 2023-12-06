@@ -38,7 +38,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('The ', if(b.active = '0' or b.active is null, 'referenced component', 'target component') , ' id= ',  if(b.active = '0' or b.active is null, a.referencedcomponentid, a.targetcomponentid), ' for refset id=', a.id, ' in SEP refset must be active.'),
+		concat('The ', if(b.active = '0' or b.active is null, 'referenced component', 'target component') , ' id= ',  if(b.active = '0' or b.active is null, a.referencedcomponentid, a.targetcomponentid), ' for refset member id=', a.id, ' in SEP refset must be active.'),
 		a.id,
 		'curr_associationrefset_s'
 	from tmp_sep_refset a 
@@ -71,7 +71,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('The target component id=', a.targetcomponentid, ' for refset id=', a.id, ' should only appear once in SEP refset.'),
+		concat('The target component id=', a.targetcomponentid, ' for refset member id=', a.id, ' should only appear once in SEP refset.'),
 		a.id,
 		'curr_associationrefset_s'
 	from tmp_sep_refset a
@@ -88,7 +88,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('A S concept id=', a.referencedcomponentid , ' for refset id=', a.id,' in SEP refset must contain the word Structure and must not start with the word Entire, All or Part.'),
+		concat('A S concept id=', a.referencedcomponentid , ' for refset member id=', a.id,' in SEP refset must contain the word Structure and must not start with the word Entire, All or Part.'),
 		a.id,
 		'curr_associationrefset_s'
 	from tmp_sep_refset a
@@ -106,7 +106,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('A P concept id=', a.targetcomponentid, ' for refset id=', a.id, ' in SEP refset must contain the word part.'),
+		concat('A P concept id=', a.targetcomponentid, ' for refset member id=', a.id, ' in SEP refset must contain the word part.'),
 		a.id,
 		'curr_associationrefset_s'
 	from tmp_sep_refset a
@@ -123,7 +123,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('An E concept id=', a.targetcomponentid, ' for refset id=', a.id, ' in SEP refset must start with the word Entire or the word All.'),
+		concat('An E concept id=', a.targetcomponentid, ' for refset member id=', a.id, ' in SEP refset must start with the word Entire or the word All.'),
 		a.id,
 		'curr_associationrefset_s'
 	from tmp_sep_refset a
@@ -190,7 +190,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('The target component id=', a.targetcomponentid, ' for refset id=', a.id, ' should have an inferred parent in S concept in ', if( a.refsetid = '734138000', 'SE', 'SP'),' refset.'),
+		concat('The target component id=', a.targetcomponentid, ' for refset member id=', a.id, ' should have an inferred parent in S concept in ', if( a.refsetid = '734138000', 'SE', 'SP'),' refset.'),
 		a.id,
 		'curr_associationrefset_s'
 	from tmp_sep_refset a
