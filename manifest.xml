@@ -17,6 +17,7 @@
 		<script uuid="0d4e6ad9-62c9-4cd3-8037-1006c5531e7f" category="resource" sqlFile="component-centric-retrieve-ancestors-for-concept-proc.sql" text="Defines procedure to retrieve all ancestors of a concept" />
 		<script uuid="d1847e3e-9434-4b41-bd82-dc8012b59d89" category="resource" sqlFile="file-centric-changes-are-in-exepected-modules-validation-edition-proc.sql" text="Defines procedure to validation all changes in the release are in expected set of modules" />
 		<script uuid="66aca2ba-1286-48d8-ac81-b8395a7c5f89" category="resource" sqlFile="file-centric-changes-are-in-exepected-modules-validation-extension-proc.sql" text="Defines procedure to validation all changes in the release are in expected set of modules" />
+		<script uuid="e2e1b03f-a6fc-4f78-9a9d-2f04915a1b01" category="resource" sqlFile="file-centric-stand-alone-product-moduleid-validation-proc.sql" text="Defines procedure to validate all changes in the release must not be in Internatinal modules" />
 
 		<!-- release-type-full-validation -->
 		<script uuid="84f5edda-1249-4d79-87da-e248e61f06a6" category="release-type-validation" sqlFile="release-type-full-validation-concept.sql" text="The current Concept full file contains all previously published data unchanged."/>
@@ -230,7 +231,8 @@
 		<script uuid="7c37bee7-62ad-41f9-93e3-12eb4803e619" category="release-type-validation,LOINC" sqlFile="release-type-snapshot-delta-validation-mapCorrelationOrigin-refset.sql" text="The current MapCorrelationOriginRefset snapshot file contains all the data from current delta file"/>
 		<script uuid="4bdb1e4d-0ee9-4b5b-a486-cf8c561a3bc1" category="release-type-validation,LOINC" sqlFile="release-type-snapshot-validation-mapCorrelationOrigin-refset.sql" text="The current MapCorrelationOriginRefset snapshot file is an accurate derivative of the current full file"/>
 
-
+		<!--  release type for standalone product-->
+		<script uuid="4d1b2244-8971-4e7c-a283-130b93de1564" category="file-centric-validation,STANDALONE_RELEASE" sqlFile="file-centric-snapshot-standalone-product-must-not-contain-international-module.sql" text="Stand-alone product must not contain any Internationl moudle content."/>
 
 		<!-- file-centric-snapshot-concept -->
 		<script uuid="81a4f6a9-0f64-4b45-9e9d-310bac0ec4f8" category="file-centric-validation,INT,US,NL" sqlFile="file-centric-delta-changes-are-not-in-expected-modules_EDITION.sql" text="All the changes in the release are in the expected set of modules" />
