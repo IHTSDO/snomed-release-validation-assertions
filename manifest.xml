@@ -232,7 +232,7 @@
 		<script uuid="4bdb1e4d-0ee9-4b5b-a486-cf8c561a3bc1" category="release-type-validation,LOINC" sqlFile="release-type-snapshot-validation-mapCorrelationOrigin-refset.sql" text="The current MapCorrelationOriginRefset snapshot file is an accurate derivative of the current full file"/>
 
 		<!--  release type for standalone product-->
-		<script uuid="4d1b2244-8971-4e7c-a283-130b93de1564" category="file-centric-validation,STANDALONE_RELEASE" sqlFile="file-centric-snapshot-standalone-product-must-not-contain-international-module.sql" text="Stand-alone product must not contain any Internationl moudle content."/>
+		<script uuid="4d1b2244-8971-4e7c-a283-130b93de1564" category="file-centric-validation,STANDALONE_RELEASE" sqlFile="file-centric-snapshot-standalone-product-must-not-contain-international-module.sql" text="Stand-alone product must not contain any Internationl module content."/>
 
 		<!-- file-centric-snapshot-concept -->
 		<script uuid="81a4f6a9-0f64-4b45-9e9d-310bac0ec4f8" category="file-centric-validation,INT,US,NL" sqlFile="file-centric-delta-changes-are-not-in-expected-modules_EDITION.sql" text="All the changes in the release are in the expected set of modules" />
