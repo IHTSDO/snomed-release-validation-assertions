@@ -14,7 +14,7 @@
         'curr_description_s'
 	from 
 	(select distinct a.refsetid, a.referencedcomponentid from curr_langrefset_d a 
-	left join curr_langrefset_s b on a.refsetid =b.refsetid and a.referencedcomponentid=b.referencedcomponentid where a.id != b.id and a.active=1) as temp,
+	left join curr_langrefset_s b on a.refsetid=b.refsetid and a.referencedcomponentid=b.referencedcomponentid where a.id != b.id and a.active=1 and b.active=1) as temp,
 	curr_description_s c 
 	where temp.referencedcomponentid =c.id;
 	
@@ -29,7 +29,7 @@
         'curr_textdefinition_s'
 	from 
 	(select distinct a.refsetid, a.referencedcomponentid from curr_langrefset_d a 
-	left join curr_langrefset_s b on a.refsetid =b.refsetid and a.referencedcomponentid=b.referencedcomponentid where a.id != b.id and a.active=1) as temp,
+	left join curr_langrefset_s b on a.refsetid =b.refsetid and a.referencedcomponentid=b.referencedcomponentid where a.id != b.id and a.active=1 and b.active=1) as temp,
 	curr_textdefinition_s c 
 	where temp.referencedcomponentid =c.id;
 	
