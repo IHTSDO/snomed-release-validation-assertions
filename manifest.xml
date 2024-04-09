@@ -420,7 +420,7 @@
 		<script uuid="9ec554c8-8bb8-4161-bc5d-fa21d14efc70" category="file-centric-validation,CH" sqlFile="file-centric-snapshot-language-pt-translated-ch-extension-fr.sql" text="Every active concept from the international release is recommended to have one active preferred term in the Swiss French language refset." />
 		<script uuid="64a9b342-6bab-4026-9d15-69fd6639a645" category="file-centric-validation,CH" sqlFile="file-centric-snapshot-language-pt-translated-ch-extension-it.sql" text="Every active concept from the international release is recommended to have one active preferred term in the Swiss Italian language refset." />
 		-->
-
+		<script uuid="530f9483-ff33-474f-85b7-29899b1d6f83" category="component-centric-validation" sqlFile="component-centric-snapshot-concept-missing-axiom.sql" text="Active concepts have at least one active axiom in the same module as the concepts themselves." />
 		<script uuid="eb940ee0-7cd6-11e1-b0c4-0800200c9a66" category="component-centric-validation" sqlFile="component-centric-snapshot-historical-association-active-target.sql" text="Active historical association refset members have active concepts as targets." />
 		<script uuid="90bcb7f0-7f25-11e1-b0c4-0800200c9a66" category="component-centric-validation" sqlFile="component-centric-snapshot-historical-association-refers-to-parent.sql" text="No active Historical Association member associates an inactive concept with its parent." />
 		<script uuid="f7117eb0-7cd6-11e1-b0c4-0800200c9a66" category="component-centric-validation" sqlFile="component-centric-snapshot-historical-association-active-source-concept.sql" text="Active historical association refset members have inactive concepts as reference components." />
