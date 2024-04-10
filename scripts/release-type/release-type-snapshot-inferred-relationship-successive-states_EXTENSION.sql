@@ -62,8 +62,10 @@
                         and r2.active=0
                         and CONVERT(r1.effectivetime, SIGNED INTEGER) < CONVERT(r2.effectivetime, SIGNED INTEGER)) c
     on a.id=c.id
-	left join dependency_relationship_s d on a.id=d.id
 	where a.active=0
 	and b.id is null
 	and c.id is null
-	and d.id is null;
+	and not exists (
+		select 1 from dependency_relationship_f d
+		where d.id = a.id
+		and d.active = 1);
