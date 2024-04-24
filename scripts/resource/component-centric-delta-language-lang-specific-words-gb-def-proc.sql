@@ -10,7 +10,7 @@
 	create procedure gbTerm_procedure(runid BIGINT, assertionid char(36)) 
 	begin 
 		declare no_more_rows INTEGER DEFAULT 0;
-		declare usTerm VARCHAR(255); 
+		declare usTerm VARCHAR(4096); 
 		declare term_cursor cursor for 
 			select distinct us_term from res_us_gb_terms; 
 

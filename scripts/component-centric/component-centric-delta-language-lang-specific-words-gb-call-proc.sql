@@ -12,7 +12,7 @@
 	drop table if exists v_curr_delta_gb;
 	create table if not exists v_curr_delta_gb
 	(	id varchar(36),
-		term varchar(255),
+		term varchar(4096),
 		conceptid varchar(255)
 	) ENGINE=MyISAM;
 	

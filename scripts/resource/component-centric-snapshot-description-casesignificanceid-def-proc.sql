@@ -10,7 +10,7 @@
 	create procedure caseSignificance_procedure(runid BIGINT, assertionid char(36)) 
 	begin 
 		declare no_more_rows INTEGER DEFAULT 0;
-		declare thisTerm VARCHAR(255); 
+		declare thisTerm VARCHAR(4096); 
 		declare cs_term_cursor cursor for 
 			select concat('"',SUBSTRING_INDEX(casesensitiveTerm, ' ', 1),'"') from res_casesensitiveTerm; 
 		
