@@ -18,7 +18,7 @@
 		
 	alter table temp_active_fsn_hierarchy add index idx_tmp_afh_cid (conceptId);
 	alter table temp_active_fsn_hierarchy add index idx_tmp_afh_l (languagecode);
-	alter table temp_active_fsn_hierarchy add index idx_tmp_afh_st (semantictag);
+	alter table temp_active_fsn_hierarchy add FULLTEXT index idx_tmp_afh_st (semantictag);
 
 /* 	a list of descriptions and their hierarchies */
 	drop table if exists tmp_description_syn;
@@ -34,8 +34,8 @@
 
 	alter table tmp_description_syn add index idx_tmp_ds_cid (conceptId);
 	alter table tmp_description_syn add index idx_tmp_ds_l (languagecode);
-	alter table tmp_description_syn add index idx_tmp_ds_st (semantictag);
-	alter table tmp_description_syn add index idx_tmp_ds_t (term);
+	alter table tmp_description_syn add FULLTEXT index idx_tmp_ds_st (semantictag);
+	alter table tmp_description_syn add FULLTEXT index idx_tmp_ds_t (term);
 
 /* 	violators to the results table */	
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)

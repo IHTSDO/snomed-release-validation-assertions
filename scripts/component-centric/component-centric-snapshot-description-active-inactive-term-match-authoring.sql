@@ -38,7 +38,7 @@
 	
 	alter table temp_active_desc add index idx_tmp_ad_cid(conceptid);
 	alter table temp_active_desc add index idx_tmp_ad_a(active);
-	alter table temp_active_desc add index idx_tmp_ad_t(term);
+	alter table temp_active_desc add FULLTEXT index idx_tmp_ad_t(term);
 	
 /* list of inactive description of active concepts edited for this release */
 	drop table if exists temp_inactive_desc;
@@ -51,7 +51,7 @@
 	
 	alter table temp_inactive_desc add index idx_tmp_id_cid(conceptid);
 	alter table temp_inactive_desc add index idx_tmp_id_a(active);
-	alter table temp_inactive_desc add index idx_tmp_id_t(term);
+	alter table temp_inactive_desc add FULLTEXT index idx_tmp_id_t(term);
 
 /* 	violators are active descriptions of which the terms are the same as 
 	inactive descriptions for a given concept 

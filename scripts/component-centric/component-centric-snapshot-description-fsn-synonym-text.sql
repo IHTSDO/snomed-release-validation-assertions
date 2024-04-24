@@ -18,7 +18,7 @@
 
 /* 	for edited concepts, list all FSNs, with and without semantic tags */
 	create table if not exists tmp_fsn
-	(index idx_tmp_fsn_cid (conceptid), index idx_tmp_fsn_twt (termwithouttag))
+	(index idx_tmp_fsn_cid (conceptid), FULLTEXT index idx_tmp_fsn_twt (termwithouttag))
 	as select replace(a.term, concat('(',substring_index(a.term, '(', -1)), '') as termwithouttag,
 	a.id , a.conceptid , a.term 
 	from curr_description_s a
@@ -49,7 +49,7 @@
 
 /* select the concepts that have synonyms that match the FSNs without semantic tags */
 	create table if not exists tmp_termsmatch
-	(index idx_tmp_tm_cid (conceptid), index idx_tmp_tm_twt (termwithouttag))
+	(index idx_tmp_tm_cid (conceptid), FULLTEXT index idx_tmp_tm_twt (termwithouttag))
 	as select a.* 
 	from tmp_fsn a
 	join tmp_allterms b
