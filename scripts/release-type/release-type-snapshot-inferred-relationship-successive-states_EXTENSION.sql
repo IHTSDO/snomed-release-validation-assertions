@@ -33,7 +33,12 @@
         WHERE a.id = c.id
 		AND a.moduleid = c.moduleid
         AND c.active = 1 AND cast(a.effectivetime as datetime) > cast(c.effectivetime as datetime) 
-		AND cast(c.effectivetime as datetime) > cast(b.effectivetime as datetime));
+		AND cast(c.effectivetime as datetime) > cast(b.effectivetime as datetime))
+	AND NOT EXISTS (
+        SELECT 1 FROM dependency_relationship_f d
+        WHERE a.id = d.id
+        AND d.active = 1 AND cast(a.effectivetime as datetime) > cast(d.effectivetime as datetime) 
+		AND cast(d.effectivetime as datetime) > cast(b.effectivetime as datetime));
 
 	
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
