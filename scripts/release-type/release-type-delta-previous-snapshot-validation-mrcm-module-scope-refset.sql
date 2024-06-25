@@ -6,7 +6,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('Mrcm Module Scope Refset: id=',a.id, ' is in the detla file, but no actual changes made since the previous release.'),
+		concat('Mrcm Module Scope Refset: id=',a.id, ' is in the delta file, but no actual changes made since the previous release.'),
 		a.id,
 		'curr_mrcmmodulescoperefset_d'
 	from curr_mrcmmodulescoperefset_d a

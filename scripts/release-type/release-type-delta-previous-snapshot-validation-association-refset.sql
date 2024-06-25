@@ -6,7 +6,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('Association refset id=',a.id, ' is in the detla file, but no actual changes made since the previous release.'),
+		concat('Association refset id=',a.id, ' is in the delta file, but no actual changes made since the previous release.'),
 		a.id,
 		'curr_associationrefset_d'
 	from curr_associationrefset_d a

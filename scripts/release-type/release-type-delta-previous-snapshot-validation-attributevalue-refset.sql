@@ -6,7 +6,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('Attribute value refset id=',a.id, ' is in the detla file, but no actual changes made since the previous release.'),
+		concat('Attribute value refset id=',a.id, ' is in the delta file, but no actual changes made since the previous release.'),
 		a.id,
 		'curr_attributevaluerefset_d'
 	from curr_attributevaluerefset_d a

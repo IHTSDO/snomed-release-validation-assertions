@@ -6,7 +6,7 @@
 	<RUNID>,
 	'<ASSERTIONUUID>',
 	a.referencedcomponentid,
-	concat('SimpleRefsetId=',a.id, ' is in the detla file, but no actual changes made since the previous release.'),
+	concat('SimpleRefsetId=',a.id, ' is in the delta file, but no actual changes made since the previous release.'),
 	a.id,
 	'curr_simplerefset_d'
 	from curr_simplerefset_d a
