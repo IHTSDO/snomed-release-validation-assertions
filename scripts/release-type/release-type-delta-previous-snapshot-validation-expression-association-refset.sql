@@ -6,7 +6,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('ExpressionAssociation: id=',a.id, ' is in the detla file, but no actual changes made since the previous release.'),
+		concat('ExpressionAssociation: id=',a.id, ' is in the delta file, but no actual changes made since the previous release.'),
 		a.id,
 		'curr_expressionassociationrefset_d'
 	from curr_expressionassociationrefset_d a

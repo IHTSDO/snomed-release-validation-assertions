@@ -6,7 +6,7 @@
 	<RUNID>,
 	'<ASSERTIONUUID>',
 	a.conceptid,
-	concat('Definition: id=',a.id, ' is in the detla file, but no actual changes made since the previous release.') ,
+	concat('Definition: id=',a.id, ' is in the delta file, but no actual changes made since the previous release.') ,
 	a.id,
 	'curr_textdefinition_d'
 	from curr_textdefinition_d a

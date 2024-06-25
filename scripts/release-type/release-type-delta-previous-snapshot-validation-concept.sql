@@ -6,7 +6,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.id,
-		concat('Concept: id=',a.id, ' is in the detla file, but no actual changes made since the previous release.'),
+		concat('Concept: id=',a.id, ' is in the delta file, but no actual changes made since the previous release.'),
 		a.id,
 		'curr_concept_d'
 	from curr_concept_d a

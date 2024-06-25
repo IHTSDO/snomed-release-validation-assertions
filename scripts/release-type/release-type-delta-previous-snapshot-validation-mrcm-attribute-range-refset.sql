@@ -6,7 +6,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('Mrcm Attribute Range Refset: id=',a.id, ' is in the detla file, but no actual changes made since the previous release.'),
+		concat('Mrcm Attribute Range Refset: id=',a.id, ' is in the delta file, but no actual changes made since the previous release.'),
 		a.id,
 		'curr_mrcmattributerangerefset_d'
 	from curr_mrcmattributerangerefset_d a

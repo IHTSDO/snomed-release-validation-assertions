@@ -6,7 +6,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.sourceid,
-		concat('Stated relationship: id=',a.id, ' is in the detla file, but no actual changes made since the previous release.'),
+		concat('Stated relationship: id=',a.id, ' is in the delta file, but no actual changes made since the previous release.'),
 		a.id,
 		'curr_stated_relationship_d'
 	from curr_stated_relationship_d a

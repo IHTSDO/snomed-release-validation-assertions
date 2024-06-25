@@ -6,7 +6,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.sourceid,
-		concat('Relationship Concrete Values: id=',a.id, ' is in the detla file, but no actual changes made since the previous release.'),
+		concat('Relationship Concrete Values: id=',a.id, ' is in the delta file, but no actual changes made since the previous release.'),
 		a.id,
 		'curr_relationship_concrete_values_d'
 	from curr_relationship_concrete_values_d a
