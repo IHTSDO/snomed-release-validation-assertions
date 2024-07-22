@@ -24,7 +24,7 @@
 	and a.mapTarget = b.mapTarget
 	and a.correlationId = b.correlationId
 	and a.mapCategoryId = b.mapCategoryId
-	where b.id is null
+	where (b.id is null
 	or b.effectivetime is null
 	or b.active is null
 	or b.moduleid is null
@@ -35,4 +35,5 @@
 	or b.mapRule is null
 	or b.mapTarget is null
 	or b.correlationId is null
-	or b.mapCategoryId is null;
+	or b.mapCategoryId is null)
+	and cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_extendedmaprefset_d z where z.id = a.id);

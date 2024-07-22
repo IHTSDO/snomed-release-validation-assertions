@@ -25,7 +25,7 @@
 		and a.typeid = b.typeid
 		and a.term = b.term
 		and a.casesignificanceid = b.casesignificanceid
-	where b.id is null
+	where (b.id is null
 	or b.effectivetime is null
 	or b.active is null
 	or b.moduleid is null
@@ -33,6 +33,7 @@
 	or b.languagecode is null
 	or b.typeid is null
 	or b.term is null
-	or b.casesignificanceid is null;
+	or b.casesignificanceid is null)
+	and not exists (select 1 from curr_textdefinition_d c where a.id = c.id and cast(c.effectivetime as datetime) > cast(a.effectivetime as datetime));
 	
 	 

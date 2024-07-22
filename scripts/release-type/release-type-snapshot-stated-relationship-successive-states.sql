@@ -29,7 +29,10 @@
 	and a.destinationid = b.destinationid
 	and a.typeid = b.typeid
 	and a.characteristictypeid = b.characteristictypeid
-	and a.modifierid = b.modifierid;
+	and a.modifierid = b.modifierid
+	and not exists (select 1 from curr_stated_relationship_d c where a.id = c.id 
+																	and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime) 
+																	and c.active = 1);
 	
 	
 insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
@@ -46,4 +49,5 @@ insert into qa_result (runid, assertionuuid, concept_id, details, component_id, 
 	and a.destinationid=b.destinationid
 	and a.typeid=b.typeid
 	where a.active=0 
-	and b.id is null;
+	and b.id is null
+	and not exists (select 1 from curr_stated_relationship_f c where a.id = c.id and c.active = 1 and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime));

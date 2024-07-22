@@ -19,5 +19,14 @@
 	and a.typeid = b.typeid
 	and a.term = b.term
 	and a.casesignificanceid = b.casesignificanceid
-	where b.id is not null;
+	where b.id is not null
+	and not exists (select 1 from curr_textdefinition_d c where a.id = c.id 
+																and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime) 
+																and (a.active != c.active 
+																	or a.moduleid != c.moduleid 
+																	or a.conceptid != c.conceptid
+																	or a.languagecode != c.languagecode
+																	or a.typeid != c.typeid
+																	or a.term != c.term
+																	or a.casesignificanceid != c.casesignificanceid));
 	

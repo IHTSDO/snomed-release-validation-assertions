@@ -15,5 +15,10 @@
 	and a.active = b.active
 	and a.moduleid = b.moduleid
 	and a.definitionstatusid = b.definitionstatusid
-	where b.id is not null;
+	where b.id is not null
+	and not exists (select 1 from curr_concept_d c where a.id = c.id 
+														and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime) 
+														and (a.active != c.active 
+															or a.moduleid != c.moduleid 
+															or a.definitionstatusid != c.definitionstatusid));
 	

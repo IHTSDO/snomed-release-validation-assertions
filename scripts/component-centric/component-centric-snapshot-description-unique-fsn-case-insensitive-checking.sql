@@ -24,7 +24,10 @@ insert into qa_result (runid, assertionuuid, concept_id, details, component_id, 
 						and b.typeid ='900000000000003001' 
 						group by term COLLATE utf8_general_ci having total > 1) result, curr_description_s d 
 	where a.term COLLATE utf8_general_ci = result.term 
-	and a.id <> result.id 
+	and a.id <> result.id
+	and a.active = 1
+	and a.typeid = '900000000000003001'
+	and cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_description_d z where z.id = a.id) 
 	and result.moduleid = d.conceptid 
 	and d.active = 1 
 	and d.typeid = '900000000000003001' 

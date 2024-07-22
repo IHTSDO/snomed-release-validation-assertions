@@ -1,15 +1,15 @@
-/******************************************************************************** 
+/********************************************************************************
 
 
 
-  
+
 	Assertion:
-	The Concept snapshot file contains the data in the current delta file.  
+	The Concept snapshot file contains the data in the current delta file.
 
 ********************************************************************************/
 
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
-	select 
+	select
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.id,
@@ -23,8 +23,9 @@
 		and a.active = b.active
 		and a.moduleid = b.moduleid
 		and a.definitionstatusid = b.definitionstatusid
-	where b.id is null
+	where (b.id is null
 	or b.effectivetime is null
 	or b.active is null
 	or b.moduleid is null
-	or b.definitionstatusid is null;	 
+	or b.definitionstatusid is null)
+	and not exists (select 1 from curr_concept_d c where a.id = c.id and cast(c.effectivetime as datetime) > cast(a.effectivetime as datetime));

@@ -20,5 +20,15 @@
 		and a.typeid = b.typeid
 		and a.characteristictypeid = b.characteristictypeid
 		and a.modifierid = b.modifierid	
-	where b.id is not null;
+	where b.id is not null
+	and not exists (select 1 from curr_relationship_concrete_values_d c where a.id = c.id 
+																	and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime) 
+																	and (a.active != c.active 
+																		or a.moduleid != c.moduleid 
+																		or a.sourceid != c.sourceid
+																		or a.value != c.value
+																		or a.relationshipgroup != c.relationshipgroup
+																		or a.typeid != c.typeid
+																		or a.characteristictypeid != c.characteristictypeid
+																		or a.modifierid != c.modifierid));
 

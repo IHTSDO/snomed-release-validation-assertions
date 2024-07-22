@@ -25,7 +25,8 @@
 	and b.active = 1
 	and a.conceptid = b.id
 	and a.typeid ='900000000000003001'
-	and term REGEXP '[\\\t\r\n\Z\@$#]';
+	and term REGEXP '[\\\t\r\n\Z\@$#]'
+	and cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_description_d z where z.id = a.id);
 	
 	
 	/* 	inserting exceptions in the result table for Synonym */
@@ -42,5 +43,6 @@
 	and b.active = 1
 	and a.conceptid = b.id
 	and a.typeid ='900000000000013009'
-	and term REGEXP '[\\\t\r\n\Z@$]';
+	and term REGEXP '[\\\t\r\n\Z@$]'
+	and cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_description_d z where z.id = a.id);
 	

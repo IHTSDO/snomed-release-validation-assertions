@@ -17,7 +17,8 @@ select
     'curr_relationship_d'
 from curr_relationship_d a
 where a.active = '1'
-    and relationshipgroup >= 100;
+    and relationshipgroup >= 100
+    and cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_relationship_d z where z.id = a.id);
 
 insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
 select
@@ -29,6 +30,7 @@ select
     'curr_stated_relationship_d'
 from curr_stated_relationship_d a
 where a.active = '1'
-    and relationshipgroup >= 100;
+    and relationshipgroup >= 100
+    and cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_stated_relationship_d z where z.id = a.id);
 
 

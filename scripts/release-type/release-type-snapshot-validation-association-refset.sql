@@ -14,7 +14,7 @@
 		 from curr_associationrefset_f z
 		 where z.id = a.id);
 
-/* in the delta; not in the full */
+/* in the snapshot; not in the full */
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
 	select 
 	<RUNID>,
@@ -40,7 +40,7 @@
   	or b.referencedcomponentid is null
   	or b.targetcomponentid is null;
 
-/* in the full; not in the delta */
+/* in the full; not in the snapshot */
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
 	select 
 	<RUNID>,

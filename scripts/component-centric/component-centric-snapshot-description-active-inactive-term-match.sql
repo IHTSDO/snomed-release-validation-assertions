@@ -29,12 +29,15 @@
 			and a.active = 1;
 	commit;
 
-/* list of active description of active concepts edited for this release */
+/* list of new active description of active concepts edited for this release */
 	drop table if exists tmp_active_desc;
 	create table if not exists tmp_active_desc as
 	select a.*
 	from curr_description_d a 
-	where a.active=1 and not exists (select count(*) as total from curr_description_f b where a.id=b.id having total > 1);
+	where a.active=1
+		and cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_description_d z where z.id = a.id)
+		and not exists (select count(*) as total from curr_description_f b where a.id=b.id having total > 1)
+		and not exists (select count(*) as total from prev_description_s c where a.id=c.id having total > 0);
 	commit;
 	
 	alter table tmp_active_desc add index idx_tmp_ad_cid(conceptid);

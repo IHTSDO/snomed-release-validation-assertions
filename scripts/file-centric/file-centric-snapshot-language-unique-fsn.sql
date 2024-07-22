@@ -30,6 +30,7 @@
 	and b.active = '1'
 	and a.active = '1'
 	and a.typeid = '900000000000003001'
+	and cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_description_d z where z.id = a.id)
 	GROUP BY c.id,b.referencedcomponentid, b.refsetid
 	having count(b.referencedcomponentid) > (select count(distinct(refsetid)) from curr_langrefset_s);
 	
@@ -40,7 +41,8 @@
 	from curr_description_d a
 	join curr_concept_s b
 	on a.conceptid = b.id
-	and b.active = 1;
+	and b.active = 1
+	and cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_description_d z where z.id = a.id);
 
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
 	select 

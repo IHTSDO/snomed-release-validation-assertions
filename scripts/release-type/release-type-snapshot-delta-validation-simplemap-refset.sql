@@ -22,9 +22,10 @@
 		and a.moduleid = b.moduleid
 		and a.referencedcomponentid = b.referencedcomponentid
 		and a.maptarget = b.maptarget		
-	where b.id is null
+	where (b.id is null
 		or b.effectivetime is null
 		or b.active is null
 		or b.moduleid is null
 		or b.referencedcomponentid is null
-		or b.maptarget is null;
+		or b.maptarget is null)
+		and not exists (select 1 from curr_simplemaprefset_d c where a.id = c.id and cast(c.effectivetime as datetime) > cast(a.effectivetime as datetime));

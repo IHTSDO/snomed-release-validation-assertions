@@ -24,7 +24,7 @@
 		and a.correlationId = b.correlationId
 		and a.contentOriginId = b.contentOriginId
 	where 
-	b.id is null
+	(b.id is null
 	or b.effectivetime is null
 	or b.active is null
 	or b.moduleid is null
@@ -33,5 +33,6 @@
 	or b.mapTarget is null
 	or b.attributeId is null
 	or b.correlationId is null
-	or b.contentOriginId is null;
+	or b.contentOriginId is null)
+	and cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_mapcorrelationoriginrefset_d z where z.id = a.id);
 commit;

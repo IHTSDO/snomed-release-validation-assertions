@@ -38,7 +38,7 @@
 		and a.typeid = b.typeid
 		and a.characteristictypeid = b.characteristictypeid
 		and a.modifierid = b.modifierid	
-	where b.id is null
+	where (b.id is null
 		or b.effectivetime is null
 		or b.active is null
 		or b.moduleid is null
@@ -47,4 +47,5 @@
 		or a.relationshipgroup is null
 		or a.typeid is null
 		or a.characteristictypeid is null
-		or a.modifierid is null;
+		or a.modifierid is null)
+		and not exists (select 1 from curr_stated_relationship_d c where a.id = c.id and cast(c.effectivetime as datetime) > cast(a.effectivetime as datetime));

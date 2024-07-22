@@ -53,7 +53,7 @@
 		a.sourceid,
 		concat('Stated relationship: id=',a.id, ' is in FULL file, but not in SNAPSHOT file.'),
 		a.id,
-		'curr_stated_relationship_f
+		'curr_stated_relationship_f'
 	from temp_stated_relationship_v a
 	left join curr_stated_relationship_s b 
 		on a.id = b.id

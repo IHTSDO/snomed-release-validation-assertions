@@ -13,8 +13,11 @@
 		c.id,
         'curr_description_s'
 	from 
-	(select distinct a.refsetid, a.referencedcomponentid from curr_langrefset_d a 
-	left join curr_langrefset_s b on a.refsetid=b.refsetid and a.referencedcomponentid=b.referencedcomponentid where a.id != b.id and a.active=1 and b.active=1) as temp,
+	(select distinct a.refsetid, a.referencedcomponentid from curr_langrefset_d a left join curr_langrefset_s b on a.refsetid=b.refsetid and a.referencedcomponentid=b.referencedcomponentid 
+	where a.id != b.id 
+		and a.active=1 
+		and b.active=1
+		and cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_langrefset_d z where z.id = a.id)) as temp, 
 	curr_description_s c 
 	where temp.referencedcomponentid =c.id;
 	
@@ -28,8 +31,12 @@
 		c.id,
         'curr_textdefinition_s'
 	from 
-	(select distinct a.refsetid, a.referencedcomponentid from curr_langrefset_d a 
-	left join curr_langrefset_s b on a.refsetid =b.refsetid and a.referencedcomponentid=b.referencedcomponentid where a.id != b.id and a.active=1 and b.active=1) as temp,
+	(select distinct a.refsetid, a.referencedcomponentid 
+	from curr_langrefset_d a left join curr_langrefset_s b on a.refsetid =b.refsetid and a.referencedcomponentid=b.referencedcomponentid 
+	where a.id != b.id 
+		and a.active=1 
+		and b.active=1
+		and cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_langrefset_d z where z.id = a.id)) as temp, 
 	curr_textdefinition_s c 
 	where temp.referencedcomponentid =c.id;
 	

@@ -21,5 +21,16 @@
 	and a.definitionStatusId = b.definitionStatusId
 	and a.correlationId = b.correlationId
 	and a.contentOriginId = b.contentOriginId
-	where b.id is not null;
+	where b.id is not null
+	and not exists (select 1 from curr_expressionassociationrefset_d c where a.id = c.id 
+																	and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime) 
+																	and (a.active != c.active 
+																		or a.moduleid != c.moduleid 
+																		or a.refsetid != c.refsetid 
+																		or a.referencedcomponentid != c.referencedcomponentid
+																		or a.mapTarget != c.mapTarget
+																		or a.expression != c.expression
+																		or a.definitionStatusId != c.definitionStatusId
+																		or a.correlationId != c.correlationId
+																		or a.contentOriginId != c.contentOriginId));
 	

@@ -23,4 +23,17 @@
 	and a.mapTarget = b.mapTarget
 	and a.correlationId = b.correlationId
 	and a.mapCategoryId = b.mapCategoryId
-	where b.id is not null;
+	where b.id is not null
+	and not exists (select 1 from curr_extendedmaprefset_d c where a.id = c.id 
+																	and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime) 
+																	and (a.active != c.active 
+																		or a.moduleid != c.moduleid 
+																		or a.refsetid != c.refsetid 
+																		or a.referencedcomponentid != c.referencedcomponentid
+																		or a.mapGroup != c.mapGroup
+																		or a.mapPriority != c.mapPriority
+																		or a.mapRule != c.mapRule
+																		or a.mapAdvice != c.mapAdvice
+																		or a.mapTarget != c.mapTarget
+																		or a.correlationId != c.correlationId
+																		or a.mapCategoryId != c.mapCategoryId));

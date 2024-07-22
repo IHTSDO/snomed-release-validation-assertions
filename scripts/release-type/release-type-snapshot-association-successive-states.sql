@@ -18,7 +18,10 @@
 	on a.id = b.id
 	where a.active = 0
 	and a.active = b.active
-	and a.effectivetime != b.effectivetime;
+	and a.effectivetime != b.effectivetime
+	and not exists (select 1 from curr_associationrefset_d c where a.id = c.id 
+																	and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime) 
+																	and c.active = 1);
 	
 	
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
@@ -32,9 +35,5 @@
 	from curr_associationrefset_s a left join prev_associationrefset_s b
 	on a.id = b.id
 	where a.active=0 and b.id is null
-	AND NOT EXISTS (
-	SELECT 1 FROM curr_associationrefset_f c
-	WHERE a.id = c.id
-	AND a.moduleid = c.moduleid
-	AND c.active = 1);
+	and not exists (select 1 from curr_associationrefset_f c where a.id = c.id and c.active = 1 and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime));
 	commit;

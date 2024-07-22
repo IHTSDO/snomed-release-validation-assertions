@@ -16,8 +16,7 @@
 		concat('Reference component id:',a.referencedcomponentid, ' valueid=', a.valueid, ' pair is not unique in the Attribute Value snapshot'),
 		a.id,
 		'curr_attributevaluerefset_s'
-	from curr_attributevaluerefset_s a,
-		curr_attributevaluerefset_d b
-	where a.referencedcomponentid=b.referencedcomponentid and a.valueid=b.valueid
+	from curr_attributevaluerefset_s a
+	where cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_attributevaluerefset_d z where z.id = a.id)
 	group by a.referencedcomponentid,a.valueid,a.moduleid
 	having  count(a.id) > 1;

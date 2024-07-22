@@ -35,10 +35,11 @@
 		and a.refsetid = b.refsetid
 		and a.referencedcomponentid = b.referencedcomponentid
 		and a.owlexpression = b.owlexpression
-	where b.id is null
+	where (b.id is null
 		or b.effectivetime is null
 		or b.active is null
 		or b.moduleid is null
 		or a.refsetid is null
 		or a.referencedcomponentid is null
-		or a.owlexpression is null;
+		or a.owlexpression is null)
+		and not exists (select 1 from curr_owlexpressionrefset_d c where a.id = c.id and cast(c.effectivetime as datetime) > cast(a.effectivetime as datetime));

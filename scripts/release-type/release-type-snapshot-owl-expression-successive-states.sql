@@ -20,10 +20,6 @@ insert into qa_result (runid, assertionuuid, concept_id, details, component_id, 
 	where
 	a.active = 0
 	and b.id is null
-	AND NOT EXISTS (
-		SELECT 1 FROM curr_owlexpressionrefset_f c
-		WHERE a.id = c.id
-		AND a.moduleid = c.moduleid
-		AND c.active = 1);
+	and not exists (select 1 from curr_owlexpressionrefset_f c where a.id = c.id and c.active = 1 and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime));
 	commit;
 	

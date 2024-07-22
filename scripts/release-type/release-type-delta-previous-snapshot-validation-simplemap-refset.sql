@@ -18,4 +18,11 @@
     	and a.refsetid = b.refsetid
    	 	and a.referencedcomponentid = b.referencedcomponentid
     	and a.maptarget = b.maptarget
-	where b.id is not null;
+	where b.id is not null
+	and not exists (select 1 from curr_simplemaprefset_d c where a.id = c.id 
+																	and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime) 
+																	and (a.active != c.active 
+																		or a.moduleid != c.moduleid 
+																		or a.refsetid != c.refsetid 
+																		or a.referencedcomponentid != c.referencedcomponentid
+																		or a.maptarget != c.maptarget));

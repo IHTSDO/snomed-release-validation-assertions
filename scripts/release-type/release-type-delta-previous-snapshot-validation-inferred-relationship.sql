@@ -21,10 +21,14 @@
 		and a.characteristictypeid = b.characteristictypeid
 		and a.modifierid = b.modifierid	
 	where b.id is not null
-	    AND NOT EXISTS (
-        SELECT 1 FROM curr_relationship_f c
-        WHERE a.id = c.id
-		AND a.moduleid = c.moduleid
-        AND c.active != a.active AND cast(a.effectivetime as datetime) > cast(c.effectivetime as datetime) 
-        AND cast(c.effectivetime as datetime) > cast(b.effectivetime as datetime));
+	    and not exists (select 1 from curr_relationship_d c where a.id = c.id 
+																	and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime) 
+																	and (a.active != c.active 
+																		or a.moduleid != c.moduleid 
+																		or a.sourceid != c.sourceid
+																		or a.destinationid != c.destinationid
+																		or a.relationshipgroup != c.relationshipgroup
+																		or a.typeid != c.typeid
+																		or a.characteristictypeid != c.characteristictypeid
+																		or a.modifierid != c.modifierid));
 
