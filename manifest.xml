@@ -308,8 +308,9 @@
 		
 		<script uuid="bec23e05-e977-4190-aa6a-137e5742f513" category="file-centric-validation" sqlFile="file-centric-snapshot-association-valid-referencedcomponentid.sql" text="Referencedcomponentid refers to valid concepts in the ASSOCIATION REFSET snapshot file." />
 		
-		<script uuid="35ec824d-b53d-4567-833e-8ce79774acae" category="file-centric-validation" sqlFile="file-centric-snapshot-association-valid-targetcomponentid.sql" text="TargetComponentId refers to valid components in the ASSOCIATION REFSET snapshot file." />
-		
+		<script uuid="35ec824d-b53d-4567-833e-8ce79774acae" category="file-centric-validation,INT,US,NL,EXTENSION" sqlFile="file-centric-snapshot-association-valid-targetcomponentid.sql" text="TargetComponentId refers to valid components in the ASSOCIATION REFSET snapshot file." />
+
+		<script uuid="6e620469-14f6-4025-85d3-2a7d34d59336" category="file-centric-validation,AU" sqlFile="file-centric-snapshot-association-valid-targetcomponentid_AU_EDITION.sql" text="TargetComponentId refers to valid components in the ASSOCIATION REFSET snapshot file." />
 
 		<script uuid="e202807d-915d-4c8a-8f02-c6e4e6f969fc" category="file-centric-validation" sqlFile="file-centric-snapshot-attribute-value-unique-id.sql" text="ID is unique in the ATTRIBUTE VALUE snapshot." />
 		
