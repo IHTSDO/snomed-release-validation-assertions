@@ -9,9 +9,7 @@ CREATE PROCEDURE validateSnomedCTExpressionConcepts_procedure(runId BIGINT, asse
 begin 
 		declare no_more_rows INTEGER DEFAULT 0;
 		declare ids VARCHAR(500); 
-		declare expression_cursor cursor for 
-			select expression from expressionassociationrefset_s;
-
+		declare expression_cursor cursor for select expression from curr_expressionassociationrefset_s;
 		declare continue handler for not found set no_more_rows = 1;
 		drop table if exists temp_concept;
 		CREATE TABLE temp_concept (conceptId VARCHAR(30));

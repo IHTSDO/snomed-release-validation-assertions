@@ -34,5 +34,5 @@
 	or b.mapRule is null
 	or b.mapTarget is null
 	or b.correlationId is null)
-	and cast(a.effectivetime as datetime) =  (select max(cast(z.effectivetime as datetime)) from curr_complexmaprefset_d z where z.id = a.id)
+	and cast(a.effectivetime as datetime) =  (select max(cast(z.effectivetime as datetime)) from curr_complexmaprefset_d z where z.id = a.id);
 	

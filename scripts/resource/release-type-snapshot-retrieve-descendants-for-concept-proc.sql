@@ -22,17 +22,17 @@ BEGIN
   END WHILE;  
 
   iter: LOOP
-    INSERT INTO children
-      SELECT t.sourceid, t.destinationid FROM stated_relationship_s t
+    INSERT INTO children (sourceid, destinationid)
+      SELECT t.sourceid, t.destinationid FROM curr_stated_relationship_s t
         JOIN descendants d ON t.destinationid = d.sourceid
       WHERE t.typeid = '116680003';
     DELETE FROM children WHERE sourceid IN (SELECT sourceid FROM descendants);
     IF (SELECT count(*) FROM children) > 0 THEN
-      INSERT INTO descendants SELECT * FROM children;
+      INSERT INTO descendants (sourceid, destinationid) SELECT c.sourceid, c.destinationid FROM children c;
     ELSE
       LEAVE iter;
     END IF;
   END LOOP;
-  
+
   DROP TABLE children;
 END;
