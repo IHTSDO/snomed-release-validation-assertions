@@ -25,12 +25,14 @@
 	select 
 		<RUNID>,
 		'<ASSERTIONUUID>',
-		a.referencedcomponentid,
-		concat('Mrcm Attribute Range Refset: id=',a.id, ' is inactive but no active state found in the previous snapshot.'),
-		a.id,
+		d.referencedcomponentid,
+		concat('Mrcm Attribute Range Refset: id=',d.id, ' is inactive but no active state found in the previous snapshot.'),
+		d.id,
 		'curr_mrcmattributerangerefset_s'
-	from curr_mrcmattributerangerefset_s a  left join prev_mrcmattributerangerefset_s b
+	from (select a.id, a.referencedcomponentid from curr_mrcmattributerangerefset_s a  left join prev_mrcmattributerangerefset_s b
 	on a.id = b.id
 	where a.active = 0
-	and b.id is null;
+	and b.id is null) d 
+	left join dependency_mrcmattributerangerefset_s e on d.id = e.id
+	where e.id is null;
 	

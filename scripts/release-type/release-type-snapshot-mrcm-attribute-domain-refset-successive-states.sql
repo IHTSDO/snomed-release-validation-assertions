@@ -25,12 +25,14 @@
 	select 
 		<RUNID>,
 		'<ASSERTIONUUID>',
-		a.referencedcomponentid,
-		concat('Mrcm Attribute Domain Refset: id=',a.id, ' is inactive but no active state found in the previous snapshot.'),
-		a.id,
+		d.referencedcomponentid,
+		concat('Mrcm Attribute Domain Refset: id=',d.id, ' is inactive but no active state found in the previous snapshot.'),
+		d.id,
 		'curr_mrcmattributedomainrefset_s'
-	from curr_mrcmattributedomainrefset_s a  left join prev_mrcmattributedomainrefset_s b
+	from (select a.id, a.referencedcomponentid from curr_mrcmattributedomainrefset_s a  left join prev_mrcmattributedomainrefset_s b
 	on a.id = b.id
 	where a.active = 0
-	and b.id is null;
+	and b.id is null) d
+	left join dependency_mrcmattributedomainrefset_s e on d.id = e.id
+	where e.id is null;
 	

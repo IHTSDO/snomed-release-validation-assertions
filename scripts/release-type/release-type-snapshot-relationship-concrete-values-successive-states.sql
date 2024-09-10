@@ -37,15 +37,17 @@ insert into qa_result (runid, assertionuuid, concept_id, details, component_id, 
 	select 
 		<RUNID>,
 		'<ASSERTIONUUID>',
-		a.sourceid,
-		concat('Relationship Concrete Values: id=',a.id, ' is inactive in the current release but no active state found in the previous snapshot.'),
-		a.id,
+		d.sourceid,
+		concat('Relationship Concrete Values: id=',d.id, ' is inactive in the current release but no active state found in the previous snapshot.'),
+		d.id,
 		'curr_relationship_concrete_values_s'
-	from curr_relationship_concrete_values_s  a left join prev_relationship_concrete_values_s b
+	from (select a.id, a.sourceid from curr_relationship_concrete_values_s a left join prev_relationship_concrete_values_s b
 	on a.id=b.id
 	and a.sourceid=b.sourceid
 	and a.value=b.value
 	and a.typeid=b.typeid
 	where a.active=0 
 	and b.id is null
-	and not exists (select 1 from curr_relationship_concrete_values_f c where a.id = c.id and a.moduleid = c.moduleid and c.active = 1 and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime));
+	and not exists (select 1 from curr_relationship_concrete_values_f c where a.id = c.id and a.moduleid = c.moduleid and c.active = 1 and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime))) d 
+	left join dependency_relationship_concrete_values_s e on d.id = e.id
+	where e.id is null;

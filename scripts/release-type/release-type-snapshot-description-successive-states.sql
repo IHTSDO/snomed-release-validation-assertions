@@ -36,14 +36,16 @@
 	select 
 		<RUNID>,
 		'<ASSERTIONUUID>',
-		a.conceptid,
-		concat('DESCRIPTION: id=',a.id, ' is inactive but no active state found in the previous snapshot.'),
-		a.id,
+		d.conceptid,
+		concat('DESCRIPTION: id=',d.id, ' is inactive but no active state found in the previous snapshot.'),
+		d.id,
 		'curr_description_s'
-	from curr_description_s a left join prev_description_s b
+	from (select a.id, a.conceptid from curr_description_s a left join prev_description_s b
 	on a.id=b.id
 	where a.active=0 and b.id is null
-	and not exists (select 1 from curr_description_f c where a.id = c.id and c.active = 1 and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime));
+	and not exists (select 1 from curr_description_f c where a.id = c.id and c.active = 1 and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime))) d 
+	left join dependency_description_s e on d.id = e.id
+	where e.id is null;
 	
 	
 	

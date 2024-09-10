@@ -28,13 +28,15 @@
 	select 
 		<RUNID>,
 		'<ASSERTIONUUID>',
-		a.conceptid,
-		concat('TextDefinition: id=',a.id, ' is inactive but no active state found in the previous snapshot.'),
-		a.id,
+		d.conceptid,
+		concat('TextDefinition: id=',d.id, ' is inactive but no active state found in the previous snapshot.'),
+		d.id,
 		'curr_textdefinition_s'
-	from curr_textdefinition_s a  left join prev_textdefinition_s b
+	from (select a.id, a.conceptid from curr_textdefinition_s a  left join prev_textdefinition_s b
 	on a.id = b.id
 	where a.active = 0
 	and b.id is null
-	and not exists (select 1 from curr_textdefinition_f c where a.id = c.id and a.moduleid = c.moduleid and c.active = 1 and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime));
+	and not exists (select 1 from curr_textdefinition_f c where a.id = c.id and a.moduleid = c.moduleid and c.active = 1 and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime))) d 
+	left join dependency_textdefinition_s e on d.id = e.id
+	where e.id is null;
 	
