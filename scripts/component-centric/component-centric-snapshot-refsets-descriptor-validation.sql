@@ -48,16 +48,18 @@ select a.id FROM curr_refsetdescriptor_s a
 
 /* insert into qa table */
 insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
-select <RUNID>, '<ASSERTIONUUID>', a.referencedcomponentid,
-concat('The refsetDescriptor id=', a.referencedcomponentid ,' has the Attribute Description and Attribute Type which are not descendant or self of those in the parent refsetDescriptor id=', c.parent_id,' in the same position') ,
-a.id,
+select <RUNID>, '<ASSERTIONUUID>', d.referencedcomponentid,
+concat('The refsetDescriptor id=', d.referencedcomponentid ,' has the Attribute Description and Attribute Type which are not descendant or self of those in the parent refsetDescriptor id=', d.parent_id,' in the same position') ,
+d.id,
 'curr_refsetdescriptor_s'
-from curr_refsetdescriptor_s a
-left join v_valid_ids b on a.id = b.id
-left join v_act_parent_concepts c on a.referencedcomponentid = c.concept_id
-where a.active = 1
-and a.refsetid = '900000000000456007'
-and b.id is null;
+from (select a.id, a.referencedcomponentid, c.parent_id from curr_refsetdescriptor_s a
+	left join v_valid_ids b on a.id = b.id
+	left join v_act_parent_concepts c on a.referencedcomponentid = c.concept_id
+	where a.active = 1
+	and a.refsetid = '900000000000456007'
+	and b.id is null) d 
+left join dependency_refsetdescriptor_s e on d.id = e.id
+where e.id is null;;
 
 drop table if exists ancestors;
 drop table if exists v_attributedescription_and_attributetype_concept_ids;
