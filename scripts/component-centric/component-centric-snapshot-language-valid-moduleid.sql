@@ -18,9 +18,10 @@
         'curr_langrefset_s'
 	from curr_langrefset_s a 
 	left join curr_description_s b on a.referencedcomponentid = b.id
+	left join dependency_langrefset_s c on a.id = c.id
 	where a.active = '1'
-		and b.active = '1' 
-		and a.moduleid <> b.moduleid 
-		and not (b.moduleid = '900000000000012004' and a.moduleid = '900000000000207008');
+		and b.active = '1'
+		and (('NULL' <> '<INCLUDED_MODULES>' and c.id is null and a.moduleid <> '900000000000207008' and a.moduleid not in (<INCLUDED_MODULES>)) 
+			or ('NULL' = '<INCLUDED_MODULES>' and a.moduleid <> b.moduleid and not (b.moduleid = '900000000000012004' and a.moduleid = '900000000000207008')));
 
     commit;
