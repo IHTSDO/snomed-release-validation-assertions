@@ -15,5 +15,6 @@
 		a.id,
 		'curr_simplemaprefset_s'
 	from curr_simplemaprefset_s a 
-	where a.moduleid != '900000000000207008';
+	where 'NULL' = '<INCLUDED_MODULES>' -- Only validate the INT release
+	AND a.moduleid != '900000000000207008';
 	

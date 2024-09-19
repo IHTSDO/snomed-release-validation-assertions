@@ -7,7 +7,8 @@ concat('Metadata concept (', c.id, '|', d.term,'|) in module other than model mo
 c.id,
 'curr_concept_d'
 FROM curr_description_s d, curr_concept_d c
-WHERE d.conceptid = c.id
+WHERE 'NULL' = '<INCLUDED_MODULES>' -- Only validate the INT release
+AND d.conceptid = c.id
 AND d.typeid = 900000000000003001 -- FSN
 AND d.term LIKE '%(%metadata%)'
 AND c.active = 1 
