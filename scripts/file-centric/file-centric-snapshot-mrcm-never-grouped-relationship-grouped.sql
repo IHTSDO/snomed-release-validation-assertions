@@ -15,5 +15,5 @@
 		r.id,
 		'curr_relationship_s'
 	from curr_mrcmattributedomainrefset_s a, curr_relationship_s r
-	where a.grouped = '0' and a.referencedcomponentid = r. typeid and r. relationshipgroup > 0 and a.active = 1 and r.active = 1 and r.active = 1;
+	where a.grouped = '0' and a.referencedcomponentid = r. typeid and r. relationshipgroup > 0 and a.active = 1 and r.active = 1;
 	commit;
