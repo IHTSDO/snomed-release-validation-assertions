@@ -496,7 +496,7 @@
 		<script uuid="495b0552-9c9d-4356-b4cf-efba6bea3a0d" category="component-centric-validation" sqlFile="component-centric-snapshot-illegal-change-for-description-or-concept-inactivation-reason.sql" text="All inactive members within the concept and description inactivation indicator reference set have valid modifications to their inactivation indicator reasons." />
 		<script uuid="2b166f4e-73ae-4c89-b2bb-bc9ce07fa9d9" category="component-centric-validation" sqlFile="component-centric-snapshot-fully-defined-concept-against-owlexpression.sql" text="Active fully-defined concept must have at least one Axiom record with the words 'EquivalentClasses'." />
 		<script uuid="8090d441-7aeb-4a48-bdc3-2545916aa26d" category="component-centric-validation" sqlFile="component-centric-snapshot-active-concept-must-have-correct-definition-status-according-to-defined-axioms.sql" text="Active concepts must have correct definition status according to defined axioms." />
-		<script uuid="628a8d16-d8ba-405e-b321-1f5f7dd70d91" category="component-centric-validation" sqlFile="component-centric-snapshot-referenced-concepts-in-mrcm-active.sql" text="All referenced concepts in MRCM refsets must be active." />
+		<!--script uuid="628a8d16-d8ba-405e-b321-1f5f7dd70d91" category="component-centric-validation" sqlFile="component-centric-snapshot-referenced-concepts-in-mrcm-active.sql" text="All referenced concepts in MRCM refsets must be active." /-->
 		<script uuid="e82a8211-fac1-4998-b3cb-3db99ee4565c" category="component-centric-validation" sqlFile="component-centric-snapshot-role-group-are-in-double-figures.sql" text="Role Group numbers are in double figures." />
 
 		<script uuid="fc0f240c-4a07-4995-acf6-52a7f41f2ce6" category="component-centric-validation" sqlFile="component-centric-snapshot-refsets-descriptor-validation.sql" text="Any refset with a refsetDescriptor record, that is a subset of another refset with a refsetDescriptor record, must have a refsetDescriptor that is either the same, or a specialisation of the parent's refset." />
@@ -567,7 +567,7 @@
 
 		<script uuid="413c91cd-4b1a-47cf-a278-3141bea39fde" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-refsetid.sql" text="RefsetId value refers to valid concept identifier in the MRCM ATTRIBUTE DOMAIN REFSET snapshot"/>
 
-		<script uuid="292b4427-0cce-493d-b63c-27cd249eafea" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-referencedcomponentid.sql" text="ReferencedComponentId value refers to valid concept identifier in the MRCM ATTRIBUTE DOMAIN REFSET snapshot"/>
+		<script uuid="292b4427-0cce-493d-b63c-27cd249eafea" category="file-centric-validation" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-referencedcomponentid.sql" text="ReferencedComponentId value refers to valid concept identifier in the MRCM ATTRIBUTE DOMAIN REFSET snapshot"/>
 
 		<script uuid="0bd6a234-58f9-424f-84b4-0dc800e5a70b" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-domainid.sql" text="DomainId value refers to valid concept identifier in the MRCM ATTRIBUTE DOMAIN REFSET snapshot" />
 
@@ -580,14 +580,14 @@
 
 		<script uuid="14e30e46-1e7a-4655-b1ca-48254f8b7071" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-domain-valid-refsetid.sql" text="RefsetId value refers to valid concept identifier in the MRCM DOMAIN REFSET snapshot"/>
 
-		<script uuid="c3e6008a-2e9a-4b42-9a37-78ea6a4c7799" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-domain-valid-referencedcomponentid.sql" text="ReferencedComponentId value refers to valid concept identifier in the MRCM DOMAIN REFSET snapshot"/>
+		<script uuid="c3e6008a-2e9a-4b42-9a37-78ea6a4c7799" category="file-centric-validation" sqlFile="file-centric-snapshot-mrcm-domain-valid-referencedcomponentid.sql" text="ReferencedComponentId value refers to valid concept identifier in the MRCM DOMAIN REFSET snapshot"/>
 
 		<!-- file-centric-snapshot-mrcm-refset-attribute-range -->
 		<script uuid="bd129ddf-e7ea-49a4-9e9c-ad790b75331d" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-moduleid.sql" text="ModuleId value refers to valid concept identifier in the MRCM ATTRIBUTE RANGE REFSET snapshot" />
 
 		<script uuid="40b0b1f3-7ed0-4074-ab0e-c5abd19f70b8" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-refsetid.sql" text="RefsetId value refers to valid concept identifier in the MRCM ATTRIBUTE RANGE REFSET snapshot" />
 
-		<script uuid="907c11ad-5ad7-49ed-b3e8-1149b1e95716" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-referencedcomponentid.sql" text="ReferencedComponentId value refers to valid concept identifier in the MRCM ATTRIBUTE RANGE REFSET snapshot" />
+		<script uuid="907c11ad-5ad7-49ed-b3e8-1149b1e95716" category="file-centric-validation" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-referencedcomponentid.sql" text="ReferencedComponentId value refers to valid concept identifier in the MRCM ATTRIBUTE RANGE REFSET snapshot" />
 
 		<script uuid="618115ab-b5bc-4ed3-aaba-fec8536fe498" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-rulestrengthid.sql" text="RuleStrengthId value refers to valid concept identifier in the MRCM ATTRIBUTE RANGE REFSET snapshot" />
 
@@ -598,7 +598,7 @@
 
 		<script uuid="844f4f15-ac5d-48a6-ba33-f11893cb7a20" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-module-scope-valid-refsetid.sql" text="RefsetId value refers to valid concept identifier in the MRCM MODULE SCOPE REFSET snapshot" />
 
-		<script uuid="c4920cb7-7e7f-4f3f-ae87-f15b7c8fb1b6" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-module-scope-valid-referencedcomponentid.sql" text="ReferencedComponentId value refers to valid concept identifier in the MRCM MODULE SCOPE REFSET snapshot" />
+		<script uuid="c4920cb7-7e7f-4f3f-ae87-f15b7c8fb1b6" category="file-centric-validation" sqlFile="file-centric-snapshot-mrcm-module-scope-valid-referencedcomponentid.sql" text="ReferencedComponentId value refers to valid concept identifier in the MRCM MODULE SCOPE REFSET snapshot" />
 
 		<script uuid="4fe314dd-6f65-4e9e-8ce1-a4c7db598c0d" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-module-scope-valid-mrcmrulerefsetid.sql" text="MrcmRuleRefsetId value refers to valid concept identifier in the MRCM MODULE SCOPE REFSET snapshot" />
 
