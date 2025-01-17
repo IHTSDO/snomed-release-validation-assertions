@@ -28,7 +28,7 @@
 		b.conceptid,
 		concat('Text definition: id=',b.id, ': has multiple language refset members for a given dialect.'),
 		b.id,
-        'curr_description_s'
+        'curr_textdefinition_s'
 	from 
 	(select distinct a.refsetid, a.referencedcomponentid 
 	from curr_langrefset_d a left join curr_langrefset_s b on a.refsetid =b.refsetid and a.referencedcomponentid=b.referencedcomponentid 
