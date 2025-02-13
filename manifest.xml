@@ -42,32 +42,32 @@
 		<script uuid="f0b4c712-781a-4ca5-872e-883cf1949f12" category="release-type-validation" sqlFile="release-type-full-validation-language-refset.sql" text="The current Language refset full file contains all previously published data unchanged." />
 
 		<!-- release-type-snapshot-delta-validation -->
-		<script uuid="e2d4a6be-cd76-4e03-afe8-5c7783aaa2c7" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-concept.sql" text="The current data in the Concept snapshot file are the same as the data in the current delta file." />
+		<script uuid="e2d4a6be-cd76-4e03-afe8-5c7783aaa2c7" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-concept.sql" text="The Concept Snapshot file must contain the latest Concept changes." />
 
-		<script uuid="073832f4-6dc5-4781-9e56-9c3bc45d01bd" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-description.sql" text="The current data in the Description snapshot file are the same as the data in the current delta file." />
+		<script uuid="073832f4-6dc5-4781-9e56-9c3bc45d01bd" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-description.sql" text="The Description Snapshot file must contain the latest Description changes." />
 
-		<script uuid="01ce3ac9-d168-4333-99d7-8d2f228f5ec9" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-stated-relationship.sql" text="The current data in the Stated Relationship snapshot file are the same as the data in the current delta file." />
+		<script uuid="01ce3ac9-d168-4333-99d7-8d2f228f5ec9" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-stated-relationship.sql" text="The Stated Relationship Snapshot file must contain the latest Stated Relationship changes." />
 
-		<script uuid="177a7271-7986-433b-8506-fff39e6c1004" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-inferred-relationship.sql" text="The current data in the Inferred Relationship snapshot file are the same as the data in the current delta file." />
+		<script uuid="177a7271-7986-433b-8506-fff39e6c1004" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-inferred-relationship.sql" text="The Inferred Relationship Snapshot file must contain the latest Inferred Relationship changes." />
 
-		<script uuid="c0812d7e-b0a2-460d-a1bd-1292c07a7516" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-relationship-concrete-values.sql" text="The current data in the Relationship Concrete Values snapshot file are the same as the data in the current delta file." />
+		<script uuid="c0812d7e-b0a2-460d-a1bd-1292c07a7516" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-relationship-concrete-values.sql" text="The Concrete Value Relationship Snapshot file must contain the latest Concrete Value Relationship changes." />
 
-		<script uuid="c837a6f8-f06a-4599-944c-eaa3a6d68c18" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-definition.sql" text="The current data in the Definition snapshot file are the same as the data in the current delta file." />
-
-
-		<script uuid="b808204b-5608-4865-b334-50a6d113b36b" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-association-refset.sql" text="The current data in the Association refset snapshot file are the same as the data in the current delta file." />
+		<script uuid="c837a6f8-f06a-4599-944c-eaa3a6d68c18" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-definition.sql" text="The Text Definition Snapshot file must contain the latest Text Definition changes." />
 
 
-		<script uuid="602a3d22-b3b0-48cc-8ebb-949f96580834" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-attributevalue-refset.sql" text="The current data in the AttributeValue refset snapshot file are the same as the data in the current delta file." />
+		<script uuid="b808204b-5608-4865-b334-50a6d113b36b" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-association-refset.sql" text="The Association Refset Snapshot file must contain the latest Association Refset changes." />
 
 
-		<script uuid="365b7d89-74d0-411e-93c6-4a3748736a3b" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-simple-refset.sql" text="The current data in the Simple refset snapshot file are the same as the data in the current delta file." />
+		<script uuid="602a3d22-b3b0-48cc-8ebb-949f96580834" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-attributevalue-refset.sql" text="The Attribute Value Refset Snapshot file must contain the latest Attribute Value Refset changes." />
 
 
-		<script uuid="959e11e7-9ff9-40b9-b833-387495e320d0" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-simplemap-refset.sql" text="The current data in the SimpleMap refset snapshot file are the same as the data in the current delta file." />
+		<script uuid="365b7d89-74d0-411e-93c6-4a3748736a3b" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-simple-refset.sql" text="The Simple Refset Snapshot file must contain the latest Simple Refset changes." />
 
 
-		<script uuid="bd27d80a-42f1-4412-8111-fdf72fa32904" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-language-refset.sql" text="The current data in the Language refset snapshot file are the same as the data in the current delta file." />
+		<script uuid="959e11e7-9ff9-40b9-b833-387495e320d0" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-simplemap-refset.sql" text="The Simple Map Refset Snapshot file must contain the latest Simple Map Refset changes." />
+
+
+		<script uuid="bd27d80a-42f1-4412-8111-fdf72fa32904" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-language-refset.sql" text="The Language Refset Snapshot file must contain the latest Language Refset changes." />
 
 
 		<!-- release-type-delta-validation -->
@@ -285,7 +285,7 @@
 
 		<script uuid="8ea2e5d9-5c35-4436-b67d-c5268b5da06c" category="file-centric-validation" sqlFile="file-centric-snapshot-description-unique-FSN.sql" text="Active Fully Specified Name associated with active concepts is unique in DESCRIPTION snapshot." />
 
-		<script uuid="1491f72c-cb00-42db-a97b-9c685f4e4cb0" category="file-centric-validation" sqlFile="file-centric-snapshot-description-valid-conceptid.sql" text="ConceptId value refers to valid concept identifier in the DESCRIPTION snapshot." />
+		<script uuid="1491f72c-cb00-42db-a97b-9c685f4e4cb0" category="file-centric-validation" sqlFile="file-centric-snapshot-description-valid-conceptid.sql" text="conceptIds in the Description Snapshot File must refer to valid concepts." />
 
 		<script uuid="82cc38ce-75d6-429e-bf45-551a100bfc52" category="file-centric-validation" sqlFile="file-centric-snapshot-description-invalid-descriptiontype.sql" text="Unknown description type on snapshot description row." />
 
@@ -297,7 +297,7 @@
 
 		<script uuid="718cc822-73b5-42c2-9c01-f8df09a9bf8d" category="file-centric-validation" sqlFile="file-centric-snapshot-definition-immutable.sql" text="There is a 1:1 relationship between the id and the immutable values in the DEFINITION snapshot." />
 
-		<script uuid="5a83783e-3366-48bd-a50d-8f3a53812174" category="file-centric-validation" sqlFile="file-centric-snapshot-definition-valid conceptid.sql" text="ConceptId value refers to valid concept identifier in the DEFINITION snapshot." />
+		<script uuid="5a83783e-3366-48bd-a50d-8f3a53812174" category="file-centric-validation" sqlFile="file-centric-snapshot-definition-valid conceptid.sql" text="conceptIds in the Text Definition Snapshot File must refer to valid concepts." />
 
 		<script uuid="de0c4d6c-6297-41be-9979-fb1c93717baa" category="file-centric-validation" sqlFile="file-centric-snapshot-definition-cardinality.sql" text="There is at most one active definition per concept per dialect." />
 
@@ -306,17 +306,17 @@
 
 		<script uuid="2ddc9a28-150d-47a4-9b0e-7dbff2efdd72" category="file-centric-validation" sqlFile="file-centric-snapshot-association-valid-key.sql" text="There is a 1:1 relationship between the id and the key values in the ASSOCIATION REFSET snapshot file." />
 
-		<script uuid="bec23e05-e977-4190-aa6a-137e5742f513" category="file-centric-validation" sqlFile="file-centric-snapshot-association-valid-referencedcomponentid.sql" text="Referencedcomponentid refers to valid concepts in the ASSOCIATION REFSET snapshot file." />
+		<script uuid="bec23e05-e977-4190-aa6a-137e5742f513" category="file-centric-validation" sqlFile="file-centric-snapshot-association-valid-referencedcomponentid.sql" text="referencedComponentIds in the Association Refset Snapshot File must refer to valid concepts." />
 
-		<script uuid="35ec824d-b53d-4567-833e-8ce79774acae" category="file-centric-validation,INT,US,NL,EXTENSION" sqlFile="file-centric-snapshot-association-valid-targetcomponentid.sql" text="TargetComponentId refers to valid components in the ASSOCIATION REFSET snapshot file." />
+		<script uuid="35ec824d-b53d-4567-833e-8ce79774acae" category="file-centric-validation,INT,US,NL,EXTENSION" sqlFile="file-centric-snapshot-association-valid-targetcomponentid.sql" text="targetComponentIds in the Association Refset Snapshot File must refer to valid concepts or descriptions." />
 
 		<script uuid="6e620469-14f6-4025-85d3-2a7d34d59336" category="file-centric-validation,AU" sqlFile="file-centric-snapshot-association-valid-targetcomponentid_AU_EDITION.sql" text="TargetComponentId refers to valid components in the ASSOCIATION REFSET snapshot file." />
 
 		<script uuid="e202807d-915d-4c8a-8f02-c6e4e6f969fc" category="file-centric-validation" sqlFile="file-centric-snapshot-attribute-value-unique-id.sql" text="	IDs must be unique in the Attribute Value Refset Snapshot file." />
 
-		<script uuid="d5c80582-ad32-4f26-a729-a91fe04a06b2" category="file-centric-validation" sqlFile="file-centric-snapshot-attribute-value-valid-referencedcomponentid.sql" text="Referencedcomponentid refers to valid concepts in the ATTRIBUTEVALUE snapshot file." />
+		<script uuid="d5c80582-ad32-4f26-a729-a91fe04a06b2" category="file-centric-validation" sqlFile="file-centric-snapshot-attribute-value-valid-referencedcomponentid.sql" text="referencedComponentIds in the Attribute Value Refset Snapshot File must refer to valid concepts." />
 
-		<script uuid="ddc754ab-0965-4ae2-b95d-6b0f8392e276" category="file-centric-validation" sqlFile="file-centric-snapshot-attribute-value-valid-valueid.sql" text="ValueId refers to valid concepts in the ATTRIBUTE VALUE snapshot." />
+		<script uuid="ddc754ab-0965-4ae2-b95d-6b0f8392e276" category="file-centric-validation" sqlFile="file-centric-snapshot-attribute-value-valid-valueid.sql" text="valueIds in the Attribute Value Refset Snapshot File must refer to valid concepts." />
 
 		<script uuid="ad7ae768-d14a-4f15-a5cb-4c56b8b4fed6" category="file-centric-validation" sqlFile="file-centric-snapshot-simple-map-unique-id.sql" text="IDs must be unique in the Simple Map Refset Snapshot file." />
 
@@ -328,7 +328,7 @@
 
 		<script uuid="c779d282-3c4d-4c16-a8a6-8d1a621b247d" category="file-centric-validation" sqlFile="file-centric-snapshot-simple-refset-valid-key.sql" text="There is a 1:1 relationship between the id and the key values in the SIMPLE REFSET snapshot." />
 
-		<script uuid="6a407415-8415-4870-a6ef-b5bc22f73c1f" category="file-centric-validation" sqlFile="file-centric-snapshot-simple-refset-valid-referencedcomponentid.sql" text="Referencedcomponentid refers to valid concepts in the SIMPLE REFSET snapshot." />
+		<script uuid="6a407415-8415-4870-a6ef-b5bc22f73c1f" category="file-centric-validation" sqlFile="file-centric-snapshot-simple-refset-valid-referencedcomponentid.sql" text="referencedComponentIds in the Simple Refset Snapshot File must refer to valid concepts." />
 
 		<script uuid="eff30fb0-7856-11e1-b0c4-0800200c9a60" category="file-centric-validation" sqlFile="file-centric-snapshot-attribute-value-unique-pair.sql" text="Reference componentId and valueId pair is unique in the ATTRIBUTE VALUE snapshot." />
 		<script uuid="f5d9ae70-7856-11e1-b0c4-0800200c9a66" category="file-centric-validation" sqlFile="file-centric-snapshot-language-valid-descriptionid.sql" text="All members refer to a description that is referenced in either the description table or the text definition table." />
@@ -547,60 +547,60 @@
 
 		<!-- OWL Expression files assertions -->
 		<script uuid="910844a8-97e5-4096-add2-e1734b941e10" category="release-type-validation" sqlFile="release-type-delta-previous-snapshot-validation-owl-expression.sql" text="Members in the new OWL Expression Refset Delta file must be different from their previously published version." />
-		<script uuid="3d21913e-553b-4ce9-8b3b-b46601c60326" category="release-type-validation" sqlFile="release-type-full-delta-validation-owl-expression.sql" text="The current full OWL Expression file consists of the previously published full file and the changes for the current release"  />
+		<script uuid="3d21913e-553b-4ce9-8b3b-b46601c60326" category="release-type-validation" sqlFile="release-type-full-delta-validation-owl-expression.sql" text="The current full OWL Expression file consists of the previously published full file and the changes for the current release" />
 		<script uuid="26c25479-c3ba-47f2-9851-bb05ae42ad48" category="release-type-validation" sqlFile="release-type-snapshot-owl-expression-successive-states.sql" text="All OWL Expression inactivated in current release must have been active in the previous release."/>
 		<script uuid="2cc6624a-159b-4251-96b5-16b13b6bfdb4" category="release-type-validation" sqlFile="release-type-snapshot-validation-owl-expression.sql" text="The current OWL Expression snapshot file is an accurate derivative of the current full file"  />
-		<script uuid="13d797e0-e67d-46a7-96e9-761c3c2c84d5" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-owl-expression.sql" text="The current data in the OWL Expression snapshot file are the same as the data in the current delta file. "  />
+		<script uuid="13d797e0-e67d-46a7-96e9-761c3c2c84d5" category="release-type-validation" sqlFile="release-type-snapshot-delta-validation-owl-expression.sql" text="The OWL Expression Refset Snapshot file must contain the latest OWL Expression Refset changes." />
 		<script uuid="3d4342fe-4698-4c6d-b519-d8d649c842e0" category="release-type-validation" sqlFile="release-type-full-validation-owl-expression.sql" text="The current OWL Expression full file contains all previously published data unchanged." />
 		<script uuid="21acfba1-d637-4913-a54d-987f4ac336d1" category="release-type-validation" sqlFile="release-type-delta-validation-owl-expression.sql" text="The current OWL Expression delta file is an accurate derivative of the current full file"  />
 
 		<script uuid="9fc3995b-f84d-46e1-b7cb-88f0fe8564e2" category="file-centric-validation" sqlFile="file-centric-snapshot-owl-expression-unique-id.sql" text="The current OWL Expression snapshot file does not contain duplicate Ids." />
 		<script uuid="6a5cf755-e2bb-4615-8f84-733b9546a3cf" category="file-centric-validation" sqlFile="file-centric-snapshot-owl-expression-unique-active-axiom-for-same-concept.sql" text="The current OWL Expression snapshot file does not contain any duplicate active OWL axioms for the same concept." />
-		<script uuid="70befe18-cb16-4b86-bd49-e624ce5f6ae7" category="component-centric-validation" sqlFile="component-centric-snapshot-active-owl-axiom-referencing-inactive-concept.sql" text="Active OWL axiom refset members must not be referencing inactive concepts." />
+		<script uuid="70befe18-cb16-4b86-bd49-e624ce5f6ae7" category="component-centric-validation" sqlFile="component-centric-snapshot-active-owl-axiom-referencing-inactive-concept.sql" text="referencedComponentIds in the OWL Expression Refset Snapshot File must refer to valid and active concepts." />
 
 		<!-- <script uuid="d55eee56-c5f2-44da-971b-86f39378fe38" category="file-centric-validation" sqlFile="file-centric-snapshot-relationship-must-not-be-both-stated-inferred.sql" text="Relationships should not exist in Stated Relationship and Relationship files at the same time" /> -->
 
 		<!--  MRCM refsets validation -->
 		<script uuid="21f3a8f3-a714-40b6-800e-4eeb0fa9b424" category="file-centric-validation" sqlFile="file-centric-snapshot-mrcm-never-grouped-relationship-grouped.sql" text="Found grouped relationship for attribute marked as never-grouped"/>
 		<!-- file-centric-snapshot-mrcm-refset-attribute-domain -->
-		<script uuid="e968c5d1-e06b-4351-9e96-3f62208d27d4" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-moduleid.sql" text="ModuleId value refers to valid concept identifier in the MRCM ATTRIBUTE DOMAIN REFSET snapshot"/>
+		<script uuid="e968c5d1-e06b-4351-9e96-3f62208d27d4" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-moduleid.sql" text="moduleIds in the MRCM Attribute Domain Refset Snapshot File must refer to valid concepts."/>
 
-		<script uuid="413c91cd-4b1a-47cf-a278-3141bea39fde" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-refsetid.sql" text="RefsetId value refers to valid concept identifier in the MRCM ATTRIBUTE DOMAIN REFSET snapshot"/>
+		<script uuid="413c91cd-4b1a-47cf-a278-3141bea39fde" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-refsetid.sql" text="refsetIds in the MRCM Attribute Domain Refset Snapshot File must refer to valid concepts."/>
 
-		<script uuid="292b4427-0cce-493d-b63c-27cd249eafea" category="file-centric-validation" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-referencedcomponentid.sql" text="ReferencedComponentId value refers to valid concept identifier in the MRCM ATTRIBUTE DOMAIN REFSET snapshot"/>
+		<script uuid="292b4427-0cce-493d-b63c-27cd249eafea" category="file-centric-validation" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-referencedcomponentid.sql" text="referencedComponentIds in the MRCM Attribute Domain Refset Snapshot File must refer to valid concepts."/>
 
-		<script uuid="0bd6a234-58f9-424f-84b4-0dc800e5a70b" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-domainid.sql" text="DomainId value refers to valid concept identifier in the MRCM ATTRIBUTE DOMAIN REFSET snapshot" />
+		<script uuid="0bd6a234-58f9-424f-84b4-0dc800e5a70b" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-domainid.sql" text="domainIds in the MRCM Attribute Domain Refset Snapshot File must refer to valid concepts." />
 
-		<script uuid="0e8e3549-e704-41a2-a853-fd91a60116ee" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-rulestrengthid.sql" text="RuleStrengthId value refers to valid concept identifier in the MRCM ATTRIBUTE DOMAIN REFSET snapshot" />
+		<script uuid="0e8e3549-e704-41a2-a853-fd91a60116ee" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-rulestrengthid.sql" text="ruleStrengthIds in the MRCM Attribute Domain Refset Snapshot File must refer to valid concepts." />
 
-		<script uuid="338c39ad-6f40-46dc-ad35-b7c697d66a63" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-contenttypeid.sql" text="ContentTypeId value refers to valid concept identifier in the MRCM ATTRIBUTE DOMAIN REFSET snapshot" />
+		<script uuid="338c39ad-6f40-46dc-ad35-b7c697d66a63" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-attribute-domain-valid-contenttypeid.sql" text="contentTypeIds in the MRCM Attribute Domain Refset Snapshot File must refer to valid concepts." />
 
 		<!-- file-centric-snapshot-mrcm-refset-domain -->
-		<script uuid="32bc5dc7-192c-441f-9693-6710020a6442" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-domain-valid-moduleid.sql" text="ModuleId value refers to valid concept identifier in the MRCM DOMAIN REFSET snapshot"/>
+		<script uuid="32bc5dc7-192c-441f-9693-6710020a6442" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-domain-valid-moduleid.sql" text="moduleIds in the MRCM Domain Refset Snapshot File must refer to valid concepts."/>
 
-		<script uuid="14e30e46-1e7a-4655-b1ca-48254f8b7071" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-domain-valid-refsetid.sql" text="RefsetId value refers to valid concept identifier in the MRCM DOMAIN REFSET snapshot"/>
+		<script uuid="14e30e46-1e7a-4655-b1ca-48254f8b7071" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-domain-valid-refsetid.sql" text="refsetIds in the MRCM Domain Refset Snapshot File must refer to valid concepts."/>
 
-		<script uuid="c3e6008a-2e9a-4b42-9a37-78ea6a4c7799" category="file-centric-validation" sqlFile="file-centric-snapshot-mrcm-domain-valid-referencedcomponentid.sql" text="ReferencedComponentId value refers to valid concept identifier in the MRCM DOMAIN REFSET snapshot"/>
+		<script uuid="c3e6008a-2e9a-4b42-9a37-78ea6a4c7799" category="file-centric-validation" sqlFile="file-centric-snapshot-mrcm-domain-valid-referencedcomponentid.sql" text="referencedComponentIds in the MRCM Domain Refset Snapshot File must refer to valid concepts."/>
 
 		<!-- file-centric-snapshot-mrcm-refset-attribute-range -->
-		<script uuid="bd129ddf-e7ea-49a4-9e9c-ad790b75331d" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-moduleid.sql" text="ModuleId value refers to valid concept identifier in the MRCM ATTRIBUTE RANGE REFSET snapshot" />
+		<script uuid="bd129ddf-e7ea-49a4-9e9c-ad790b75331d" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-moduleid.sql" text="moduleIds in the MRCM Attribute Range Refset Snapshot File must refer to valid concepts." />
 
-		<script uuid="40b0b1f3-7ed0-4074-ab0e-c5abd19f70b8" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-refsetid.sql" text="RefsetId value refers to valid concept identifier in the MRCM ATTRIBUTE RANGE REFSET snapshot" />
+		<script uuid="40b0b1f3-7ed0-4074-ab0e-c5abd19f70b8" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-refsetid.sql" text="refsetIds in the MRCM Attribute Range Refset Snapshot File must refer to valid concepts." />
 
-		<script uuid="907c11ad-5ad7-49ed-b3e8-1149b1e95716" category="file-centric-validation" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-referencedcomponentid.sql" text="ReferencedComponentId value refers to valid concept identifier in the MRCM ATTRIBUTE RANGE REFSET snapshot" />
+		<script uuid="907c11ad-5ad7-49ed-b3e8-1149b1e95716" category="file-centric-validation" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-referencedcomponentid.sql" text="referencedComponentIds in the MRCM Attribute Range Refset Snapshot File must refer to valid concepts." />
 
-		<script uuid="618115ab-b5bc-4ed3-aaba-fec8536fe498" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-rulestrengthid.sql" text="RuleStrengthId value refers to valid concept identifier in the MRCM ATTRIBUTE RANGE REFSET snapshot" />
+		<script uuid="618115ab-b5bc-4ed3-aaba-fec8536fe498" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-rulestrengthid.sql" text="ruleStrengthIds in the MRCM Attribute Range Refset Snapshot File must refer to valid concepts." />
 
-		<script uuid="b110b8de-53df-4387-b0ac-aecfbc01ed0d" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-contenttypeid.sql" text="ContentTypeId value refers to valid concept identifier in the MRCM ATTRIBUTE RANGE REFSET snapshot" />
+		<script uuid="b110b8de-53df-4387-b0ac-aecfbc01ed0d" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-atribute-range-valid-contenttypeid.sql" text="contentTypeIds in the MRCM Attribute Range Refset Snapshot File must refer to valid concepts." />
 
 		<!-- file-centric-snapshot-mrcm-refset-module-scope -->
-		<script uuid="15a2289d-a160-4faa-b1ea-2f54980b5830" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-module-scope-valid-moduleid.sql" text="ModuleId value refers to valid concept identifier in the MRCM MODULE SCOPE REFSET snapshot" />
+		<script uuid="15a2289d-a160-4faa-b1ea-2f54980b5830" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-module-scope-valid-moduleid.sql" text="moduleIds in the MRCM Module Scope Refset Snapshot File must refer to valid concepts." />
 
-		<script uuid="844f4f15-ac5d-48a6-ba33-f11893cb7a20" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-module-scope-valid-refsetid.sql" text="RefsetId value refers to valid concept identifier in the MRCM MODULE SCOPE REFSET snapshot" />
+		<script uuid="844f4f15-ac5d-48a6-ba33-f11893cb7a20" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-module-scope-valid-refsetid.sql" text="refsetIds in the MRCM Module Scope Refset Snapshot File must refer to valid concepts." />
 
-		<script uuid="c4920cb7-7e7f-4f3f-ae87-f15b7c8fb1b6" category="file-centric-validation" sqlFile="file-centric-snapshot-mrcm-module-scope-valid-referencedcomponentid.sql" text="ReferencedComponentId value refers to valid concept identifier in the MRCM MODULE SCOPE REFSET snapshot" />
+		<script uuid="c4920cb7-7e7f-4f3f-ae87-f15b7c8fb1b6" category="file-centric-validation" sqlFile="file-centric-snapshot-mrcm-module-scope-valid-referencedcomponentid.sql" text="referencedComponentIds in the MRCM Module Scope Refset Snapshot File must refer to valid concepts." />
 
-		<script uuid="4fe314dd-6f65-4e9e-8ce1-a4c7db598c0d" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-module-scope-valid-mrcmrulerefsetid.sql" text="MrcmRuleRefsetId value refers to valid concept identifier in the MRCM MODULE SCOPE REFSET snapshot" />
+		<script uuid="4fe314dd-6f65-4e9e-8ce1-a4c7db598c0d" category="file-centric-validation,INT" sqlFile="file-centric-snapshot-mrcm-module-scope-valid-mrcmrulerefsetid.sql" text="mrcmRuleRefsetIds in the MRCM Module Scope Refset Snapshot File must refer to valid concepts." />
 
 		<!-- release-type-validation-mrcm -->
 		<script uuid="b1ebc4cb-6a86-498f-a3ea-aeef250b9399" category="release-type-validation,INT" sqlFile="release-type-delta-previous-snapshot-validation-mrcm-attribute-domain-refset.sql" text="Members in the new MRCM Attribute Domain Refset Delta file must be different from their previously published version." />
@@ -611,37 +611,37 @@
 
 		<script uuid="d7e12c75-9979-4adb-9b5b-3b8a80ab4fbb" category="release-type-validation,INT" sqlFile="release-type-delta-previous-snapshot-validation-mrcm-module-scope-refset.sql" text="Members in the new MRCM Module Scope Refset Delta file must be different from their previously published version." />
 
-		<script uuid="87af4df0-c506-41ed-9089-6a359f16b34f" category="release-type-validation,INT" sqlFile="release-type-full-validation-mrcm-domain-refset.sql" text="The current MRCM Domain Refset full file contains all previously published data unchanged."/>
+		<script uuid="87af4df0-c506-41ed-9089-6a359f16b34f" category="release-type-validation,INT" sqlFile="release-type-full-validation-mrcm-domain-refset.sql" text="The MRCM Domain Refset Full file must contain the same data as its previously published version."/>
 
-		<script uuid="4fdf8c6a-8b58-4bf7-a8b5-71176ede7ac0" category="release-type-validation,INT" sqlFile="release-type-full-validation-mrcm-attribute-domain-refset.sql" text="The current MRCM Attribute Domain Refset full file contains all previously published data unchanged."/>
+		<script uuid="4fdf8c6a-8b58-4bf7-a8b5-71176ede7ac0" category="release-type-validation,INT" sqlFile="release-type-full-validation-mrcm-attribute-domain-refset.sql" text="The MRCM Attribute Domain Refset Full file must contain the same data as its previously published version."/>
 
-		<script uuid="becfbeaa-5eab-4a4a-90ca-7c893b7495b2" category="release-type-validation,INT" sqlFile="release-type-full-validation-mrcm-attribute-range-refset.sql" text="The current MRCM Attribute Range Refset full file contains all previously published data unchanged."/>
+		<script uuid="becfbeaa-5eab-4a4a-90ca-7c893b7495b2" category="release-type-validation,INT" sqlFile="release-type-full-validation-mrcm-attribute-range-refset.sql" text="The MRCM Attribute Range Refset Full file must contain the same data as its previously published version."/>
 
-		<script uuid="0f7b6979-7a9d-45d4-956b-972d452f1638" category="release-type-validation,INT" sqlFile="release-type-full-validation-mrcm-module-scope-refset.sql" text="The current MRCM Module Scope Refset full file contains all previously published data unchanged."/>
+		<script uuid="0f7b6979-7a9d-45d4-956b-972d452f1638" category="release-type-validation,INT" sqlFile="release-type-full-validation-mrcm-module-scope-refset.sql" text="The MRCM Domain Module Scope Refset Full file must contain the same data as its previously published version."/>
 
-		<script uuid="75afe90a-eb1c-4e86-9312-22bc742f5b49" category="release-type-validation,INT" sqlFile="release-type-snapshot-delta-validation-mrcm-domain-refset.sql" text="The current data in the MRCM Domain Refset snapshot file are the same as the data in the current delta file." />
+		<script uuid="75afe90a-eb1c-4e86-9312-22bc742f5b49" category="release-type-validation,INT" sqlFile="release-type-snapshot-delta-validation-mrcm-domain-refset.sql" text="The MRCM Domain Refset Snapshot file must contain the latest MRCM Domain Refset changes." />
 
-		<script uuid="609ed083-737c-401a-9aa9-5666bbd2aff2" category="release-type-validation,INT" sqlFile="release-type-snapshot-delta-validation-mrcm-attribute-domain-refset.sql" text="The current data in the MRCM Attribute Domain Refset snapshot file are the same as the data in the current delta file." />
+		<script uuid="609ed083-737c-401a-9aa9-5666bbd2aff2" category="release-type-validation,INT" sqlFile="release-type-snapshot-delta-validation-mrcm-attribute-domain-refset.sql" text="The MRCM Attribute Domain Refset Snapshot file must contain the latest MRCM Attribute Domain Refset changes." />
 
-		<script uuid="56c6abd0-11c7-409e-b0ed-f9d0f08f2cd7" category="release-type-validation,INT" sqlFile="release-type-snapshot-delta-validation-mrcm-attribute-range-refset.sql" text="The current data in the MRCM Attribute Range Refset snapshot file are the same as the data in the current delta file." />
+		<script uuid="56c6abd0-11c7-409e-b0ed-f9d0f08f2cd7" category="release-type-validation,INT" sqlFile="release-type-snapshot-delta-validation-mrcm-attribute-range-refset.sql" text="The MRCM Attribute Range Refset Snapshot file must contain the latest MRCM Attribute Range Refset changes." />
 
-		<script uuid="0999e34c-36b5-4d33-951a-8e949a66062e" category="release-type-validation,INT" sqlFile="release-type-snapshot-delta-validation-mrcm-module-scope-refset.sql" text="The current data in the MRCM Module Scope Refset snapshot file are the same as the data in the current delta file." />
+		<script uuid="0999e34c-36b5-4d33-951a-8e949a66062e" category="release-type-validation,INT" sqlFile="release-type-snapshot-delta-validation-mrcm-module-scope-refset.sql" text="The MRCM Module Scope Refset Snapshot file must contain the latest MRCM Module Scope Refset changes." />
 
-		<script uuid="501dc4c4-49d4-41d9-9751-271687d54820" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-attribute-domain-refset.sql" text="The current MRCM Attribute Domain Refset snapshot file is an accurate derivative of the current full file" />
+		<script uuid="501dc4c4-49d4-41d9-9751-271687d54820" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-attribute-domain-refset.sql" text="The new MRCM Attribute Domain Refset Snapshot file must be derived from the previously published Full file." />
 
-		<script uuid="7c87a865-beb5-4e03-a489-2b05a40bd860" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-attribute-range-refset.sql" text="The current MRCM Attribute Range Refset snapshot file is an accurate derivative of the current full file" />
+		<script uuid="7c87a865-beb5-4e03-a489-2b05a40bd860" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-attribute-range-refset.sql" text="The new MRCM Attribute Range Refset Snapshot file must be derived from the previously published Full file." />
 
-		<script uuid="504d10af-deba-46f0-85d5-f792749b0d62" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-domain-refset.sql" text="The current MRCM Domain Refset snapshot file is an accurate derivative of the current full file" />
+		<script uuid="504d10af-deba-46f0-85d5-f792749b0d62" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-domain-refset.sql" text="The new MRCM Domain Refset Snapshot file must be derived from the previously published Full file." />
 
-		<script uuid="388b2eff-f8b0-418c-9794-d35aaa4d748b" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-module-scope-refset.sql" text="The current MRCM Module Scope Refset snapshot file is an accurate derivative of the current full file" />
+		<script uuid="388b2eff-f8b0-418c-9794-d35aaa4d748b" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-module-scope-refset.sql" text="The new MRCM Module Scope Refset Snapshot file must be derived from the previously published Full file." />
 
-		<script uuid="7c3fe37c-6ad5-446e-bc82-7c2bc078042a" category="release-type-validation,INT" sqlFile="release-type-full-delta-validation-mrcm-attribute-domain-refset.sql" text="The current full MRCM Attribute Domain Refset file consists of the previously published full file and the changes for the current release." />
+		<script uuid="7c3fe37c-6ad5-446e-bc82-7c2bc078042a" category="release-type-validation,INT" sqlFile="release-type-full-delta-validation-mrcm-attribute-domain-refset.sql" text="The new MRCM Attribute Domain Refset Full file must be the same as the previously published Full file plus the latest changes." />
 
-		<script uuid="ad0f8978-c8a7-4d91-8e3e-a887e4830fec" category="release-type-validation,INT" sqlFile="release-type-full-delta-validation-mrcm-attribute-range-refset.sql" text="The current full MRCM Attribute Range Refset file consists of the previously published full file and the changes for the current release." />
+		<script uuid="ad0f8978-c8a7-4d91-8e3e-a887e4830fec" category="release-type-validation,INT" sqlFile="release-type-full-delta-validation-mrcm-attribute-range-refset.sql" text="The new MRCM Attribute Range Refset Full file must be the same as the previously published Full file plus the latest changes." />
 
-		<script uuid="43bdeea9-be7b-4235-b58e-8842a8e47793" category="release-type-validation,INT" sqlFile="release-type-full-delta-validation-mrcm-domain-refset.sql" text="The current full MRCM Domain Refset file consists of the previously published full file and the changes for the current release." />
+		<script uuid="43bdeea9-be7b-4235-b58e-8842a8e47793" category="release-type-validation,INT" sqlFile="release-type-full-delta-validation-mrcm-domain-refset.sql" text="The new MRCM Domain Refset Full file must be the same as the previously published Full file plus the latest changes." />
 
-		<script uuid="054bccb0-c678-4722-94dd-b664e0c6267e" category="release-type-validation,INT" sqlFile="release-type-full-delta-validation-mrcm-module-scope-refset.sql" text="The current full MRCM Module Scope Refset file consists of the previously published full file and the changes for the current release." />
+		<script uuid="054bccb0-c678-4722-94dd-b664e0c6267e" category="release-type-validation,INT" sqlFile="release-type-full-delta-validation-mrcm-module-scope-refset.sql" text="The new MRCM Module Scope Refset Full file must be the same as the previously published Full file plus the latest changes." />
 
 		<script uuid="b205d819-2ef6-48e3-8fe1-1793e83a7b8a" category="release-type-validation,INT" sqlFile="release-type-snapshot-mrcm-attribute-domain-refset-successive-states.sql" text="Inactive members in the MRCM Attribute Domain Refset Snapshot file must have been active in the previous version." />
 
