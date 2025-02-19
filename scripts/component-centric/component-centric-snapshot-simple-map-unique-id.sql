@@ -1,6 +1,6 @@
 
 /******************************************************************************** 
-	file-centric-snapshot-simple-map-unique-id
+	component-centric-snapshot-simple-map-unique-id
 
 	Assertion:
 	ID is unique in the SIMPLEMAP REFSET snapshot.

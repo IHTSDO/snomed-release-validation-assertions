@@ -1,6 +1,6 @@
 
 /******************************************************************************** 
-	file-centric-snapshot-definition-unique-id
+	component-centric-snapshot-definition-unique-id
 
 	Assertion:
 	ID is unique in the DEFINITION snapshot.

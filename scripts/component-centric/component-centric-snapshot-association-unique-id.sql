@@ -1,19 +1,20 @@
 
 /******************************************************************************** 
-	file-centric-snapshot-description-unique-id
+	component-centric-snapshot-association-unique-id
 
 	Assertion:
-	The current Description snapshot file has unique ids.
+	ID is unique in the ASSOCIATION REFSET snapshot.
 
 ********************************************************************************/
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
 	select 
 		<RUNID>,
 		'<ASSERTIONUUID>',
-		a.conceptid,
-		concat('DESC: id=',a.id, ':Non unique id in description release file.'),
+		a.referencedcomponentid,
+		concat('ASSOC RS: id=',a.id, ':Non unique id in current release file.'),
 		a.id,
-		'curr_description_s'
-	from curr_description_s a	
+		'curr_associationrefset_s'
+	from curr_associationrefset_s a
 	group by a.id
 	having  count(a.id) > 1;
+	commit;

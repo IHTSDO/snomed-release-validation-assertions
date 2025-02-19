@@ -1,20 +1,21 @@
 
 /******************************************************************************** 
-	file-centric-snapshot-concept-unique-id
+	component-centric-snapshot-attribute-value-unique-id
 
 	Assertion:
-	The current Concept snapshot file has unique identifiers.
+	ID is unique in the ATTRIBUTE VALUE snapshot.
 
 ********************************************************************************/
+
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
 	select 
 		<RUNID>,
 		'<ASSERTIONUUID>',
+		a.referencedcomponentid,
+		concat('Attribute value refset: id=',a.id, ':Non unique id in snapshot file.'),
 		a.id,
-		concat('CONCEPT: id=',a.id, ':Non unique id in current release file.'),
-		a.id,
-		'curr_concept_s'
-	from curr_concept_s a
+		'curr_attributevaluerefset_s'
+	from curr_attributevaluerefset_s a	
 	group by a.id
 	having  count(a.id) > 1;
 	commit;
