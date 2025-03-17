@@ -11,7 +11,7 @@
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.referencedcomponentid,
-		concat('referencedcomponentId:', a.referencedcomponentid, ' refsetId:', a.refsetid, ' mapTarget:', a.maptarget, ' are duplicated in the simple map fefset snapshot file.'),
+		concat('referencedcomponentId:', a.referencedcomponentid, ' refsetId:', a.refsetid, ' mapTarget:', a.maptarget, ' are duplicated in the simple map refset snapshot file.'),
 		a.id,
 		'curr_simplemaprefset_s'
 	from curr_simplemaprefset_s a 
