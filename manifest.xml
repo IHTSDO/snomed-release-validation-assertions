@@ -627,13 +627,13 @@
 
 		<script uuid="0999e34c-36b5-4d33-951a-8e949a66062e" category="release-type-validation,INT" sqlFile="release-type-snapshot-delta-validation-mrcm-module-scope-refset.sql" text="The MRCM Module Scope Refset Snapshot file must contain the latest MRCM Module Scope Refset changes." />
 
-		<script uuid="501dc4c4-49d4-41d9-9751-271687d54820" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-attribute-domain-refset.sql" text="The new MRCM Attribute Domain Refset Snapshot file must be derived from the previously published Full file." />
+		<script uuid="501dc4c4-49d4-41d9-9751-271687d54820" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-attribute-domain-refset.sql" text="The new MRCM Attribute Domain Refset Snapshot file must be derived from the new Full file." />
 
-		<script uuid="7c87a865-beb5-4e03-a489-2b05a40bd860" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-attribute-range-refset.sql" text="The new MRCM Attribute Range Refset Snapshot file must be derived from the previously published Full file." />
+		<script uuid="7c87a865-beb5-4e03-a489-2b05a40bd860" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-attribute-range-refset.sql" text="The new MRCM Attribute Range Refset Snapshot file must be derived from the new Full file." />
 
-		<script uuid="504d10af-deba-46f0-85d5-f792749b0d62" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-domain-refset.sql" text="The new MRCM Domain Refset Snapshot file must be derived from the previously published Full file." />
+		<script uuid="504d10af-deba-46f0-85d5-f792749b0d62" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-domain-refset.sql" text="The new MRCM Domain Refset Snapshot file must be derived from the new Full file." />
 
-		<script uuid="388b2eff-f8b0-418c-9794-d35aaa4d748b" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-module-scope-refset.sql" text="The new MRCM Module Scope Refset Snapshot file must be derived from the previously published Full file." />
+		<script uuid="388b2eff-f8b0-418c-9794-d35aaa4d748b" category="release-type-validation,INT" sqlFile="release-type-snapshot-validation-mrcm-module-scope-refset.sql" text="The new MRCM Module Scope Refset Snapshot file must be derived from the new Full file." />
 
 		<script uuid="7c3fe37c-6ad5-446e-bc82-7c2bc078042a" category="release-type-validation,INT" sqlFile="release-type-full-delta-validation-mrcm-attribute-domain-refset.sql" text="The new MRCM Attribute Domain Refset Full file must be the same as the previously published Full file plus the latest changes." />
 
