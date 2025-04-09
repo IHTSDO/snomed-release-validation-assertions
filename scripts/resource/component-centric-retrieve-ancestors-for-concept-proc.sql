@@ -1,3 +1,4 @@
+DROP PROCEDURE IF EXISTS findAncestors;
 CREATE PROCEDURE findAncestors()
 BEGIN
     DECLARE root_id BIGINT DEFAULT 0;
