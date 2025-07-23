@@ -1,6 +1,6 @@
 
 /******************************************************************************** 
-	component-centric-snapshot-language-inactive-members
+	component-centric-snapshot-description-language-inactive-members
 
 	Assertion:
 	LangRefset members are active for inactive descriptions in the language refset snapshot file.
