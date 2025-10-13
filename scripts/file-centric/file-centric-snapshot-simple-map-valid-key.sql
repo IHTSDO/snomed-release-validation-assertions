@@ -14,7 +14,9 @@
 		concat('referencedcomponentId:', a.referencedcomponentid, ' refsetId:', a.refsetid, ' mapTarget:', a.maptarget, ' are duplicated in the simple map refset snapshot file.'),
 		a.id,
 		'curr_simplemaprefset_s'
-	from curr_simplemaprefset_s a 
-	group by a.refsetid, a.referencedcomponentid, a.maptarget
+	from curr_simplemaprefset_s a
+	where a.active = '1' 
+	group by a.refsetid, a.referencedcomponentid, a.maptarget COLLATE utf8_bin
+	
 	having count(a.id) > 1;
 	
