@@ -74,7 +74,8 @@
 	on a.conceptid = b.conceptid
 	and a.moduleid = b.moduleid
 	and a.languagecode = b.languagecode
-	and cast(a.term as binary)= cast(b.term as binary)
+	and a.typeid = b.typeid
+	and cast(a.term as binary) = cast(b.term as binary)
 	where a.active != b.active
 	and cast(a.effectivetime as datetime) >= cast(b.effectivetime as datetime);
 	commit;
