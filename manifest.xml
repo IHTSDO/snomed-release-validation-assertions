@@ -18,6 +18,7 @@
 		<script uuid="d1847e3e-9434-4b41-bd82-dc8012b59d89" category="resource" sqlFile="file-centric-changes-are-in-exepected-modules-validation-edition-proc.sql" text="Defines procedure to validation all changes in the release are in expected set of modules." />
 		<script uuid="66aca2ba-1286-48d8-ac81-b8395a7c5f89" category="resource" sqlFile="file-centric-changes-are-in-exepected-modules-validation-extension-proc.sql" text="Defines procedure to validation all changes in the release are in expected set of modules." />
 		<script uuid="e2e1b03f-a6fc-4f78-9a9d-2f04915a1b01" category="resource" sqlFile="file-centric-stand-alone-product-moduleid-validation-proc.sql" text="Defines procedure to validate all changes in the release must not be in Internatinal modules." />
+		<script uuid="502919db-3ab9-4a1e-a2fb-c3b02f24b67f" category="resource" sqlFile="file-centric-module-jumping-validation-proc.sql" text="Defines procedure to detect module jumping." />
 
 		<!-- release-type-full-validation -->
 		<script uuid="84f5edda-1249-4d79-87da-e248e61f06a6" category="release-type-validation" sqlFile="release-type-full-validation-concept.sql" text="The current Concept full file contains all previously published data unchanged."/>
@@ -234,6 +235,8 @@
 		<script uuid="4d1b2244-8971-4e7c-a283-130b93de1564" category="file-centric-validation,STANDALONE_RELEASE" sqlFile="file-centric-snapshot-standalone-product-must-not-contain-international-module.sql" text="Stand-alone product must not contain any Internationl module content."/>
 
 		<!-- file-centric-snapshot-concept -->
+		<script uuid="02cf4438-170e-4b6b-b5da-624ef730a8e0" category="file-centric-validation" sqlFile="file-centric-snapshot-module-jumping.sql" text="The module id of components must not be jumped from one module to another." />
+
 		<script uuid="81a4f6a9-0f64-4b45-9e9d-310bac0ec4f8" category="file-centric-validation,INT,US,NL,AU" sqlFile="file-centric-delta-changes-are-not-in-expected-modules_EDITION.sql" text="All the changes in the release are in the expected set of modules." />
 
 		<script uuid="5ca164a8-c451-4204-b1ae-804d0cb890e7" category="file-centric-validation,EXTENSION" sqlFile="file-centric-delta-changes-are-not-in-expected-modules_EXTENSION.sql" text="All the changes in the release are in the expected set of modules." />
