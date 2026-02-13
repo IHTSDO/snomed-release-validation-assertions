@@ -234,6 +234,11 @@
 		<script uuid="4d1b2244-8971-4e7c-a283-130b93de1564" category="file-centric-validation,STANDALONE_RELEASE" sqlFile="file-centric-snapshot-standalone-product-must-not-contain-international-module.sql" text="Stand-alone product must not contain any Internationl module content."/>
 
 		<!-- file-centric-snapshot-concept -->
+		<script uuid="c1d2e3f4-5a6b-7c8d-9e0f-1a2b3c4d5e6f" category="file-centric-validation" sqlFile="file-centric-snapshot-description-type-unique-id.sql" text="Description Type Refset id must be unique in the snapshot file." />
+		<script uuid="d2e3f4a5-6b7c-8d9e-0f1a-2b3c4d5e6f7a" category="file-centric-validation" sqlFile="file-centric-snapshot-descriptor-unique-id.sql" text="Descriptor Refset id must be unique in the snapshot file." />
+		<script uuid="e3f4a5b6-7c8d-9e0f-1a2b-3c4d5e6f7a8b" category="file-centric-validation" sqlFile="file-centric-snapshot-module-dependency-unique-id.sql" text="Module Dependency Refset id must be unique in the snapshot file." />
+
+
 		<script uuid="81a4f6a9-0f64-4b45-9e9d-310bac0ec4f8" category="file-centric-validation,INT,US,NL,AU" sqlFile="file-centric-delta-changes-are-not-in-expected-modules_EDITION.sql" text="All the changes in the release are in the expected set of modules." />
 
 		<script uuid="5ca164a8-c451-4204-b1ae-804d0cb890e7" category="file-centric-validation,EXTENSION" sqlFile="file-centric-delta-changes-are-not-in-expected-modules_EXTENSION.sql" text="All the changes in the release are in the expected set of modules." />
