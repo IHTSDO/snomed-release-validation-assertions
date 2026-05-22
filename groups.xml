@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--
+	assertionGroupingStrategy (groups.xml)
+
+	Purpose: defines how assertions are assigned to named assertion groups when the
+	Release Validation Framework imports assertion groups. Policy definitions live in
+	policies.xml; this file lists group membership rules only.
+
+	group (one row per assertion group name)
+	- name: group identifier; required and must be non-blank.
+
+	Matching order for an assertion against a group (all steps use this group row):
+	1) Exclusions: if any rule fires, the assertion is not in this group.
+	   excludeByPolicy: comma-separated policy names; assertion is excluded if its UUID
+	   appears in any named UUID policy list, or its text contains any phrase from a
+	   named assertionTextPhrases policy.
+	   excludeCategories: comma-separated keyword tokens; excluded if the assertion
+	   keywords field, split on commas, contains any listed token.
+	2) includeByPolicy: comma-separated policy names; included when the assertion UUID
+	   appears in any named UUID policy, or matches any named categoryWithCentrePairs policy.
+	3) includeStandaloneCategories: comma-separated tokens compared to assertion
+	   keywords (comma-separated). Used for standalone keyword tagging (including the
+	   default categories file-centric-validation, component-centric-validation,
+	   release-type-validation with special handling in RVF).
+
+	If none of the include paths apply, the assertion is not added to that group.
+
+	Suggested attribute order on group for readability:
+	name, excludeByPolicy, excludeCategories, includeByPolicy, includeStandaloneCategories
+-->
+<assertionGroupingStrategy version="1.0">
+	<group name="file-centric-validation" includeStandaloneCategories="file-centric-validation" />
+	<group name="component-centric-validation" includeStandaloneCategories="component-centric-validation" />
+	<group name="release-type-validation" includeStandaloneCategories="release-type-validation" />
+	<group name="common-edition" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs" />
+	<group name="common-refset" includeByPolicy="common-refsets" />
+	<group name="InternationalEdition" excludeByPolicy="snomed-rt-identifier,stated-relationship,int-edition-exclude" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,mrcm,INT" />
+	<group name="USEdition" excludeByPolicy="stated-relationship,us-edition-exclude" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,US" />
+	<group name="AustralianEdition" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,AU" />
+	<group name="DutchEdition" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,NL" />
+	<group name="SpanishEdition" excludeByPolicy="stated-relationship,spanish-extension-exclude" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,ES" />
+	<group name="DanishEdition" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,DK" />
+	<group name="SwedishEdition" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,SE" />
+	<group name="BelgianEdition" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,BE" />
+	<group name="NorwegianEdition" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,NO" />
+	<group name="SwissEdition" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,CH" />
+	<group name="FrenchEdition" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,FR" />
+	<group name="IrishEdition" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,IE" />
+	<group name="EstonianEdition" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,EE" />
+	<group name="AustrianEdition" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,AT" />
+	<group name="common-authoring" excludeByPolicy="snapshot-exclude,stated-relationship,simple-map-exclude" includeStandaloneCategories="file-centric-validation,component-centric-validation" />
+	<group name="common-authoring-without-lang-refsets" excludeByPolicy="snapshot-exclude,stated-relationship,common-language-refsets-exclude,simple-map-exclude" includeStandaloneCategories="file-centric-validation,component-centric-validation" />
+	<group name="at-authoring" includeByPolicy="ms-authoring-include,category-centre-AT" includeStandaloneCategories="extension-only" />
+	<group name="dk-authoring" includeByPolicy="ms-authoring-include,category-centre-DK" includeStandaloneCategories="extension-only" />
+	<group name="se-authoring" includeByPolicy="ms-authoring-include,category-centre-SE" includeStandaloneCategories="extension-only" />
+	<group name="int-authoring" excludeByPolicy="int-authoring-exclude,simple-map-exclude" includeByPolicy="int-authoring-include,category-centre-INT" includeStandaloneCategories="mrcm" />
+	<group name="us-authoring" excludeByPolicy="us-authoring-exclude" includeByPolicy="ms-authoring-include,category-centre-US" />
+	<group name="be-authoring" includeByPolicy="ms-authoring-include,category-centre-BE" includeStandaloneCategories="extension-only" />
+	<group name="no-authoring" includeByPolicy="ms-authoring-include,category-centre-NO" includeStandaloneCategories="extension-only" />
+	<group name="ch-authoring" includeByPolicy="ms-authoring-include,category-centre-CH" includeStandaloneCategories="extension-only" />
+	<group name="fr-authoring" includeByPolicy="ms-authoring-include,category-centre-FR" includeStandaloneCategories="extension-only" />
+	<group name="ie-authoring" includeByPolicy="ms-authoring-include,category-centre-IE" includeStandaloneCategories="extension-only" />
+	<group name="ee-authoring" includeByPolicy="ms-authoring-include,category-centre-EE" includeStandaloneCategories="extension-only" />
+	<group name="nz-authoring" includeByPolicy="ms-authoring-include,category-centre-NZ" includeStandaloneCategories="extension-only" />
+	<group name="zh-authoring" includeByPolicy="ms-authoring-include,category-centre-ZH" includeStandaloneCategories="extension-only" />
+	<group name="kr-authoring" includeByPolicy="ms-authoring-include,category-centre-KR" includeStandaloneCategories="extension-only" />
+	<group name="au-authoring" includeByPolicy="ms-authoring-include,category-centre-AU" />
+	<group name="nl-authoring" includeByPolicy="ms-authoring-include,category-centre-NL" />
+	<group name="mdrs" includeStandaloneCategories="mdrs" />
+	<group name="standalone-release" includeStandaloneCategories="STANDALONE_RELEASE" />
+	<group name="simplex-release" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,SIMPLEX" />
+	<group name="loinc-authoring" />
+	<group name="first-time-loinc-validation" excludeByPolicy="first-time-common-exclude,stated-relationship,first-time-release-text-exclude" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,LOINC" />
+	<group name="first-time-common-edition" excludeByPolicy="first-time-common-exclude,stated-relationship,first-time-release-text-exclude" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation" />
+	<group name="LoincEdition" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,LOINC" />
+	<group name="GPFP-ICPC2" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,GPFP-ICPC2" />
+	<group name="GMDN" excludeByPolicy="stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,GMDN" />
+	<group name="DerivativeEdition" excludeByPolicy="derivative-edition-exclude,stated-relationship" includeStandaloneCategories="file-centric-validation,component-centric-validation,release-type-validation,mdrs,extension-only,DERIVATIVE" />
+	<group name="stated-relationships-validation" excludeCategories="release-type-validation" includeByPolicy="stated-relationship" />
+	<group name="stated-relationships-release-validation" includeByPolicy="stated-relationship" />
+</assertionGroupingStrategy>
