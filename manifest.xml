@@ -19,6 +19,8 @@
 		<script uuid="d1847e3e-9434-4b41-bd82-dc8012b59d89" category="resource" sqlFile="file-centric-changes-are-in-exepected-modules-validation-edition-proc.sql" text="Defines procedure to validation all changes in the release are in expected set of modules." />
 		<script uuid="66aca2ba-1286-48d8-ac81-b8395a7c5f89" category="resource" sqlFile="file-centric-changes-are-in-exepected-modules-validation-extension-proc.sql" text="Defines procedure to validation all changes in the release are in expected set of modules." />
 		<script uuid="e2e1b03f-a6fc-4f78-9a9d-2f04915a1b01" category="resource" sqlFile="file-centric-stand-alone-product-moduleid-validation-proc.sql" text="Defines procedure to validate all changes in the release must not be in Internatinal modules." />
+		<script uuid="9172832e-0918-4509-8373-5660aa2eb27d" category="resource" sqlFile="file-centric-inactivated-component-module-validation-proc.sql" text="Defines procedure to validate inactivated components remain in their previously published module." />
+
 
 		<!-- release-type-full-validation -->
 		<script uuid="84f5edda-1249-4d79-87da-e248e61f06a6" category="release-type-validation" sqlFile="release-type-full-validation-concept.sql" text="The current Concept full file contains all previously published data unchanged."/>
@@ -238,7 +240,7 @@
 		<script uuid="c1d2e3f4-5a6b-7c8d-9e0f-1a2b3c4d5e6f" category="file-centric-validation" sqlFile="file-centric-snapshot-description-type-unique-id.sql" text="Description Type Refset id must be unique in the snapshot file." />
 		<script uuid="d2e3f4a5-6b7c-8d9e-0f1a-2b3c4d5e6f7a" category="file-centric-validation" sqlFile="file-centric-snapshot-descriptor-unique-id.sql" text="Descriptor Refset id must be unique in the snapshot file." />
 		<script uuid="e3f4a5b6-7c8d-9e0f-1a2b-3c4d5e6f7a8b" category="file-centric-validation" sqlFile="file-centric-snapshot-module-dependency-unique-id.sql" text="Module Dependency Refset id must be unique in the snapshot file." />
-
+		<script uuid="02cf4438-170e-4b6b-b5da-624ef730a8e0" category="file-centric-validation" sqlFile="file-centric-snapshot-inactivated-component-module.sql" text="Components inactivated in the current release must remain in the module in which they were previously published." severity="WARNING" />
 
 		<script uuid="81a4f6a9-0f64-4b45-9e9d-310bac0ec4f8" category="file-centric-validation,INT,US,NL,AU" sqlFile="file-centric-delta-changes-are-not-in-expected-modules_EDITION.sql" text="All the changes in the release are in the expected set of modules." />
 
