@@ -10,7 +10,7 @@
 /* 	temp table: active sysonyms of active concepts edited in the current release cycle */ 	
 	drop table if exists description_edited_tmp;
 	create table if not exists description_edited_tmp 
-	as select c.id, c.conceptid, c.active
+	as select c.id, c.conceptid, c.active, c.moduleid
 	from res_concepts_edited a
 	join curr_concept_s b 
 		on a.conceptid = b.id
@@ -25,17 +25,18 @@
 	
 
 	/*  detect duplicate language refset entries - ignoring the id and active flag - where both appear in the delta. */
-	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
+	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name, skip_module_check)
 	select  	
 		<RUNID>,
 		'<ASSERTIONUUID>',
 		a.conceptid,
 		concat('Concept: id=',a.conceptid, ' has duplicate language refsets for description id=',a.id, ' in Language refset delta'),
 		a.conceptid,
-		'curr_concept_s'
+		'curr_concept_s',
+		if(a.moduleid != max(b.moduleid), 1, 0)
 	from description_edited_tmp a
 	join curr_langrefset_d b on a.id = b.referencedcomponentid	
-	group by a.conceptid, b.refsetid, b.referencedcomponentid
+	group by a.conceptid, b.refsetid, b.referencedcomponentid, a.id, a.moduleid
 	having count(b.referencedcomponentid) >1;
 
 	drop table if exists description_edited_tmp;
