@@ -239,6 +239,7 @@
 		<!-- file-centric-snapshot-concept -->
 		<script uuid="c1d2e3f4-5a6b-7c8d-9e0f-1a2b3c4d5e6f" category="file-centric-validation" sqlFile="file-centric-snapshot-description-type-unique-id.sql" text="Description Type Refset id must be unique in the snapshot file." />
 		<script uuid="d2e3f4a5-6b7c-8d9e-0f1a-2b3c4d5e6f7a" category="file-centric-validation" sqlFile="file-centric-snapshot-descriptor-unique-id.sql" text="Descriptor Refset id must be unique in the snapshot file." />
+		<script uuid="f8e7d6c5-b4a3-4291-8e7d-6c5b4a392817" category="file-centric-validation" sqlFile="file-centric-snapshot-descriptor-unique-attribute-key.sql" text="There must not be more than one active refset descriptor entry with the same referencedComponentId, attributeDescription, attributeOrder and attributeType." />
 		<script uuid="e3f4a5b6-7c8d-9e0f-1a2b-3c4d5e6f7a8b" category="file-centric-validation" sqlFile="file-centric-snapshot-module-dependency-unique-id.sql" text="Module Dependency Refset id must be unique in the snapshot file." />
 		<script uuid="02cf4438-170e-4b6b-b5da-624ef730a8e0" category="file-centric-validation" sqlFile="file-centric-snapshot-inactivated-component-module.sql" text="Components inactivated in the current release must remain in the module in which they were previously published." severity="WARNING" />
 
