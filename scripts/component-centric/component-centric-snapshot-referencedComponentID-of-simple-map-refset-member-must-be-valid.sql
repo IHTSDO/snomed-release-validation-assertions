@@ -18,5 +18,5 @@ component-centric-snapshot-referencedComponentID-of-simple-map-refset-member-mus
         a.id,
         'curr_simplemaprefset_s'
     from curr_simplemaprefset_s a left join curr_concept_s b on a.referencedcomponentid = b.id
-    where a.active = '1' and (b.active = '0' or b.id is null);
+    where a.active = '1' and b.id is null;
 
