@@ -12,3 +12,10 @@ call validate_inactivated_component_module(
 	<RUNID>,
 	'<ASSERTIONUUID>'
 );
+
+call validate_inactivated_component_module(
+	'<PROSPECTIVE>',
+	'<DEPENDENCY>',
+	<RUNID>,
+	'<ASSERTIONUUID>'
+);

@@ -23,7 +23,7 @@ declare component_label char(255);
 declare table_cursor cursor for
 select table_name from information_schema.tables
 where table_schema = substring_index(prospective_dbname, '.', 1)
-and table_name like '%\_s';
+and table_name like '%\_d';
 declare continue handler for not found set no_more_rows = 1;
 
 open table_cursor;
@@ -36,11 +36,14 @@ end if;
 
 
 set qualified_table_name = concat(substring_index(prospective_dbname,'.',1),'.',tb_name);
-set component_part = replace(replace(tb_name, 'curr_', ''), '_s', '');
+set component_part = replace(replace(tb_name, 'curr_', ''), '_d', '');
+-- Do not validate inferred relationships; module moves on inactivation are expected
+if component_part = 'relationship' then
+	iterate myloop;
+end if;
 set component_label = case component_part
 	when 'concept' then 'Concept'
 	when 'description' then 'Description'
-	when 'relationship' then 'Relationship'
 	when 'stated_relationship' then 'Stated relationship'
 	when 'relationship_concrete_values' then 'Relationship concrete values'
 	when 'langrefset' then 'Language refset member'
@@ -69,15 +72,16 @@ set @details = concat(
 	'\' but was previously published in module \', a.previous_moduleid, \'.\')'
 );
 set @sql = concat(
-	'insert into qa_result(run_id, assertion_id, concept_id, details, component_id, table_name) ',
-	'select ', runid, ',', assertionid, ',0,', @details, ',a.id,\'', qualified_table_name, '\' ',
+	'insert into qa_result(run_id, assertion_id, concept_id, details, component_id, table_name, skip_module_check) ',
+	'select ', runid, ',', assertionid, ',0,', @details, ',a.id,\'', qualified_table_name, '\', 1 ',
 	'from (',
 	'select t1.id, t1.moduleid, t2.moduleid as previous_moduleid ',
 	'from ', prospective_dbname, '.', tb_name, ' t1 ',
-	'inner join ', previous_dbname, '.', tb_name, ' t2 on t1.id = t2.id ',
+	'inner join ', previous_dbname, '.', replace(tb_name, '_d', '_s'), ' t2 on t1.id = t2.id ',
 	'where t1.active = 0 ',
 	'and t2.active = 1 ',
-	'and t1.moduleid <> t2.moduleid',
+	'and t1.moduleid <> t2.moduleid ',
+	'and cast(t1.effectivetime as datetime) >= cast(t2.effectivetime as datetime) ',
 	') a;'
 );
 prepare stmt from @sql;
