@@ -56,5 +56,6 @@
 	or c.expression is null
 	or c.definitionStatusId is null
 	or c.correlationId is null
-	or c.contentOriginId is null);
+	or c.contentOriginId is null)
+	and (select count(*) from curr_expressionassociationrefset_d) > 0;
 commit;

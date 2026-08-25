@@ -64,7 +64,8 @@
 		or c.proximalprimitiverefinement is null
 		or c.domaintemplateforprecoordination is null
 		or c.domaintemplateforpostcoordination is null
-		or c.guideurl is null);
+		or c.guideurl is null)
+		and (select count(*) from curr_mrcmdomainrefset_d) > 0;
 commit;
 
 

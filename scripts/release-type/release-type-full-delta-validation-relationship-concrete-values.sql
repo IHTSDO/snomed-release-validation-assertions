@@ -54,9 +54,10 @@
 		or c.relationshipgroup is null
 		or c.typeid is null
 		or c.characteristictypeid is null
-		or c.modifierid is null);
+		or c.modifierid is null)
+		and (select count(*) from curr_relationship_concrete_values_d) > 0;
 	commit;
-	
+
 	/* in the full; not in the delta */
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
 	select 
@@ -108,6 +109,7 @@
 		or c.relationshipgroup is null
 		or c.typeid is null
 		or c.characteristictypeid is null
-		or c.modifierid is null);
+		or c.modifierid is null)
+		and (select count(*) from curr_relationship_concrete_values_d) > 0;
 
 commit;

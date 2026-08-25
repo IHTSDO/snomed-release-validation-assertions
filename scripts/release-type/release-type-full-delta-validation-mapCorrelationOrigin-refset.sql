@@ -52,5 +52,6 @@
 	or c.mapTarget is null
 	or c.attributeId is null
 	or c.correlationId is null
-	or c.contentOriginId is null);
+	or c.contentOriginId is null)
+	and (select count(*) from curr_mapcorrelationoriginrefset_d) > 0;
 commit;

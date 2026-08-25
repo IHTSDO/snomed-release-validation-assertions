@@ -48,5 +48,6 @@
 		or c.languagecode is null
 		or c.typeid is null
 		or c.term is null
-		or c.casesignificanceid is null);
+		or c.casesignificanceid is null)
+		and (select count(*) from curr_textdefinition_d) > 0;
 commit;

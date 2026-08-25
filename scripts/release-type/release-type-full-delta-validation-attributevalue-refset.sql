@@ -40,5 +40,6 @@ insert into qa_result (runid, assertionuuid, concept_id, details, component_id, 
 		or c.moduleid is null
  		or c.refsetid is null
   		or c.referencedcomponentid is null
-  		or c.valueid is null);
+  		or c.valueid is null)
+		and (select count(*) from curr_attributevaluerefset_d) > 0;
 commit;

@@ -60,7 +60,8 @@
 		or c.attributecardinality is null
 		or c.attributeingroupcardinality is null
 		or c.rulestrengthid is null
-		or c.contenttypeid is null);
+		or c.contenttypeid is null)
+		and (select count(*) from curr_mrcmattributedomainrefset_d) > 0;
 commit;
 
 

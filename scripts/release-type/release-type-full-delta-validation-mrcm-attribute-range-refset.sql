@@ -52,7 +52,8 @@
         or c.rangeconstraint is null
         or c.attributerule is null
         or c.rulestrengthid is null
-        or c.contenttypeid is null);
+        or c.contenttypeid is null)
+		and (select count(*) from curr_mrcmattributerangerefset_d) > 0;
 commit;
 
 

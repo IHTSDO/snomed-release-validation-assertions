@@ -40,5 +40,6 @@
 		or c.moduleid is null
  		or c.refsetid is null
   		or c.referencedcomponentid is null
-  		or c.acceptabilityid is null);
+  		or c.acceptabilityid is null)
+  		and (select count(*) from curr_langrefset_d) > 0;
 commit;

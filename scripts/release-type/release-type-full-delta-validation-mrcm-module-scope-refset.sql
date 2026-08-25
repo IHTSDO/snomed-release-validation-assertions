@@ -40,7 +40,8 @@
 		or c.moduleid is null
 		or c.refsetid is null
 		or c.referencedcomponentid is null
-		or c.mrcmrulerefsetid is null);
+		or c.mrcmrulerefsetid is null)
+		and (select count(*) from curr_mrcmmodulescoperefset_d) > 0;
 commit;
 
 

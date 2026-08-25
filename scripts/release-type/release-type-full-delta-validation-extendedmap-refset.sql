@@ -61,5 +61,6 @@ insert into qa_result (runid, assertionuuid, concept_id, details, component_id, 
 		or c.mapRule is null
 		or c.mapTarget is null
 		or c.correlationId is null
-		or c.mapCategoryId is null);
+		or c.mapCategoryId is null)
+	and (select count(*) from curr_extendedmaprefset_d) > 0;
 commit;

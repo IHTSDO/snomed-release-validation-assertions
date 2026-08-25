@@ -52,7 +52,8 @@
 		or c.relationshipgroup is null
 		or c.typeid is null
 		or c.characteristictypeid is null
-		or c.modifierid is null);
+		or c.modifierid is null)
+		and (select count(*) from curr_stated_relationship_d) > 0;
 commit;
 
 

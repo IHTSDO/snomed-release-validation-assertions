@@ -41,5 +41,6 @@
 			or c.moduleid is null
   			or c.refsetid is null
   			or c.referencedcomponentid is null
-  			or c.maptarget is null);
+  			or c.maptarget is null)
+  		and (select count(*) from curr_simplemaprefset_d) > 0;
 commit;

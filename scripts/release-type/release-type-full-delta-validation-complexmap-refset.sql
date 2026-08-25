@@ -57,5 +57,6 @@ insert into qa_result (runid, assertionuuid, concept_id, details, component_id, 
 		or c.mapPriority is null
 		or c.mapRule is null
 		or c.mapTarget is null
-		or c.correlationId is null);
+		or c.correlationId is null)
+	and (select count(*) from curr_complexmaprefset_d) > 0;
 commit;

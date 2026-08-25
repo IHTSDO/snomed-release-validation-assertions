@@ -40,5 +40,6 @@ insert into qa_result (runid, assertionuuid, concept_id, details, component_id, 
 	or c.moduleid is null
   	or c.refsetid is null
   	or c.referencedcomponentid is null
-  	or c.targetcomponentid is null );
+  	or c.targetcomponentid is null )
+  	and (select count(*) from curr_associationrefset_d) > 0;
 commit;

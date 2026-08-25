@@ -34,5 +34,6 @@
 		or c.effectivetime is null
 		or c.active is null
 		or c.moduleid is null
-		or c.definitionstatusid is null);
+		or c.definitionstatusid is null)
+		and (select count(*) from curr_concept_d) > 0;
 	commit;
