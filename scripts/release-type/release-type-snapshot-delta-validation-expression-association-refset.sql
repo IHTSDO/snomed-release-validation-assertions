@@ -36,5 +36,5 @@
 	or b.definitionStatusId is null
 	or b.correlationId is null
 	or b.contentOriginId is null)
-	and cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_expressionassociationrefset_d z where z.id = a.id)
+	and cast(a.effectivetime as datetime) = (select max(cast(z.effectivetime as datetime)) from curr_expressionassociationrefset_d z where z.id = a.id);
 commit;
