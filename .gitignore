@@ -1,1 +1,5 @@
 .*
+
+# .* above ignores every dotfile, which also ignores .github and so makes any
+# GitHub Actions workflow impossible to commit. Exempt it.
+!.github/
