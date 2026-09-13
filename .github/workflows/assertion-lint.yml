@@ -1,0 +1,40 @@
+name: Assertions can fire
+
+# Every assertion in this repository is a check that is supposed to be able to
+# fail. This job proves that each one CAN, structurally, before a pack is built
+# from them.
+#
+# It exists because a corpus of 560 assertions was measured per assertion on two
+# engines in September 2026 and twelve of them turned out to be incapable of
+# reporting a finding for any release whatsoever. They were not slow, skipped or
+# erroring: they ran, inserted nothing, and were reported as PASSED with a
+# failure count of zero. Nothing downstream could have noticed - execution
+# checks were satisfied, the finding count is what a clean release looks like,
+# and every engine was silent for the same reason, so engine comparisons agreed.
+#
+# None of those twelve were in this repository. This job keeps it that way.
+
+on:
+  pull_request:
+    paths:
+      - '**/*.sql'
+      - '.github/workflows/assertion-lint.yml'
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+jobs:
+  can-fire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      # No dependencies, no database, no schema: the check is structural, so it
+      # runs on the SQL exactly as committed.
+      - name: Every assertion must be able to report a finding
+        run: python .github/scripts/assertion_lint.py --format=github scripts
