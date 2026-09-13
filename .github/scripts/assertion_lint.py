@@ -48,6 +48,8 @@ NOT_EXISTS_SELECT = re.compile(r'NOT\s+EXISTS\s*\(\s*SELECT\b', re.I)
 FROM = re.compile(r'\bFROM\b', re.I)
 AGGREGATE = re.compile(r'\b(COUNT|SUM|MAX|MIN|AVG)\s*\(', re.I)
 GROUPED = re.compile(r'\bGROUP\s+BY\b|\bHAVING\b', re.I)
+# Anything that can reduce a FROM-less SELECT to zero rows.
+FILTER = re.compile(r'\bWHERE\b|\bHAVING\b', re.I)
 # `x = (null)` and friends. In SQL a comparison to NULL is NULL, never true, so
 # a WHERE built on one selects nothing and a conjunct built on one makes the
 # whole conjunction unsatisfiable.
@@ -100,8 +102,19 @@ def findings(sql: str):
             continue
         line = clean.count('\n', 0, m.start()) + 1
         if not FROM.search(inner):
-            out.append((line, 'NOT EXISTS over a SELECT with no FROM: it always'
-                              ' returns one row, so this can never be true'))
+            # A FROM-less SELECT returns one row ONLY if nothing can filter it
+            # away. `SELECT 1 WHERE 1=0` has no FROM and returns nothing, so a
+            # NOT EXISTS over it is perfectly satisfiable - flagging that would
+            # be crying wolf, which is how a linter gets switched off.
+            if FILTER.search(inner):
+                continue
+            out.append((line, 'NOT EXISTS over a SELECT with no FROM and no WHERE:'
+                              ' it returns exactly one row, so this can never be'
+                              ' true. A function call here does not change that -'
+                              ' EXISTS counts the rows the subquery yields, not'
+                              ' what the function reads or returns, so a function'
+                              ' that queries an empty table or returns NULL still'
+                              ' yields one row'))
             continue
         projection = FROM.split(inner, 1)[0]
         if AGGREGATE.search(projection) and not GROUPED.search(inner):
@@ -244,9 +257,25 @@ def main():
     ap.add_argument('--format', choices=('text', 'github'), default='text',
                     help='github emits ::error annotations')
     ap.add_argument('--ddl', help='create-tables SQL, to check table names for case')
+    ap.add_argument('--allow', help='file of known findings to account for rather than fail on')
     args = ap.parse_args()
 
     stems = table_stems(args.ddl) if args.ddl else RF2_TABLE_STEMS
+
+    # Known findings, accounted for by REASON rather than suppressed by count.
+    # The same shape as this project's engine-divergence baselines: a new finding
+    # fails the build, and an allowed one that has stopped appearing also fails
+    # it, because a baseline entry that no longer applies is a baseline nobody
+    # has read. Format: one `<filename-substring><TAB><reason>` per line, # for
+    # comments.
+    allowed = {}
+    if args.allow:
+        for raw in pathlib.Path(args.allow).read_text().splitlines():
+            if not raw.strip() or raw.lstrip().startswith('#'):
+                continue
+            key, _, reason = raw.partition('\t')
+            allowed[key.strip()] = reason.strip() or '(no reason given)'
+    matched = set()
 
     scanned = 0
     hits = []
@@ -262,21 +291,45 @@ def main():
         for line, reason in case_mismatches(strip_comments(sql), stems):
             hits.append((path, line, reason))
 
+    accounted = []
+    remaining = []
+    for path, line, reason in hits:
+        key = next((k for k in allowed if k in str(path)), None)
+        if key:
+            matched.add(key)
+            accounted.append((path, line, reason, allowed[key]))
+        else:
+            remaining.append((path, line, reason))
+    hits = remaining
+
+    for path, line, reason, why in accounted:
+        print(f'accounted: {path}:{line}: {reason}\n           because: {why}')
+
+    stale = sorted(set(allowed) - matched)
+    for key in stale:
+        msg = (f'{key} is allowed but produced no finding - either it was fixed,'
+               f' in which case remove the entry, or the check stopped seeing it')
+        if args.format == 'github':
+            print(f'::error title=Stale allowance::{msg}')
+        else:
+            print(f'STALE ALLOWANCE: {msg}')
+
     for path, line, reason in hits:
         if args.format == 'github':
             print(f'::error file={path},line={line},title=Assertion cannot fire::{reason}')
         else:
             print(f'{path}:{line}: {reason}')
 
-    print(f'\n{scanned} assertion file(s) scanned, {len(hits)} that cannot fire',
-          file=sys.stderr)
+    print(f'\n{scanned} assertion file(s) scanned, {len(hits)} that cannot fire'
+          f'{f", {len(accounted)} accounted for" if accounted else ""}'
+          f'{f", {len(stale)} STALE allowance(s)" if stale else ""}', file=sys.stderr)
     if hits:
         print('An assertion that cannot report a finding passes for every release'
               ' ever validated. Nothing downstream can notice: it executes, so an'
               ' execution check is satisfied; it finds nothing, which is what a'
               ' clean release looks like; and every engine is silent for the same'
               ' reason, so an engine comparison agrees.', file=sys.stderr)
-    return 1 if hits else 0
+    return 1 if (hits or stale) else 0
 
 
 if __name__ == '__main__':
