@@ -21,9 +21,23 @@ declare qualified_table_name char(255);
 declare component_part char(255);
 declare component_label char(255);
 declare table_cursor cursor for
-select table_name from information_schema.tables
-where table_schema = substring_index(prospective_dbname, '.', 1)
-and table_name like '%\_d';
+select t.table_name from information_schema.tables t
+where t.table_schema = substring_index(prospective_dbname, '.', 1)
+and t.table_name like '%\_d'
+-- Only tables this procedure can actually query. It selects t1.id below, and
+-- not every RF2 delta table has an id column: identifier_d is keyed on
+-- alternateidentifier and declares
+-- (identifierschemeid, alternateidentifier, effectivetime, active, moduleid,
+-- referencedcomponentid). Without this the dynamic SQL raises
+-- "Unknown column 't1.id' in 'field list'", which aborts the whole assertion -
+-- so a release shipping an Identifier file was validated for none of its
+-- components, not merely for that one.
+and exists (
+	select 1 from information_schema.columns c
+	where c.table_schema = t.table_schema
+	and c.table_name = t.table_name
+	and c.column_name = 'id'
+);
 declare continue handler for not found set no_more_rows = 1;
 
 open table_cursor;
