@@ -20,7 +20,7 @@ leave myloop;
 end if;
 set @component = substring_index(tb_name,'_s',1);
 set @details = CONCAT('CONCAT(\'',@component,'\',\' ::id= \',a.id,\' ::module id: \',a.moduleid,\' must not be in Internationl modules\')');
-set @sql = CONCAT('insert into qa_result(run_id, assertion_id,concept_id, details) select ', runid,',',assertionid,',0,',@details,' from (select id,moduleid from ', substring_index(dbname,'.',1),'.',tb_name, ' where moduleid in (',international_modules,')) a;');
+set @sql = CONCAT('insert into qa_result(run_id, assertion_id,concept_id, details, component_id) select ', runid,',',assertionid,',0,',@details, ',a.id from (select id,moduleid from ', substring_index(dbname,'.',1),'.',tb_name, ' where moduleid in (',international_modules,')) a;');
 prepare stmt from @sql;
 execute stmt;
 drop prepare stmt;

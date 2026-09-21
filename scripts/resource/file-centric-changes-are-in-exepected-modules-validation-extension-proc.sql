@@ -21,7 +21,7 @@ myloop: loop fetch table_cursor into tb_name;
 	if (tb_name != "moduledependencyrefset_d") then
 		set @component = substring_index(tb_name,'_d',1);
 		set @details = CONCAT('CONCAT(\'',@component,'\',\' ::id= \',a.id,\' ::module id: \',a.moduleid,\' was made in the release but not in the expected set of modules\')');
-		set @sql = CONCAT('insert into qa_result(run_id, assertion_id,concept_id, details) select ', runid,',',assertionid,',0,',@details,' from (select id,moduleid from ', substring_index(dbname,'.',1),'.',tb_name, '  where moduleid not in (select distinct moduleid from ',substring_index(dbname,'.',1),'.moduledependencyrefset_d where active="1")) a;');
+		set @sql = CONCAT('insert into qa_result(run_id, assertion_id,concept_id, details, component_id) select ', runid,',',assertionid,',0,',@details, ',a.id from (select id,moduleid from ', substring_index(dbname,'.',1),'.',tb_name, '  where moduleid not in (select distinct moduleid from ',substring_index(dbname,'.',1),'.moduledependencyrefset_d where active="1")) a;');
 		prepare stmt from @sql;
 		execute stmt;
 		drop prepare stmt;

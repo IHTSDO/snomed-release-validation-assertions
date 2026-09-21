@@ -8,21 +8,22 @@ DROP PROCEDURE if exists validateSnomedCTExpressionConcepts_procedure;
 CREATE PROCEDURE validateSnomedCTExpressionConcepts_procedure(runId BIGINT, assertionId varchar(36))
 begin 
 		declare no_more_rows INTEGER DEFAULT 0;
-		declare ids VARCHAR(500); 
-		declare expression_cursor cursor for select expression from curr_expressionassociationrefset_s;
+		declare ids VARCHAR(500);
+		declare member_id VARCHAR(36);
+		declare expression_cursor cursor for select id, expression from curr_expressionassociationrefset_s;
 		declare continue handler for not found set no_more_rows = 1;
 		drop table if exists temp_concept;
-		CREATE TABLE temp_concept (conceptId VARCHAR(30));
+		CREATE TABLE temp_concept (id VARCHAR(36), conceptId VARCHAR(30));
 
 		open expression_cursor; 
 
-		validate: loop fetch expression_cursor into ids; 
+		validate: loop fetch expression_cursor into member_id, ids; 
 			if no_more_rows = 1 
 				then close expression_cursor; 
 				leave validate; 
 			end if; 
 	
-		set @sqlStr = CONCAT("INSERT INTO temp_concept (conceptId) VALUES ('",REPLACE((SELECT GROUP_CONCAT(cleanExpression(ids))), ",", "'),('"),"');");
+		set @sqlStr = CONCAT("INSERT INTO temp_concept (id, conceptId) VALUES ('", member_id, "','", REPLACE((SELECT GROUP_CONCAT(cleanExpression(ids))), ",", CONCAT("'),('", member_id, "','")), "');");
 		PREPARE statement FROM @sqlStr;
 		execute statement;
 		end loop validate; 
@@ -32,8 +33,8 @@ begin
 				assertionId,
 				result.conceptId,
 				concat('Concept: id=',result.conceptId, ' referenced in the ExpressionAssociationRefset SNAPSHOT is unknown.'),
-				null,
+				result.id,
 				'curr_expressionassociationrefset_s'
-			from  (select distinct(conceptId) from temp_concept a left join curr_concept_s b on a.conceptId = b.id where b.id is null) as result;
+			from  (select distinct a.conceptId, a.id from temp_concept a left join curr_concept_s b on a.conceptId = b.id where b.id is null) as result;
 		drop table temp_concept;
 end;
