@@ -30,7 +30,14 @@
 	and a.modifierid = b.modifierid
 	and not exists (select 1 from curr_relationship_d c where a.id = c.id 
 																	and cast(c.effectivetime as datetime) < cast(a.effectivetime as datetime) 
-																	and c.active = 1);
+																	and c.active = 1)
+	and not exists (select 1 from dependency_relationship_s d where a.id = d.id 
+																	and cast(d.effectivetime as datetime) < cast(a.effectivetime as datetime)
+																	and cast(d.effectivetime as datetime) > cast(b.effectivetime as datetime)
+																	and d.active = 1);
+
+
+																	
 
 	
 	insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
