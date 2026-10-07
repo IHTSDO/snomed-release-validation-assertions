@@ -30,5 +30,15 @@
 																		or a.relationshipgroup != c.relationshipgroup
 																		or a.typeid != c.typeid
 																		or a.characteristictypeid != c.characteristictypeid
-																		or a.modifierid != c.modifierid));
+																		or a.modifierid != c.modifierid))
+		and not exists (select 1 from dependency_relationship_s d where a.id = d.id 
+																	and cast(d.effectivetime as datetime) < cast(a.effectivetime as datetime) 
+																	and (a.active != d.active 
+																		or a.moduleid != d.moduleid 
+																		or a.sourceid != d.sourceid
+																		or a.destinationid != d.destinationid
+																		or a.relationshipgroup != d.relationshipgroup
+																		or a.typeid != d.typeid
+																		or a.characteristictypeid != d.characteristictypeid
+																		or a.modifierid != d.modifierid)); 
 
