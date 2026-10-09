@@ -1,0 +1,67 @@
+/*
+ *Any refset with a refsetDescriptor record, that is a subset of another refset with a refsetDescriptor record, must have an Attribute Description in each column that is either the same as, or a specialisation of, the Attribute Description in the same column of the parent's refsetDescriptor
+ */
+
+/* create table if not exists of all concepts containing an active inferred is_a relationship */
+drop table if exists v_rd_desc_act_parent_concepts;
+create table if not exists v_rd_desc_act_parent_concepts as
+select distinct a.referencedcomponentid as concept_id, b.destinationId as parent_id
+	from curr_refsetdescriptor_s a left join curr_relationship_s b on a.referencedcomponentid = b.sourceid
+	where a.active = 1
+	and a.refsetid = '900000000000456007' -- Reference set descriptor
+	and b.active = 1
+	and b.typeid = 116680003;
+
+/* create table if not exists of all Attribute Description concepts */
+drop table if exists v_rd_desc_attribute_concept_ids;
+create table if not exists v_rd_desc_attribute_concept_ids as
+select distinct attributedescription as concept_id
+	from curr_refsetdescriptor_s
+	where active = '1'
+	and refsetid = '900000000000456007';
+
+/* call store procedure to get all ancestors for the given concepts in table v_rd_desc_attribute_concept_ids, and insert into table v_rd_desc_ancestors */
+call findAncestors('v_rd_desc_attribute_concept_ids', 'v_rd_desc_ancestors');
+
+/* create table if not exists of all valid records */
+drop table if exists v_rd_desc_valid_ids;
+create table if not exists v_rd_desc_valid_ids as
+select a.id FROM curr_refsetdescriptor_s a
+	left join v_rd_desc_act_parent_concepts b on a.referencedcomponentid = b.concept_id
+	left join curr_refsetdescriptor_s c on c.referencedcomponentid = b.parent_id
+	left join v_rd_desc_ancestors d on a.attributedescription = d.concept_id
+  where b.parent_id is null
+  or c.referencedcomponentid is null
+  or (a.active = 1
+    and a.refsetid = '900000000000456007'
+    and c.active = 1
+    and c.refsetid = '900000000000456007'
+    and a.attributeorder = c.attributeorder
+    and (a.attributedescription = c.attributedescription or (d.concept_id is not null and concat(d.parents, ',') like concat('%,', c.attributedescription, ',%'))));
+
+/* insert into qa table */
+insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
+select <RUNID>, '<ASSERTIONUUID>', d.referencedcomponentid,
+case when p.id is null
+	then concat('The refsetDescriptor id=', d.referencedcomponentid, ' has the Attribute Description id=', d.attributedescription, ' at column index (attributeOrder) ', d.attributeorder, ', but the parent refsetDescriptor id=', d.parent_id, ' has no Attribute Description at column index ', d.attributeorder)
+	else concat('The refsetDescriptor id=', d.referencedcomponentid, ' has the Attribute Description id=', d.attributedescription, ' at column index (attributeOrder) ', d.attributeorder, ' which is not descendant or self of the Attribute Description id=', p.attributedescription, ' at column index ', d.attributeorder, ' in the parent refsetDescriptor id=', d.parent_id)
+end,
+d.id,
+'curr_refsetdescriptor_s'
+from (select a.id, a.referencedcomponentid, a.attributedescription, a.attributeorder, c.parent_id from curr_refsetdescriptor_s a
+	left join v_rd_desc_valid_ids b on a.id = b.id
+	left join v_rd_desc_act_parent_concepts c on a.referencedcomponentid = c.concept_id
+	where a.active = 1
+	and a.refsetid = '900000000000456007'
+	and b.id is null) d
+left join dependency_refsetdescriptor_s e on d.id = e.id
+left join curr_refsetdescriptor_s p on p.referencedcomponentid = d.parent_id
+	and p.attributeorder = d.attributeorder
+	and p.active = 1
+	and p.refsetid = '900000000000456007'
+where e.id is null;
+
+drop table if exists v_rd_desc_ancestors;
+drop table if exists v_rd_desc_attribute_concept_ids;
+drop table if exists v_rd_desc_valid_ids;
+drop table if exists v_rd_desc_act_parent_concepts;
