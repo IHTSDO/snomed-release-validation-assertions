@@ -13,15 +13,16 @@ select distinct a.referencedcomponentid as concept_id, b.destinationId as parent
 	and b.typeid = 116680003;
 
 /* create table if not exists of all Attribute Type concepts */
-drop table if exists v_rd_type_attribute_concept_ids;
-create table if not exists v_rd_type_attribute_concept_ids as
+drop table if exists tmp_rd_type_attribute_concept_ids;
+create table if not exists tmp_rd_type_attribute_concept_ids as
 select distinct attributetype as concept_id
 	from curr_refsetdescriptor_s
 	where active = '1'
 	and refsetid = '900000000000456007';
 
-/* call store procedure to get all ancestors for the given concepts in table v_rd_type_attribute_concept_ids, and insert into table v_rd_type_ancestors */
-call findAncestors('v_rd_type_attribute_concept_ids', 'v_rd_type_ancestors');
+/* call store procedure to get all ancestors for the given concepts in table tmp_rd_type_attribute_concept_ids, and insert into table tmp_rd_type_ancestors */
+/* tables passed by name to findAncestors use the tmp prefix because RVF renames temp tables in the script but not inside the procedure */
+call findAncestors('tmp_rd_type_attribute_concept_ids', 'tmp_rd_type_ancestors');
 
 /* create table if not exists of all valid records */
 drop table if exists v_rd_type_valid_ids;
@@ -29,7 +30,7 @@ create table if not exists v_rd_type_valid_ids as
 select a.id FROM curr_refsetdescriptor_s a
 	left join v_rd_type_act_parent_concepts b on a.referencedcomponentid = b.concept_id
 	left join curr_refsetdescriptor_s c on c.referencedcomponentid = b.parent_id
-	left join v_rd_type_ancestors e on a.attributetype = e.concept_id
+	left join tmp_rd_type_ancestors e on a.attributetype = e.concept_id
   where b.parent_id is null
   or c.referencedcomponentid is null
   or (a.active = 1
@@ -61,7 +62,7 @@ left join curr_refsetdescriptor_s p on p.referencedcomponentid = d.parent_id
 	and p.refsetid = '900000000000456007'
 where e.id is null;
 
-drop table if exists v_rd_type_ancestors;
-drop table if exists v_rd_type_attribute_concept_ids;
+drop table if exists tmp_rd_type_ancestors;
+drop table if exists tmp_rd_type_attribute_concept_ids;
 drop table if exists v_rd_type_valid_ids;
 drop table if exists v_rd_type_act_parent_concepts;
