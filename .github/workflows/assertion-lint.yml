@@ -1,0 +1,35 @@
+name: Assertions can fire
+
+# Every assertion in this repository is a check that is supposed to be able to
+# fail. This job checks that each one CAN, structurally. An assertion that
+# cannot fire still runs, inserts nothing and is reported as passed with a
+# failure count of zero - which is exactly what a clean release looks like.
+
+on:
+  pull_request:
+    paths:
+      - '**/*.sql'
+      - '.github/scripts/**'
+      - '.github/workflows/assertion-lint.yml'
+  push:
+    branches: [develop, master, main]
+  workflow_dispatch:
+
+jobs:
+  can-fire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: The checks find what they should, and only that
+        run: python .github/scripts/assertion_lint_selftest.py
+
+      # No dependencies, no database, no schema: the check is structural, so it
+      # runs on the SQL exactly as committed.
+      - name: Every assertion must be able to report a finding
+        run: python .github/scripts/assertion_lint.py --format=github scripts
