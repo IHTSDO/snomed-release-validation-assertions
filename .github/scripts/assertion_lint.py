@@ -68,14 +68,17 @@ NOT_A_FUNCTION = frozenset({'in', 'exists', 'any', 'all', 'some', 'values'})
 # What may come right before a conjunct: the left call of a contradiction must
 # start one, not be the right-hand side of a comparison (`y < abs(v) AND NOT
 # abs(v)` is satisfiable).
-CONJUNCT_START = re.compile(r'(?:\(|\b(?:WHERE|AND|ON|WHEN|HAVING))\s*$', re.I)
+CONJUNCT_START = re.compile(
+    r'(?:\(|\b(?:WHERE|AND|ON|WHEN|THEN|ELSE|HAVING|IF|ELSEIF|WHILE|UNTIL))\s*$', re.I)
 # An AND that belongs to BETWEEN (`x BETWEEN f(a) AND g(b)`) does not start one:
 # a BETWEEN with no other AND after it.
 BETWEEN_AND = re.compile(r'\bBETWEEN\b(?:(?!\bAND\b)[^;])*\bAND\s*$', re.I)
-# What may come right after the right call: it must end its conjunct, not be the
-# operand of a comparison (`NOT f(x) AND f(x) = 0` is satisfiable).
-CONJUNCT_END = re.compile(
-    r'\s*(?:$|[);]|\|\||\b(?:AND|OR|THEN|ELSE|END|WHEN|GROUP|ORDER|LIMIT|UNION|HAVING)\b)', re.I)
+# The right call must not be an operand of what follows it: `NOT f(x) AND f(x) = 0`
+# is satisfiable. XOR is included because it can rescue the conjunction. `IS NULL`,
+# `IS TRUE` and `IS NOT FALSE` keep it unsatisfiable, since NOT NULL is NULL.
+OPERAND_NEXT = re.compile(
+    r'\s*(?:[-=<>!+*/%&|^]|\bIS\b(?!\s+(?:NULL|TRUE|NOT\s+FALSE)\b)'
+    r'|\b(?:IN|NOT|LIKE|BETWEEN|REGEXP|RLIKE|DIV|MOD|SOUNDS|XOR|COLLATE)\b)', re.I)
 # Tokens for finding an OR (or MySQL's `||`) at the same nesting level as a
 # finding, and where that level's boolean expression starts and ends.
 BOOL_TOKEN = re.compile(r'[();]|\|\||\b[A-Za-z_]\w*\b')
@@ -149,10 +152,14 @@ def clauses_at(sql: str, at: int):
             # `IF(` is the function; the IF statement is `IF cond THEN` or, at
             # the start of a statement, `IF (cond) THEN`.
             statement_if = word == 'if' and (
-                not m.group(1) or (prev in STATEMENT_START and not frames[-1][1]))
+                not m.group(1) or (prev in STATEMENT_START and frames[-1][1] != 'expr'))
             if word != 'if' or statement_if:
                 if word == 'case':
-                    frames.append([None, True, False])
+                    # A CASE statement (`CASE v WHEN 1 THEN IF (...) THEN ...`)
+                    # holds statements; a CASE expression holds expressions.
+                    kind = ('stmt' if prev in STATEMENT_START and frames[-1][1] != 'expr'
+                            else 'expr')
+                    frames.append([None, kind, False])
                 elif word == 'end':
                     if frames[-1][1]:
                         frames.pop()
@@ -171,9 +178,17 @@ def clauses_at(sql: str, at: int):
     return [(f[0], f[2]) for f in frames]
 
 
+def never_true(sql: str, at: int) -> str:
+    # Whether the whole assertion is dead depends on the other branches' values,
+    # which this check does not evaluate, so only the branch is claimed dead.
+    if in_multi_branch_case(sql, at):
+        return 'this CASE branch can never apply'
+    return 'this can never be true'
+
+
 def in_multi_branch_case(sql: str, at: int) -> bool:
     """Whether offset `at` is inside a CASE, in the same subquery, that has
-    another WHEN or an ELSE: a dead branch there leaves the others."""
+    another WHEN or an ELSE."""
     tokens = [(m.start(), m.group(0).lower()) for m in BOOL_TOKEN.finditer(sql)]
     # One entry per nesting level: [opens a subquery, indexes of open CASEs].
     levels = [[False, []]]
@@ -240,29 +255,45 @@ def operand_start(sql: str, m) -> int:
     return i
 
 
-def top_level(sql: str) -> str:
-    """`sql` with everything inside parentheses blanked, offsets preserved."""
-    out, depth = [], 0
-    for c in sql:
+SELECT_START = re.compile(r'\s*SELECT\b', re.I)
+
+
+def without_subqueries(sql: str) -> str:
+    """`sql` with the contents of every parenthesised subquery blanked, offsets
+    preserved. Function calls (`COALESCE(MAX(x), 0)`) are kept."""
+    out, stack = list(sql), []
+    for i, c in enumerate(sql):
         if c == '(':
-            out.append(c if depth == 0 else ' ')
-            depth += 1
-        elif c == ')':
-            depth = max(depth - 1, 0)
-            out.append(c if depth == 0 else ' ')
-        else:
-            out.append(c if depth == 0 or c == '\n' else ' ')
+            stack.append(i)
+        elif c == ')' and stack:
+            j = stack.pop()
+            if SELECT_START.match(sql, j + 1, i):
+                for k in range(j + 1, i):
+                    if out[k] != '\n':
+                        out[k] = ' '
     return ''.join(out)
 
 
+def closing_paren(sql: str, opening: int) -> int:
+    depth = 0
+    for i in range(opening, len(sql)):
+        if sql[i] == '(':
+            depth += 1
+        elif sql[i] == ')':
+            depth -= 1
+            if depth == 0:
+                return i
+    return -1
+
+
 def ungrouped_aggregate(outer: str) -> bool:
-    """Whether a subquery's outermost level (see top_level) projects an
+    """Whether a subquery (with its own subqueries blanked) projects an
     aggregate with no GROUP BY or HAVING, which returns one row even for no rows."""
     if GROUPED.search(outer):
         return False
     projection = FROM.split(outer, 1)[0]
     for a in AGGREGATE.finditer(projection):
-        close = projection.find(')', a.end())
+        close = closing_paren(projection, a.end() - 1)
         if close < 0 or not WINDOWED.match(projection, close + 1):
             return True
     return False
@@ -355,7 +386,7 @@ def findings(sql: str):
         if inner is None:
             continue
         # A nested subquery's FROM, GROUP BY or aggregate is not this one's.
-        outer = top_level(inner)
+        outer = without_subqueries(inner)
         line = clean.count('\n', 0, m.start()) + 1
         if not FROM.search(outer):
             # `SELECT 1 WHERE 1=0` has no FROM and returns no row, so a NOT
@@ -396,16 +427,14 @@ def findings(sql: str):
         # BETWEEN does not start one.
         if (not CONJUNCT_START.search(clean, 0, m.start())
                 or BETWEEN_AND.search(clean, 0, m.start())
-                or not CONJUNCT_END.match(clean, m.end(5))):
+                or OPERAND_NEXT.match(clean, m.end(5))):
             continue
         if or_at_same_level(clean, m.start(), m.end(5)):
             continue
-        if in_multi_branch_case(clean, m.start()):
-            continue
         line = clean.count('\n', 0, m.start()) + 1
         out.append((line, f'the same predicate is required and forbidden as adjacent'
-                          f' conjuncts - {" ".join(left.split())[:56]} - so this can'
-                          f' never be true'))
+                          f' conjuncts - {" ".join(left.split())[:56]} - so'
+                          f' {never_true(clean, m.start())}'))
 
     # A comparison to NULL, which is NULL rather than true.
     for m in NULL_COMPARISON.finditer(clean):
@@ -419,15 +448,16 @@ def findings(sql: str):
         if any(c in ASSIGNING or c == 'select' or call
                for c, call in clauses_at(clean, start)):
             continue
-        # `a = 1 OR b = NULL`, or another WHEN/ELSE: the other branch can still be true.
-        if or_at_same_level(clean, start, m.end()) or in_multi_branch_case(clean, start):
+        # `a = 1 OR b = NULL`: the other branch can still be true.
+        if or_at_same_level(clean, start, m.end()):
             continue
         line = clean.count('\n', 0, start) + 1
         operand = ' '.join(clean[start:m.end(1)].split())
         if len(operand) > 56:
             operand = operand[:53] + '...'
-        out.append((line, f'{operand} is compared to NULL, which is never true -'
-                          f' use IS NULL, or bind the value this was meant to test'))
+        out.append((line, f'{operand} is compared to NULL, which is never true, so'
+                          f' {never_true(clean, start)} - use IS NULL, or bind the value'
+                          f' this was meant to test'))
     return out
 
 
@@ -498,7 +528,7 @@ def sql_files(targets):
         p = pathlib.Path(t)
         if p.is_dir():
             yield from sorted(p.rglob('*.sql'))
-        elif p.suffix.lower() == '.sql':
+        elif p.suffix.lower() == '.sql' and p.exists():
             yield p
 
 

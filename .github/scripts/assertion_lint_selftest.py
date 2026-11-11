@@ -28,6 +28,9 @@ FINDINGS = [
     ("select 1 where not exists (select (select count(*) from u where u.id = t.id) from t where t.x = 1)", 0),
     ("select 1 where not exists (select count(*) over () from t)", 0),
     ("select 1 where not exists (select count(*) from t where id in (select id from u group by id))", 1),
+    ("select 1 where not exists (select coalesce(max(id), 0) from curr_concept_s)", 1),
+    ("select 1 where not exists (select ifnull(count(*), 0) from curr_concept_s)", 1),
+    ("select 1 where not exists (select (count(*)) from curr_concept_s)", 1),
 
     # The same call required and forbidden as adjacent conjuncts.
     ("select a.id from curr_concept_s a where not f(a.id, 1) and f(a.id, 1)", 1),
@@ -52,10 +55,22 @@ FINDINGS = [
     ("select a.id from curr_concept_s a where not g(a.x) and g(a.x) and case when a.b = 1 then 1 end = 1 or a.c = 1", 0),
     ("select a.id from curr_concept_s a where a.c = 1 || not g(a.x) and g(a.x)", 0),
     ("select a.id from curr_concept_s a where not abs(a.id) and abs(a.id) = 0", 0),
-    ("select a.id from curr_concept_s a where not f(a.id) and f(a.id) is null", 0),
+    ("select a.id from curr_concept_s a where not f(a.id) and f(a.id) is null", 1),
+    ("select a.id from curr_concept_s a where not f(a.id) and f(a.id) is true", 1),
+    ("select a.id from curr_concept_s a where not f(a.id) and f(a.id) is not false", 1),
+    ("select a.id from curr_concept_s a where not f(a.id) and f(a.id) is not null", 0),
+    ("select a.id from curr_concept_s a where not f(a.id) and f(a.id) is false", 0),
     ("select a.id from curr_concept_s a where not f(a.id) and f(a.id) + 1 > 2", 0),
     ("select a.id from curr_concept_s a where not f(a.id) and f(a.id) group by a.id", 1),
-    ("select a.id from curr_concept_s a where case when not g(a.x) and g(a.x) then 1 when a.y = 1 then 1 end = 1", 0),
+    ("select a.id from curr_concept_s a where case when not g(a.x) and g(a.x) then 1 when a.y = 1 then 1 end = 1", 1),
+    ("select a.id from curr_concept_s a where case when not f(a.x) and f(a.x) then 1 else 0 end = 1", 1),
+    ("select a.id from curr_concept_s a where case when a.y = 1 then not g(a.x) and g(a.x) else false end", 1),
+    ("select a.id from t a join u b on not f(b.id) and f(b.id) where a.x = 1", 1),
+    ("select a.id from t a join u b on not f(b.id) and f(b.id) left join v c on c.id = a.id", 1),
+    ("select a.id from curr_concept_s a where if(not f(a.x) and f(a.x), 1, 0)", 1),
+    ("while not f(x) and f(x) do set y = 1; end while;", 1),
+    ("select a.id from curr_concept_s a where not f(a.id) and f(a.id) xor a.z", 0),
+    ("select a.id from curr_concept_s a where not f(a.id) and f(a.id) not in (1)", 0),
     ("select a.id from curr_concept_s a where not f(\n  a.id) and f(a.id)", 1),
 
     # Comparisons to NULL.
@@ -85,9 +100,12 @@ FINDINGS = [
     ("select a.id from curr_concept_s a where a.x = 1 or coalesce(a.x, a.y) = null", 0),
     ("select a.id, coalesce(a.x, 1) = null from curr_concept_s a", 0),
     ("select a.id from curr_concept_s a where if(a.x, a.y, a.z) = 0", 0),
-    ("select a.id from curr_concept_s a where case when a.x = null then 1 when a.y = 1 then 1 end = 1", 0),
-    ("select a.id from curr_concept_s a where case when a.x = null then 1 else 0 end = 0", 0),
-    ("select a.id from curr_concept_s a where case when a.y = 1 then a.x = null else 1 end", 0),
+    ("select a.id from curr_concept_s a where case when a.x = null then 1 when a.y = 1 then 1 end = 1", 1),
+    ("select a.id from curr_concept_s a where case when a.x = null then 1 else 0 end = 1", 1),
+    ("case v when 1 then if (x = null) then set y = 1; end if; end case;", 1),
+    ("select a.id from curr_concept_s a where case when a.b = 1 then case when a.c = 1 then if(a.x = null, 1, 0) end end = 1", 0),
+    ("select a.id from curr_concept_s a where case when a.x = null then 1 else 0 end = 0", 1),
+    ("select a.id from curr_concept_s a where case when a.y = 1 then a.x = null else 1 end", 1),
     ("select a.id from curr_concept_s a where case when a.y = 1 then case when a.x = null then 1 end end = 1", 1),
     ("select a.id from curr_concept_s a where case when exists (select 1 from u where u.x = null) then 1 else 0 end = 1", 1),
     ("set a = case when c = null then 1 end", 0),
@@ -159,6 +177,14 @@ CASE = [
 ]
 
 
+BRANCH_WORDING = [
+    ("select a.id from curr_concept_s a where case when a.x = null then 1 else 0 end = 1", True),
+    ("select a.id from curr_concept_s a where case when a.x = null then 1 end = 1", False),
+    ("select a.id from curr_concept_s a where case when not f(a.x) and f(a.x) then 1 when a.y = 1 then 1 end = 1", True),
+    ("select a.id from curr_concept_s a where a.x = null", False),
+]
+
+
 def exit_status_cases():
     """(name, exit status from main(), exit status it must be)."""
     out = []
@@ -174,6 +200,7 @@ def exit_status_cases():
             ('clean directory', [str(d / 'clean')], 0),
             ('a finding', [str(d / 'dead')], 1),
             ('missing directory', [str(d / 'missing')], 2),
+            ('missing .sql file', [str(d / 'missing.sql')], 2),
             ('directory with no .sql files', [str(d / 'empty')], 2),
             ('missing directory beside a clean one', [str(d / 'clean'), str(d / 'missing')], 2),
             ('DDL with no tables', ['--ddl', str(d / 'no-tables.sql'), str(d / 'clean')], 2),
@@ -205,6 +232,11 @@ def main():
     if lint.github_property('a,b:c') != 'a%2Cb%3Ac':
         failed += 1
         print(f"FAIL annotation property: got {lint.github_property('a,b:c')!r}")
+    for sql, want in BRANCH_WORDING:
+        got = ['CASE branch' in reason for _, reason in lint.findings(sql)]
+        if got != [want]:
+            failed += 1
+            print(f"FAIL branch wording: want [{want}], got {got}: {sql!r}")
     for sql, want in FINDINGS:
         got = lint.findings(sql)
         if len(got) != want:
@@ -215,7 +247,7 @@ def main():
         if len(got) != want:
             failed += 1
             print(f"FAIL case: want {want}, got {len(got)} {got}: {sql!r}")
-    total = len(FINDINGS) + len(CASE) + len(exits) + len(ANNOTATION) + 1
+    total = len(FINDINGS) + len(CASE) + len(exits) + len(ANNOTATION) + 1 + len(BRANCH_WORDING)
     print(f"{total - failed}/{total} passed")
     return 1 if failed else 0
 

@@ -43,8 +43,8 @@ jobs:
       - name: The checks find what they should, and only that
         run: python .github/scripts/assertion_lint_selftest.py
 
-      # No dependencies, no database, no schema: the check is structural, so it
-      # runs on the SQL exactly as committed.
+      # No dependencies and no database: the check is structural, so it runs on
+      # the SQL exactly as committed, with table names from RVF's DDL.
       - name: Every assertion must be able to report a finding
         run: >-
           python .github/scripts/assertion_lint.py --format=github
