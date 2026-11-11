@@ -33,8 +33,9 @@ release looks like.
     assertion_lint.py --ddl create-tables.sql <dir>   # table names from a schema
     assertion_lint_selftest.py                    # the checks, on fixtures
 
-Exit status is 1 when something is found and 0 otherwise, so it works as a
-build step with no wrapper.
+Exit status is 1 when something is found, 2 when a target is missing or
+unreadable or nothing was scanned, and 0 otherwise, so it works as a build step
+with no wrapper.
 """
 import argparse
 import pathlib
@@ -45,14 +46,17 @@ NOT_EXISTS_SELECT = re.compile(r'NOT\s+EXISTS\s*\(\s*SELECT\b', re.I)
 FROM = re.compile(r'\bFROM\b', re.I)
 AGGREGATE = re.compile(r'\b(COUNT|SUM|MAX|MIN|AVG)\s*\(', re.I)
 GROUPED = re.compile(r'\bGROUP\s+BY\b|\bHAVING\b', re.I)
+# `COUNT(*) OVER ()` is a window function: one row per input row, none for none.
+WINDOWED = re.compile(r'\s*OVER\b', re.I)
 # Anything that can reduce a FROM-less SELECT to zero rows.
 FILTER = re.compile(r'\bWHERE\b|\bHAVING\b', re.I)
 # `x = null`, `x <> (NULL)`, `x >= null` and friends. In SQL a comparison to
 # NULL is NULL, never true, so a WHERE built on one selects nothing and a
 # conjunct built on one makes the whole conjunction unsatisfiable. `<=>` is
-# NULL-safe and is not matched: after `<=` comes `>`, not NULL. Not covered:
-# `NULL = x` (NULL on the left) and `x IN (NULL)`.
-NULL_COMPARISON = re.compile(r'([\w.@]+)\s*(?:<>|!=|<=|>=|=|<|>)\s*\(?\s*NULL\b', re.I)
+# NULL-safe and is not matched: after `<=` comes `>`, not NULL. The left operand
+# can be backticked or end in `)` (`f(x) = NULL`, `(SELECT ...) = NULL`). Not
+# covered: `NULL = x` (NULL on the left) and `x IN (NULL)`.
+NULL_COMPARISON = re.compile(r'([\w.@`]+|\))\s*(?:<>|!=|<=|>=|=|<|>)\s*\(?\s*NULL\b', re.I)
 # A function call with no nested parentheses in its arguments.
 _CALL = r'(\b([A-Za-z_]\w*)\s*\([^()]*\))'
 # A lookahead, so that overlapping pairs (`f(x) AND NOT f(x) AND f(x)`) are all
@@ -68,6 +72,10 @@ CONJUNCT_START = re.compile(r'(?:\(|\b(?:WHERE|AND|ON|WHEN|HAVING))\s*$', re.I)
 # An AND that belongs to BETWEEN (`x BETWEEN f(a) AND g(b)`) does not start one:
 # a BETWEEN with no other AND after it.
 BETWEEN_AND = re.compile(r'\bBETWEEN\b(?:(?!\bAND\b)[^;])*\bAND\s*$', re.I)
+# What may come right after the right call: it must end its conjunct, not be the
+# operand of a comparison (`NOT f(x) AND f(x) = 0` is satisfiable).
+CONJUNCT_END = re.compile(
+    r'\s*(?:$|[);]|\|\||\b(?:AND|OR|THEN|ELSE|END|WHEN|GROUP|ORDER|LIMIT|UNION|HAVING)\b)', re.I)
 # Tokens for finding an OR (or MySQL's `||`) at the same nesting level as a
 # finding, and where that level's boolean expression starts and ends.
 BOOL_TOKEN = re.compile(r'[();]|\|\||\b[A-Za-z_]\w*\b')
@@ -90,7 +98,10 @@ CLAUSE = ASSIGNING | frozenset({'select', 'from', 'join', 'where', 'on', 'having
 # Words followed by `(` that are not function calls.
 NOT_A_CALL = CLAUSE | NOT_A_FUNCTION | frozenset({'and', 'or', 'not', 'case', 'end',
                                                   'between', 'like', 'is', 'as', 'using',
-                                                  'into', 'by', 'distinct'})
+                                                  'into', 'by', 'distinct', 'union',
+                                                  'intersect', 'except'})
+# Tokens after which `IF (` starts an IF statement rather than calling IF().
+STATEMENT_START = frozenset({None, ';', 'begin', 'then', 'else', 'do', 'loop', 'repeat'})
 # Boolean operators continue the current clause; inside a SET list or a select
 # list (`SET flag = a AND b, other = NULL`) they do not start a condition.
 OPERATOR = frozenset({'and', 'or', 'not'})
@@ -122,8 +133,10 @@ def clauses_at(sql: str, at: int):
     """
     # One frame per nesting level: [clause keyword, is a CASE frame, is a call].
     frames = [[None, False, False]]
+    prev = None
     for m in CONTEXT_TOKEN.finditer(sql, 0, at):
         tok = m.group(0)
+        word = None
         if tok == '(':
             frames.append([None, False, False])
         elif tok == ')':
@@ -133,8 +146,11 @@ def clauses_at(sql: str, at: int):
             frames = [[None, False, False]]
         else:
             word = re.match(r'\w+', tok).group(0).lower()
-            # `IF(` is the function; the IF statement is `IF cond THEN`.
-            if word != 'if' or not m.group(1):
+            # `IF(` is the function; the IF statement is `IF cond THEN` or, at
+            # the start of a statement, `IF (cond) THEN`.
+            statement_if = word == 'if' and (
+                not m.group(1) or (prev in STATEMENT_START and not frames[-1][1]))
+            if word != 'if' or statement_if:
                 if word == 'case':
                     frames.append([None, True, False])
                 elif word == 'end':
@@ -146,9 +162,110 @@ def clauses_at(sql: str, at: int):
                     frames[-1][0] = word
             if m.group(1):
                 # `(` after a word: a function's argument list, unless the word
-                # is a keyword (`WHERE (`, `EXISTS (`, `IN (`).
-                frames.append([None, False, word == 'if' or word not in NOT_A_CALL])
+                # is a keyword (`WHERE (`, `EXISTS (`, `IN (`) or a table name
+                # (`INSERT INTO t (SELECT ...)`).
+                call = not statement_if and prev != 'into' and (
+                    word == 'if' or word not in NOT_A_CALL)
+                frames.append([None, False, call])
+        prev = word if word else tok
     return [(f[0], f[2]) for f in frames]
+
+
+def in_multi_branch_case(sql: str, at: int) -> bool:
+    """Whether offset `at` is inside a CASE, in the same subquery, that has
+    another WHEN or an ELSE: a dead branch there leaves the others."""
+    tokens = [(m.start(), m.group(0).lower()) for m in BOOL_TOKEN.finditer(sql)]
+    # One entry per nesting level: [opens a subquery, indexes of open CASEs].
+    levels = [[False, []]]
+    for i, (pos, t) in enumerate(tokens):
+        if pos >= at:
+            break
+        if t == '(':
+            levels.append([i + 1 < len(tokens) and tokens[i + 1][1] == 'select', []])
+        elif t == ')':
+            if len(levels) > 1:
+                levels.pop()
+        elif t == ';':
+            levels = [[False, []]]
+        elif t == 'case':
+            levels[-1][1].append(i)
+        elif t == 'end' and levels[-1][1]:
+            levels[-1][1].pop()
+    enclosing = []
+    for subquery, cases in reversed(levels):
+        enclosing.extend(cases)
+        if subquery:
+            break
+    return any(case_branches(tokens, i) > 1 for i in enclosing)
+
+
+def case_branches(tokens, i):
+    """The number of WHEN and ELSE branches of the CASE at tokens[i]."""
+    depth, n = 0, 0
+    for _, t in tokens[i + 1:]:
+        if t in ('(', 'case'):
+            depth += 1
+        elif t in (')', 'end'):
+            if depth == 0:
+                break
+            depth -= 1
+        elif t == ';':
+            break
+        elif depth == 0 and t in ('when', 'else'):
+            n += 1
+    return n
+
+
+def operand_start(sql: str, m) -> int:
+    """Where the left operand of a NULL_COMPARISON match starts: for `f(a) =
+    NULL` or `(SELECT ...) = NULL`, the function name or the opening paren."""
+    i = m.start(1)
+    if sql[i] != ')':
+        return i
+    depth = 0
+    for j in range(i, -1, -1):
+        if sql[j] == ')':
+            depth += 1
+        elif sql[j] == '(':
+            depth -= 1
+            if depth == 0:
+                k = j
+                while k > 0 and sql[k - 1].isspace():
+                    k -= 1
+                w = k
+                while w > 0 and (sql[w - 1].isalnum() or sql[w - 1] == '_'):
+                    w -= 1
+                name = sql[w:k].lower()
+                return w if name and (name == 'if' or name not in NOT_A_CALL) else j
+    return i
+
+
+def top_level(sql: str) -> str:
+    """`sql` with everything inside parentheses blanked, offsets preserved."""
+    out, depth = [], 0
+    for c in sql:
+        if c == '(':
+            out.append(c if depth == 0 else ' ')
+            depth += 1
+        elif c == ')':
+            depth = max(depth - 1, 0)
+            out.append(c if depth == 0 else ' ')
+        else:
+            out.append(c if depth == 0 or c == '\n' else ' ')
+    return ''.join(out)
+
+
+def ungrouped_aggregate(outer: str) -> bool:
+    """Whether a subquery's outermost level (see top_level) projects an
+    aggregate with no GROUP BY or HAVING, which returns one row even for no rows."""
+    if GROUPED.search(outer):
+        return False
+    projection = FROM.split(outer, 1)[0]
+    for a in AGGREGATE.finditer(projection):
+        close = projection.find(')', a.end())
+        if close < 0 or not WINDOWED.match(projection, close + 1):
+            return True
+    return False
 
 
 def or_at_same_level(sql: str, start: int, end: int) -> bool:
@@ -237,11 +354,13 @@ def findings(sql: str):
         inner = subquery_body(clean, m.end())
         if inner is None:
             continue
+        # A nested subquery's FROM, GROUP BY or aggregate is not this one's.
+        outer = top_level(inner)
         line = clean.count('\n', 0, m.start()) + 1
-        if not FROM.search(inner):
+        if not FROM.search(outer):
             # `SELECT 1 WHERE 1=0` has no FROM and returns no row, so a NOT
             # EXISTS over it is satisfiable.
-            if FILTER.search(inner):
+            if FILTER.search(outer):
                 continue
             out.append((line, 'NOT EXISTS over a SELECT with no FROM and no WHERE:'
                               ' it returns exactly one row, so this can never be'
@@ -251,8 +370,7 @@ def findings(sql: str):
                               ' that queries an empty table or returns NULL still'
                               ' yields one row'))
             continue
-        projection = FROM.split(inner, 1)[0]
-        if AGGREGATE.search(projection) and not GROUPED.search(inner):
+        if ungrouped_aggregate(outer):
             out.append((line, 'NOT EXISTS over an ungrouped aggregate: it returns one'
                               ' row even when the table is empty, so this can never'
                               ' be true - including for the empty table it is'
@@ -277,16 +395,21 @@ def findings(sql: str):
         # The left call must start a conjunct, and an AND that belongs to
         # BETWEEN does not start one.
         if (not CONJUNCT_START.search(clean, 0, m.start())
-                or BETWEEN_AND.search(clean, 0, m.start())):
+                or BETWEEN_AND.search(clean, 0, m.start())
+                or not CONJUNCT_END.match(clean, m.end(5))):
             continue
         if or_at_same_level(clean, m.start(), m.end(5)):
             continue
+        if in_multi_branch_case(clean, m.start()):
+            continue
         line = clean.count('\n', 0, m.start()) + 1
         out.append((line, f'the same predicate is required and forbidden as adjacent'
-                          f' conjuncts - {left.strip()[:56]} - so this can never be true'))
+                          f' conjuncts - {" ".join(left.split())[:56]} - so this can'
+                          f' never be true'))
 
     # A comparison to NULL, which is NULL rather than true.
     for m in NULL_COMPARISON.finditer(clean):
+        start = operand_start(clean, m)
         # Inside an assignment (`SET x = NULL`, `SET a = CASE WHEN b = NULL ...`)
         # or an output column of a select list (including a CASE or scalar
         # subquery there), the comparison computes a value; it does not decide
@@ -294,13 +417,16 @@ def findings(sql: str):
         # The same inside a function's arguments (`IF(x = NULL, 1, 0)`,
         # `COALESCE(x = NULL, 1)`): the function decides what the value means.
         if any(c in ASSIGNING or c == 'select' or call
-               for c, call in clauses_at(clean, m.start())):
+               for c, call in clauses_at(clean, start)):
             continue
-        # `a = 1 OR b = NULL`: the other branch can still be true.
-        if or_at_same_level(clean, m.start(), m.end()):
+        # `a = 1 OR b = NULL`, or another WHEN/ELSE: the other branch can still be true.
+        if or_at_same_level(clean, start, m.end()) or in_multi_branch_case(clean, start):
             continue
-        line = clean.count('\n', 0, m.start()) + 1
-        out.append((line, f'{m.group(1)} is compared to NULL, which is never true -'
+        line = clean.count('\n', 0, start) + 1
+        operand = ' '.join(clean[start:m.end(1)].split())
+        if len(operand) > 56:
+            operand = operand[:53] + '...'
+        out.append((line, f'{operand} is compared to NULL, which is never true -'
                           f' use IS NULL, or bind the value this was meant to test'))
     return out
 
@@ -376,15 +502,39 @@ def sql_files(targets):
             yield p
 
 
-def main():
+def github_data(s: str) -> str:
+    return s.replace('%', '%25').replace('\r', '%0D').replace('\n', '%0A')
+
+
+def github_property(s: str) -> str:
+    return github_data(s).replace(':', '%3A').replace(',', '%2C')
+
+
+def main(argv=None):
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('targets', nargs='+', help='directories or .sql files')
     ap.add_argument('--format', choices=('text', 'github'), default='text',
                     help='github emits ::error annotations')
     ap.add_argument('--ddl', help='create-tables SQL, to check table names for case')
-    args = ap.parse_args()
+    args = ap.parse_args(argv)
 
-    stems = table_stems(args.ddl) if args.ddl else RF2_TABLE_STEMS
+    errors = 0
+    if args.ddl:
+        try:
+            stems = table_stems(args.ddl)
+        except OSError as e:
+            print(f'{args.ddl}: unreadable: {e}', file=sys.stderr)
+            return 2
+        if not stems:
+            print(f'{args.ddl}: declares no tables', file=sys.stderr)
+            return 2
+    else:
+        stems = RF2_TABLE_STEMS
+
+    for t in args.targets:
+        if not pathlib.Path(t).exists():
+            print(f'{t}: no such file or directory', file=sys.stderr)
+            errors += 1
 
     scanned = 0
     hits = []
@@ -394,6 +544,7 @@ def main():
             sql = path.read_text(encoding='utf-8', errors='replace')
         except OSError as e:
             print(f'{path}: unreadable: {e}', file=sys.stderr)
+            errors += 1
             continue
         for line, reason in findings(sql):
             hits.append((path, line, reason))
@@ -402,7 +553,8 @@ def main():
 
     for path, line, reason in hits:
         if args.format == 'github':
-            print(f'::error file={path},line={line},title=Assertion cannot fire::{reason}')
+            print(f'::error file={github_property(str(path))},line={line},'
+                  f'title=Assertion cannot fire::{github_data(reason)}')
         else:
             print(f'{path}:{line}: {reason}')
 
@@ -412,6 +564,10 @@ def main():
         print('An assertion that cannot report a finding passes for every release'
               ' it validates: it executes, finds nothing, and a clean release looks'
               ' the same.', file=sys.stderr)
+    if errors or not scanned:
+        print('Not every target was checked, so this result cannot be trusted.',
+              file=sys.stderr)
+        return 2
     return 1 if hits else 0
 
 
