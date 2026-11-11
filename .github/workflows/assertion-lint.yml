@@ -13,7 +13,7 @@ on:
       - '.github/workflows/assertion-lint.yml'
   push:
     branches: [develop, master, main]
-  # Nightly, so a table renamed or dropped in RVF is caught without a change here.
+  # Nightly, so a change to the case of RVF's table names is caught without a change here.
   schedule:
     - cron: '0 3 * * *'
   workflow_dispatch:
