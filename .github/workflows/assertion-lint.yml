@@ -13,13 +13,27 @@ on:
       - '.github/workflows/assertion-lint.yml'
   push:
     branches: [develop, master, main]
+  # Nightly, so a table renamed or dropped in RVF is caught without a change here.
+  schedule:
+    - cron: '0 3 * * *'
   workflow_dispatch:
 
 jobs:
   can-fire:
     runs-on: ubuntu-latest
+    env:
+      # RVF deploys develop assertions with RVF develop and master with master.
+      RVF_REF: ${{ github.event_name != 'schedule' && (github.base_ref || github.ref_name) == 'master' && 'master' || 'develop' }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          # Scheduled runs start on the default branch (master); assertions change on develop.
+          ref: ${{ github.event_name == 'schedule' && 'develop' || '' }}
+
+      - name: Fetch RVF's table definitions
+        run: >-
+          curl -fsSL --retry 3 -o "$RUNNER_TEMP/create-tables-mysql.sql"
+          "https://raw.githubusercontent.com/IHTSDO/release-validation-framework/$RVF_REF/src/main/resources/sql/create-tables-mysql.sql"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -29,7 +43,9 @@ jobs:
       - name: The checks find what they should, and only that
         run: python .github/scripts/assertion_lint_selftest.py
 
-      # No dependencies, no database, no schema: the check is structural, so it
-      # runs on the SQL exactly as committed.
+      # No dependencies and no database: the check is structural, so it runs on
+      # the SQL exactly as committed, with table names from RVF's DDL.
       - name: Every assertion must be able to report a finding
-        run: python .github/scripts/assertion_lint.py --format=github scripts
+        run: >-
+          python .github/scripts/assertion_lint.py --format=github
+          --ddl "$RUNNER_TEMP/create-tables-mysql.sql" scripts
