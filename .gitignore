@@ -1,1 +1,5 @@
 .*
+
+# .* above also matches .github, so workflow files could only be added with
+# `git add -f`. Exempt the directory.
+!.github/
