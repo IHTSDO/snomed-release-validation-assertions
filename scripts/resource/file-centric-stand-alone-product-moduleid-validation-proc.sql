@@ -10,7 +10,26 @@ create procedure validate_stand_alone_product_module_id(dbname char(255),runid B
 begin
 declare no_more_rows integer default 0;
 declare tb_name char(255);
-declare table_cursor cursor for select table_name from information_schema.tables where table_schema = substring_index(dbname,'.',1) and table_name like '%\_s';
+declare table_cursor cursor for
+select t.table_name from information_schema.tables t
+where t.table_schema = substring_index(dbname,'.',1)
+and t.table_name like '%\_s'
+-- Only tables this procedure can actually query. It selects id and moduleid
+-- below, and not every RF2 table has an id column: identifier_s is keyed on
+-- alternateidentifier. Without this the dynamic SQL raises
+-- "Unknown column 'id' in 'field list'", which aborts the whole assertion.
+and exists (
+	select 1 from information_schema.columns c
+	where c.table_schema = t.table_schema
+	and c.table_name = t.table_name
+	and c.column_name = 'id'
+)
+and exists (
+	select 1 from information_schema.columns c
+	where c.table_schema = t.table_schema
+	and c.table_name = t.table_name
+	and c.column_name = 'moduleid'
+);
 declare continue handler for not found set no_more_rows = 1;
 open table_cursor;
 myloop: loop fetch table_cursor into tb_name;
