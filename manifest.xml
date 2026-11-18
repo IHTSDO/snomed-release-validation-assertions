@@ -665,6 +665,8 @@
 
 		<script uuid="d1417dd6-7a74-4e67-8dc0-156e7c4c489c" category="component-centric-validation" sqlFile="component-centric-snapshot-referenced-refsetId-of-refeset-member-must-be-valid.sql" text="The refsetId of a refset member must be an existing and active concept." />
 
+		<script uuid="a7e3c1d4-5b28-4f90-8c6a-1d9e0f4b7a32" category="component-centric-validation" sqlFile="component-centric-snapshot-annotation-refset-ids-must-be-valid-and-active.sql" text="Active Component Annotation refset members must use a valid referencedComponentId and typeId." />
+
 		<script uuid="1a4e40a9-cf14-4703-b206-9f2fbeb56c7f" category="component-centric-validation" sqlFile="component-centric-snapshot-referencedComponentID-of-refset-member-must-be-valid.sql" text="All active Refset records are valid." />
 
 		<script uuid="c35167ac-1dfc-4861-ac19-be60f95e3521" category="component-centric-validation" sqlFile="component-centric-snapshot-referencedComponentID-of-simple-map-refset-member-must-be-valid.sql" text="All active simple map Refset records are valid." severity="WARNING" />

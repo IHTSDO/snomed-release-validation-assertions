@@ -76,6 +76,8 @@ set component_label = case component_part
 	when 'mrcmmodulescoperefset' then 'MRCM module scope refset member'
 	when 'mapcorrelationoriginrefset' then 'Map correlation origin refset member'
 	when 'descriptiontype' then 'Description type refset member'
+	when 'componentannotationstringvaluerefset' then 'Component annotation refset member'
+	when 'memberannotationstringvaluerefset' then 'Member annotation refset member'
 	else replace(component_part, '_', ' ')
 end;
 

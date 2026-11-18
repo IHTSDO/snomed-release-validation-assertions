@@ -171,6 +171,28 @@ component-centric-snapshot-referenced-refsetId-of-refeset-member-must-be-valid.s
     from curr_simplerefset_s a left join curr_concept_s b on a.refsetid = b.id
         where a.active = '1' and (b.active = '0' or b.id is null);
 
+    insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
+    select
+        <RUNID>,
+        '<ASSERTIONUUID>',
+        a.refsetid,
+        concat('Refset id:',a.refsetid, ' in component annotation refset member must be an existing and active concept.'),
+        a.id,
+        'curr_componentannotationstringvaluerefset_s'
+    from curr_componentannotationstringvaluerefset_s a left join curr_concept_s b on a.refsetid = b.id
+        where a.active = '1' and (b.active = '0' or b.id is null);
+
+    insert into qa_result (runid, assertionuuid, concept_id, details, component_id, table_name)
+    select
+        <RUNID>,
+        '<ASSERTIONUUID>',
+        a.refsetid,
+        concat('Refset id:',a.refsetid, ' in member annotation refset member must be an existing and active concept.'),
+        a.id,
+        'curr_memberannotationstringvaluerefset_s'
+    from curr_memberannotationstringvaluerefset_s a left join curr_concept_s b on a.refsetid = b.id
+        where a.active = '1' and (b.active = '0' or b.id is null);
+
 
 
 
